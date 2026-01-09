@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16
+    container_name: salon_db
+    restart: always
+    environment:
+      POSTGRES_USER: salon_user
+      POSTGRES_PASSWORD: salon_password
+      POSTGRES_DB: salon_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local

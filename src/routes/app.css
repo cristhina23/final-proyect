@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+:root {
+  --radius: 0.65rem;
+
+  /* Colores base */
+  --primary: #936C4B;    /* Camel Dark */
+  --secondary: #C8A180;  /* Camel Mid */
+  --accent: #D9B79A;     /* Camel Light */
+  --muted: #F9ECE1;       /* Camel Cream */
+  --background: #FEFCFF;  /* Background Light */
+  --foreground: #2A2A2F;  /* Text Dark */
+
+  /* Gradiente de camels */
+  --camel-gradient: linear-gradient(
+    to bottom,
+    var(--primary) 0%,
+    var(--secondary) 40%,
+    var(--accent) 70%,
+    var(--muted) 100%
+  );
+
+  /* ALERTAS */
+
+  /* ERROR  */
+  --alert-error-bg: #C94F3F;             
+  --alert-error-text: #FEFCFF;          
+  --alert-error-border: #A03C34;        
+  --alert-error-bg-hover: rgba(201, 79, 63, 0.85);  
+
+  /* Success */
+  --alert-success-bg: #6A9A58;
+  --alert-success-text: #FEFCFF;
+  --alert-success-border: #5C844A;
+  --alert-success-bg-hover: rgba(106, 154, 88, 0.85);
+
+  /*  Warning */
+  --alert-warning-bg: #D9A23F;
+  --alert-warning-text: #936C4B;
+  --alert-warning-border: #C38F34;
+  --alert-warning-bg-hover: rgba(217, 162, 63, 0.85);
+
+  /* INFO 
+   */
+  --alert-info-bg: #5B7A9A;
+  --alert-info-text: #FEFCFF;
+  --alert-info-border: #4E6A84;
+  --alert-info-bg-hover: rgba(91, 122, 154, 0.85);
+}
+
+
+
+
