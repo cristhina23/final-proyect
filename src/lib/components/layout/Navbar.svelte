@@ -1,0 +1,72 @@
+<script lang="ts">
+	import PrimaryButton from '$lib/components/ui/PrimaryButton.svelte';
+	
+	let isMenuOpen = false;
+
+	function toggleMenu() {
+		isMenuOpen = !isMenuOpen;
+	}
+</script>
+
+<nav class="sticky top-0 z-50 w-full border-b border-[var(--muted)] bg-[var(--background)]/80 backdrop-blur-md">
+	<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+		<!-- Logo -->
+		<div class="flex items-center">
+			<a href="/" class="text-2xl font-bold tracking-tight text-[var(--primary)] font-serif">
+				Beauty<span class="text-[var(--secondary)]">Salon</span>
+			</a>
+		</div>
+
+		<!-- Desktop Navigation -->
+		<div class="hidden md:block">
+			<div class="ml-10 flex items-baseline space-x-8">
+				<a href="/" class="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+				<a href="#services" class="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors px-3 py-2 rounded-md text-sm font-medium">Services</a>
+				<a href="#stylists" class="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors px-3 py-2 rounded-md text-sm font-medium">Stylists</a>
+				<a href="#about" class="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
+			</div>
+		</div>
+
+		<!-- CTA Button -->
+		<div class="hidden md:block">
+			<PrimaryButton href="/book">Book Now</PrimaryButton>
+		</div>
+
+		<!-- Mobile menu button -->
+		<div class="-mr-2 flex md:hidden">
+			<button
+				type="button"
+				onclick={toggleMenu}
+				class="inline-flex items-center justify-center rounded-md p-2 text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)] focus:outline-none"
+				aria-controls="mobile-menu"
+				aria-expanded={isMenuOpen}
+			>
+				<span class="sr-only">Open main menu</span>
+				{#if isMenuOpen}
+					<svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+					</svg>
+				{:else}
+					<svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+					</svg>
+				{/if}
+			</button>
+		</div>
+	</div>
+
+	<!-- Mobile menu -->
+	{#if isMenuOpen}
+		<div class="md:hidden" id="mobile-menu">
+			<div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
+				<a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)]">Home</a>
+				<a href="#services" class="block rounded-md px-3 py-2 text-base font-medium text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)]">Services</a>
+				<a href="#stylists" class="block rounded-md px-3 py-2 text-base font-medium text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)]">Stylists</a>
+				<a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)]">About</a>
+				<div class="mt-4 px-3">
+					<PrimaryButton href="/book" class="w-full justify-center">Book Now</PrimaryButton>
+				</div>
+			</div>
+		</div>
+	{/if}
+</nav>
