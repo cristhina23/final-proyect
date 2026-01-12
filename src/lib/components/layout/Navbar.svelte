@@ -20,10 +20,10 @@
 		<!-- Desktop Navigation -->
 		<div class="hidden md:block">
 			<div class="ml-10 flex items-baseline space-x-8">
-				<a href="/" class="text-foreground hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
-				<a href="#services" class="text-foreground hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Services</a>
-				<a href="#stylists" class="text-foreground hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Stylists</a>
-				<a href="#about" class="text-foreground hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
+				<a href="/" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+				<a href="#services" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Services</a>
+				<a href="#stylists" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Stylists</a>
+				<a href="#about" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
 			</div>
 		</div>
 
@@ -59,10 +59,10 @@
 	{#if isMenuOpen}
 		<div class="md:hidden" id="mobile-menu">
 			<div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-				<a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)]">Home</a>
-				<a href="#services" class="block rounded-md px-3 py-2 text-base font-medium text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)]">Services</a>
-				<a href="#stylists" class="block rounded-md px-3 py-2 text-base font-medium text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)]">Stylists</a>
-				<a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--primary)]">About</a>
+				<a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Home</a>
+				<a href="#services" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Services</a>
+				<a href="#stylists" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Stylists</a>
+				<a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">About</a>
 				<div class="mt-4 px-3">
 					<PrimaryButton href="/book" class="w-full justify-center">Book Now</PrimaryButton>
 				</div>

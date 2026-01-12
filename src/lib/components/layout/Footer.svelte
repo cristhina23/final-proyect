@@ -2,12 +2,12 @@
     const currentYear = new Date().getFullYear();
 </script>
 
-<footer class="bg-[var(--primary)] text-white mt-auto">
+<footer class="bg-foreground text-white mt-auto">
     <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
             <!-- Brand Info -->
             <div class="col-span-1 md:col-span-1">
-                <span class="text-2xl font-bold font-serif text-[var(--muted)]">BeautySalon</span>
+                <span class="text-2xl font-bold font-serif text-primary">Beauty  <span class="text-secondary">Care</span></span>
                 <p class="mt-4 text-sm text-gray-200">
                     Experience premium care and style. Our expert stylists are dedicated to bringing out your best look.
                 </p>
@@ -15,7 +15,7 @@
 
             <!-- Quick Links -->
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--muted)]">Nav</h3>
+                <h3 class="text-sm font-semibold uppercase text-secondary">Nav</h3>
                 <ul class="mt-4 space-y-2">
                     <li><a href="/" class="text-gray-200 hover:text-white transition-colors">Home</a></li>
                     <li><a href="#services" class="text-gray-200 hover:text-white transition-colors">Services</a></li>
@@ -26,7 +26,7 @@
 
             <!-- Hours -->
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--muted)]">Hours</h3>
+                <h3 class="text-sm font-semibold uppercase text-secondary">Hours</h3>
                 <ul class="mt-4 space-y-2 text-gray-200">
                     <li>Mon - Fri: 9am - 8pm</li>
                     <li>Saturday: 10am - 6pm</li>
@@ -34,9 +34,9 @@
                 </ul>
             </div>
 
-            <!-- Contact -->
+            
             <div>
-                <h3 class="text-sm font-semibold uppercase tracking-wider text-[var(--muted)]">Contact</h3>
+                <h3 class="text-sm font-semibold uppercase text-secondary">Contact</h3>
                 <ul class="mt-4 space-y-2 text-gray-200">
                     <li>123 Beauty Lane</li>
                     <li>Style City, SC 12345</li>

@@ -5,51 +5,76 @@
 :root {
   --radius: 0.65rem;
 
+    /* Typography */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
   /* Colores base */
-  --primary: #936C4B;    /* Camel Dark */
-  --secondary: #C8A180;  /* Camel Mid */
-  --accent: #D9B79A;     /* Camel Light */
-  --muted: #F9ECE1;       /* Camel Cream */
-  --background: #FEFCFF;  /* Background Light */
-  --foreground: #2A2A2F;  /* Text Dark */
+  --primary: #C8A180;    
+  --secondary: #D9B79A;  
+  --accent: #d1b195;     
+  --muted: #F9ECE1;       
+  --background: #FEFCFF;  
+  --foreground: #2A2A2F;  
+
+    /* Text colors */
+  --text-primary: #2A2A2F;   /* Main text (headings, body) */
+  --text-secondary: #5C5C66; /* Secondary text (descriptions, labels) */
+  --text-muted: #8F8F99;    /* Muted text (helper text, metadata) */
+  --text-disabled: #B8B8C0; /* Disabled / very subtle text */
 
   /* Gradiente de camels */
   --camel-gradient: linear-gradient(
     to bottom,
     var(--primary) 0%,
-    var(--secondary) 40%,
-    var(--accent) 70%,
-    var(--muted) 100%
+    var(--secondary) 100%
   );
-
-  /* ALERTAS */
-
-  /* ERROR  */
-  --alert-error-bg: #C94F3F;             
-  --alert-error-text: #FEFCFF;          
-  --alert-error-border: #A03C34;        
-  --alert-error-bg-hover: rgba(201, 79, 63, 0.85);  
-
-  /* Success */
-  --alert-success-bg: #6A9A58;
-  --alert-success-text: #FEFCFF;
-  --alert-success-border: #5C844A;
-  --alert-success-bg-hover: rgba(106, 154, 88, 0.85);
-
-  /*  Warning */
-  --alert-warning-bg: #D9A23F;
-  --alert-warning-text: #936C4B;
-  --alert-warning-border: #C38F34;
-  --alert-warning-bg-hover: rgba(217, 162, 63, 0.85);
-
-  /* INFO 
-   */
-  --alert-info-bg: #5B7A9A;
-  --alert-info-text: #FEFCFF;
-  --alert-info-border: #4E6A84;
-  --alert-info-bg-hover: rgba(91, 122, 154, 0.85);
 }
 
 
 
+@theme {
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-disabled: var(--text-disabled);
+
+  
+  
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-secondary);
+  background-color: var(--background);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+}
+
+.step-circle circle {
+  stroke-dasharray: 339;
+  stroke-dashoffset: 339;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.step.animate .step-circle circle {
+  animation: draw-circle 1s ease-out forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes draw-circle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 
