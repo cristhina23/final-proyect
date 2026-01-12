@@ -1,22 +1,14 @@
 <script lang="ts">
 	import PrimaryButton from '$lib/components/ui/PrimaryButton.svelte';
 	import SecondaryButton from '$lib/components/ui/SecondaryButton.svelte';
-	import Card from '$lib/components/ui/Card.svelte'; // Assuming Card exists or will just use div if not complex
+	import Card from '$lib/components/ui/Card.svelte'; 
+  import HowItWorks from '$lib/components/landing/HowItWorks.svelte';
 
-    // Mock Data for Services
-    const services = [
-        { title: 'Haircut & Styling', price: '$50+', duration: '60 min', description: 'Expert cutting and styling tailored to your face shape.' },
-        { title: 'Color & Highlights', price: '$120+', duration: '120 min', description: 'Vibrant colors and natural-looking highlights.' },
-        { title: 'Manicure & Pedicure', price: '$40+', duration: '45 min', description: 'Relaxing hand and foot care with premium polish.' },
-        { title: 'Facial Treatments', price: '$80+', duration: '60 min', description: 'Rejuvenating facials for glowing, healthy skin.' }
-    ];
+    
+   import { services } from '$lib/data';
 
-    // Mock Data for Stylists
-    const stylists = [
-        { name: 'Sarah J.', specialty: 'Color Specialist', bio: 'Expert in balayage and corrective color.' },
-        { name: 'Michael R.', specialty: 'Master Cutter', bio: 'Precision haircuts for men and women.' },
-        { name: 'Jessica T.', specialty: 'Bridal Stylist', bio: 'Creating dream looks for your special day.' }
-    ];
+   
+    
 </script>
 
 <svelte:head>
@@ -71,63 +63,10 @@
 </section>
 
 <!-- Stylists Section -->
-<section id="stylists" class="py-24 bg-[var(--background)]">
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-            <h2 class="text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl font-serif">Meet Our Experts</h2>
-        </div>
-		<div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
-			{#each stylists as stylist}
-				<div class="group relative overflow-hidden rounded-2xl bg-white shadow-md">
-                    <div class="aspect-[3/4] w-full bg-[var(--muted)] flex items-center justify-center text-[var(--secondary)]">
-                        <!-- Placeholder for Stylist Image -->
-                        <span class="text-6xl opacity-50">Requires Image</span>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-[var(--foreground)]">{stylist.name}</h3>
-                        <p class="text-sm font-medium text-[var(--primary)]">{stylist.specialty}</p>
-                        <p class="mt-3 text-gray-600">{stylist.bio}</p>
-                        <div class="mt-6">
-                             <SecondaryButton href="/book" class="w-full justify-center">Book with {stylist.name.split(' ')[0]}</SecondaryButton>
-                        </div>
-                    </div>
-				</div>
-			{/each}
-		</div>
-	</div>
-</section>
+
 
 <!-- How It Works Section -->
-<section class="py-24 bg-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-            <h2 class="text-3xl font-bold tracking-tight text-[var(--foreground)] sm:text-4xl font-serif">How It Works</h2>
-            <p class="mt-4 text-lg text-gray-600">Your journey to beauty in 4 simple steps.</p>
-        </div>
-        
-        <div class="mt-16 relative">
-            <!-- Connecting Line (Desktop) -->
-            <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-[var(--muted)] -z-10"></div>
-            
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
-                {#each [
-                    { step: 1, title: 'Choose Service', desc: 'Browse our menu of premium treatments.' },
-                    { step: 2, title: 'Select Stylist', desc: 'Pick your preferred expert.' },
-                    { step: 3, title: 'Book Time', desc: 'Find a slot that fits your schedule.' },
-                    { step: 4, title: 'Confirm', desc: 'Receive instant confirmation via email.' }
-                ] as item}
-                    <div class="flex flex-col items-center text-center bg-white px-4">
-                        <div class="flex h-24 w-24 items-center justify-center rounded-full bg-[var(--background)] border-4 border-[var(--primary)] shadow-sm mb-6">
-                            <span class="text-3xl font-bold text-[var(--primary)]">{item.step}</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-[var(--foreground)]">{item.title}</h3>
-                        <p class="mt-2 text-gray-600">{item.desc}</p>
-                    </div>
-                {/each}
-            </div>
-        </div>
-    </div>
-</section>
+<HowItWorks />
 
 <!-- Final CTA Section -->
 <section class="py-24 bg-[var(--primary)] text-white relative overflow-hidden">

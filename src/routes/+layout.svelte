@@ -9,10 +9,11 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<div class="flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)]">
+<div class="flex min-h-screen flex-col bg-background text-foreground">
 	<Navbar />
 	
 	<main class="flex-1 w-full">
+		
 		{@render children()}
 	</main>
 	
