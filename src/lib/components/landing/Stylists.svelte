@@ -1,46 +1,135 @@
 <script>
-// @ts-nocheck
-
+  // @ts-nocheck
   import { stylists } from "$lib/data";
-  import SecondaryButton from "../ui/SecondaryButton.svelte";
-  import { getStylistImage } from '$lib/utils/imageResolver';
+  import { getStylistImage } from "$lib/utils/imageResolver";
   import PrimaryButton from "../ui/PrimaryButton.svelte";
 
+  let selectedStylist = null;
+
+  const openModal = (stylist) => selectedStylist = stylist;
+  const closeModal = () => selectedStylist = null;
 </script>
 
-<section id="stylists" class="py-18 bg-background">
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-16">
-      <span class="text-primary px-3 py-1 text-sm font-bold rounded-full" >Our Professional Team</span>
-      <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-serif">Meet Our Experts</h2>
-      <p class="mt-4 text-lg text-gray-600">A team of highly skilled stylists dedicated to enhancing your beauty with precision, care, and passion.</p>
-    </div>
-		<div class="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
-			{#each stylists as stylist}
-				<div class="group flex flex-col items-center">
-          <div class="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg">
-            {#if getStylistImage(stylist.image)}
-                <img src={getStylistImage(stylist.image)} alt={stylist.name} class="h-full w-full object-cover object-top" />
-            {:else}
-                <div class="h-full w-full bg-muted flex items-center justify-center">
-                    <span class="text-4xl opacity-50">{stylist.name.split(' ')[0]}</span>
-                </div>
-            {/if}
+<section
+  id="stylists"
+  class="relative py-28 overflow-hidden bg-[#F6F2ED]"
+>
+  
+  <div class="absolute -top-40 -left-40 w-[420px] h-[420px] bg-[#D9B79A]/40 rounded-full blur-[140px]"></div>
+  <div class="absolute top-1/3 -right-40 w-[380px] h-[380px] bg-[#C8A180]/40 rounded-full blur-[130px]"></div>
+  <div class="absolute bottom-0 left-1/3 w-[420px] h-[420px] bg-[#EFE1D1]/60 rounded-full blur-[160px]"></div>
 
-            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-6 text-center backdrop-blur-xs">
-              <span class="text-secondary font-medium tracking-wide uppercase text-xs mb-2">{stylist.specialty}</span>
-              <p class="text-white text-sm leading-relaxed mb-6 line-clamp-4">{stylist.bio}</p>
-              <PrimaryButton href="/book" class="text-foreground" text="text-foreground">
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+    
+    <div class="text-center mb-20">
+      <span class="inline-block mb-4 px-4 py-1.5 text-xs tracking-widest uppercase font-semibold rounded-full bg-[#936C4B]/10 text-[#936C4B]">
+        Our Professional Team
+      </span>
+      <h2 class="text-4xl sm:text-5xl font-serif font-bold text-[#2E1F14]">
+        Meet Our Experts
+      </h2>
+      <p class="mt-6 text-lg text-[#6B5A4A] max-w-2xl mx-auto">
+        A curated team of elite stylists combining technique, creativity, and passion.
+      </p>
+    </div>
+
+    
+    <div class="grid grid-cols-2  gap-16 sm:grid-cols-2 lg:grid-cols-4">
+      {#each stylists as stylist}
+        <div class="group">
+
+          
+          <div class="relative aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-xl transition-transform duration-700 group-hover:-translate-y-2">
+
+            
+            <div class=" hidden md:block absolute top-5 left-5 z-10">
+              <span class="px-4 py-1.5 text-xs font-semibold rounded-full bg-[#936C4B]/90 text-white backdrop-blur-md shadow-lg">
+                {stylist.experience}+ yrs
+              </span>
+            </div>
+
+            
+            <img
+              src={getStylistImage(stylist.image)}
+              alt={stylist.name}
+              class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+
+            
+            <div
+              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-[#2E1F14]/90 via-[#6B4A2F]/70 to-transparent hidden lg:flex flex-col justify-end p-8"
+            >
+              <p class="text-xs uppercase tracking-widest text-[#EAD9C8] mb-2">
+                {stylist.specialty}
+              </p>
+              <p class="text-white text-sm leading-relaxed mb-6 line-clamp-3">
+                {stylist.bio}
+              </p>
+              <PrimaryButton href="/book" class="w-full text-sm">
                 Book with {stylist.name.split(' ')[0]}
               </PrimaryButton>
             </div>
           </div>
-          <div class="mt-5 text-center">
-            <h3 class="text-xl font-bold text-foreground font-serif tracking-tight">{stylist.name}</h3>
-            <p class="text-xs font-bold text-primary uppercase tracking-widest mt-1">{stylist.specialty}</p>
+
+          
+          <div class="mt-8 text-center">
+            <h3 class="text-2xl font-serif font-bold text-[#2E1F14]">
+              {stylist.name}
+            </h3>
+            <p class="mt-1 text-xs uppercase tracking-widest font-semibold text-[#936C4B]">
+              {stylist.specialty}
+            </p>
+
+            
+            <button
+              class="mt-4 text-sm font-semibold text-[#936C4B] underline underline-offset-4 lg:hidden"
+              on:click={() => openModal(stylist)}
+            >
+              View info
+            </button>
           </div>
-				</div>
-			{/each}
-		</div>
-	</div>
+        </div>
+      {/each}
+    </div>
+  </div>
+
+  
+  {#if selectedStylist}
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+      <div class="bg-[#F6F2ED] rounded-[2.5rem] max-w-md w-full p-6 relative shadow-2xl">
+
+        <button
+          class="absolute top-4 right-5 text-[#6B5A4A] hover:text-[#2E1F14]"
+          on:click={closeModal}
+        >
+          ✕
+        </button>
+
+        <img
+          src={getStylistImage(selectedStylist.image)}
+          alt={selectedStylist.name}
+          class="w-full h-72 object-cover object-top rounded-2xl mb-6"
+        />
+
+        <h3 class="text-2xl font-serif font-bold text-[#2E1F14]">
+          {selectedStylist.name}
+        </h3>
+
+        <p class="mt-1 text-xs uppercase tracking-widest font-semibold text-[#936C4B]">
+          {selectedStylist.specialty} · {selectedStylist.experience}+ yrs
+        </p>
+
+        <p class="mt-5 text-sm text-[#6B5A4A] leading-relaxed">
+          {selectedStylist.bio}
+        </p>
+
+        <div class="mt-8">
+          <PrimaryButton href="/book" class="w-full">
+            Book Appointment
+          </PrimaryButton>
+        </div>
+      </div>
+    </div>
+  {/if}
 </section>

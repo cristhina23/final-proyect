@@ -2,7 +2,7 @@
  import AboutImage from '$lib/assets/about.jpg';
 </script>
 
-<section class="py-18 bg-white overflow-hidden">
+<section class="py-18 bg-white overflow-hidden" id="about">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
      
@@ -56,7 +56,7 @@
         </dl>
       </div>
 
-      <!-- Image (Right) -->
+     
       <div class="order-2 lg:order-1 flex justify-center ">
         <div class="relative w-full max-w-lg aspect-4/5 lg:aspect-square">
            <div class="absolute inset-0 bg-primary/20 rounded-tr-[100px] rounded-bl-[100px] transform translate-x-4 translate-y-4 -z-10"></div>

@@ -15,35 +15,32 @@
 			{#each services as service}
 				<div class="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-(--muted) bg-white hover:border-transparent p-6 shadow-sm hover:shadow-xl transition-all duration-300">
                     
-            <!-- Hover Background Image -->
-            <div class=" absolute inset-0 z-0 bg-cover bg-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
-                  style="background-image: url({getServiceImage(service.image)})">
+            
+          <div class=" absolute inset-0 z-0 bg-cover bg-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
+            style="background-image: url({getServiceImage(service.image)})">
             </div>
             
-            <!-- Hover Overlay -->
-            <div class="absolute inset-0 z-0 bg-black/60
-    opacity-100 md:opacity-0
-    md:group-hover:opacity-100
-    transition-opacity duration-500"></div>
+            
+          <div class="absolute inset-0 z-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
 
-            <!-- Content -->
-            <div class="relative z-10 flex flex-col justify-between h-full">
-                <div>
-                    <h3 class="text-xl font-semibold
+            
+          <div class="relative z-10 flex flex-col justify-between h-full">
+              <div>
+                  <h3 class="text-xl font-semibold
   text-primary md:text-primary
   md:group-hover:text-white">{service.title}</h3>
-                    <p class="  mt-4
+                  <p class="  mt-4
   text-white md:text-gray-600
   md:group-hover:text-white">{service.duration}</p>
-                    <p class=" mt-4
+                  <p class=" mt-4
   text-white md:text-gray-600
   md:group-hover:text-white">{service.description}</p>
-                </div>
-                <div class="mt-6 flex items-center justify-between">
-                    <span class="text-lg font-bold text-white md:text-foreground transition-colors duration-300 group-hover:text-white">{service.price}</span>
-                    <a href="/book" class="text-sm font-semibold text-primary hover:underline group-hover:text-primary border border-primary px-2 py-1 rounded-xl">Book &rarr;</a>
-                </div>
-            </div>
+              </div>
+              <div class="mt-6 flex items-center justify-between">
+                  <span class="text-lg font-bold text-white md:text-foreground transition-colors duration-300 group-hover:text-white">{service.price}</span>
+                  <a href="/book" class="text-sm font-semibold text-primary hover:underline group-hover:text-primary border border-primary px-2 py-1 rounded-xl">Book &rarr;</a>
+              </div>
+          </div>
 				</div>
 			{/each}
 		</div>

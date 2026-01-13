@@ -7,7 +7,8 @@
 		text = 'text-white', 
 		padding = 'px-8 py-2',
 		class: className = '',
-		children 
+		children, 
+        target = '',
 	}: { 
 		type?: 'button' | 'submit' | 'reset';
 		disabled?: boolean;
@@ -17,6 +18,7 @@
 		padding?: string;
 		class?: string;
 		children?: any;
+        target?: string;
 	} = $props();
 
     let baseClasses = $derived(`
@@ -34,8 +36,8 @@
 </script>
 
 {#if href}
-    <a {href} class={baseClasses}>
-        <!-- Overlay shine -->
+    <a {href} {target} class={baseClasses}>
+        
         <span
             class="
             absolute inset-0 scale-150 bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-0 rotate-45
@@ -52,7 +54,7 @@
     </a>
 {:else}
     <button {type} {disabled} class={baseClasses}>
-        <!-- Overlay shine -->
+        
         <span
             class="
             absolute inset-0 scale-150 bg-gradient-to-r from-transparent via-white/80 to-transparent opacity-0 rotate-45

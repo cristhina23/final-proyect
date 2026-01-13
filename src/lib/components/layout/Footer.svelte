@@ -5,7 +5,7 @@
 <footer class="bg-foreground text-white mt-auto">
     <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
-            <!-- Brand Info -->
+           
             <div class="col-span-1 md:col-span-1">
                 <span class="text-2xl font-bold font-serif text-primary">Beauty  <span class="text-secondary">Care</span></span>
                 <p class="mt-4 text-sm text-gray-200">
@@ -13,7 +13,7 @@
                 </p>
             </div>
 
-            <!-- Quick Links -->
+            
             <div>
                 <h3 class="text-sm font-semibold uppercase text-secondary">Nav</h3>
                 <ul class="mt-4 space-y-2">
@@ -24,7 +24,7 @@
                 </ul>
             </div>
 
-            <!-- Hours -->
+            
             <div>
                 <h3 class="text-sm font-semibold uppercase text-secondary">Hours</h3>
                 <ul class="mt-4 space-y-2 text-gray-200">

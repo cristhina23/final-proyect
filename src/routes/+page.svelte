@@ -5,8 +5,11 @@
   import Services from '$lib/components/landing/Services.svelte';
   import Stylists from '$lib/components/landing/Stylists.svelte';
   import About from '$lib/components/landing/About.svelte';
-  import CTA from '$lib/components/landing/CTA.svelte';
   import Promotion from '$lib/components/landing/Promotion.svelte';
+  import Contact from '$lib/components/landing/Contact.svelte';
+  import CTA from '$lib/components/landing/CTA.svelte';
+  import Testimonials from '$lib/components/landing/Testimonials.svelte';
+ 
 
    
     
@@ -30,6 +33,9 @@
 
 <Stylists />
 
+<Testimonials />
 
-<!-- <CTA /> -->
+<Contact />
+
+<CTA />
 

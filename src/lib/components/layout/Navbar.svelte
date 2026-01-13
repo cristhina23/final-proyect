@@ -10,29 +10,29 @@
 
 <nav class="sticky top-0 z-50 w-full border-b border-gray-200 bg-background/80 backdrop-blur-md">
 	<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-		<!-- Logo -->
+		
 		<div class="flex items-center">
 			<a href="/" class="w-40">
 				<img src="{logo}" alt="logo of the app">
 			</a>
 		</div>
 
-		<!-- Desktop Navigation -->
+		
 		<div class="hidden md:block">
 			<div class="ml-10 flex items-baseline space-x-8">
 				<a href="/" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+				<a href="#about" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
 				<a href="#services" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Services</a>
 				<a href="#stylists" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Stylists</a>
-				<a href="#about" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
 			</div>
 		</div>
 
-		<!-- CTA Button -->
+		
 		<div class="hidden md:block">
 			<PrimaryButton href="/book">Book Now</PrimaryButton>
 		</div>
 
-		<!-- Mobile menu button -->
+		
 		<div class="-mr-2 flex md:hidden">
 			<button
 				type="button"
@@ -55,14 +55,14 @@
 		</div>
 	</div>
 
-	<!-- Mobile menu -->
+	
 	{#if isMenuOpen}
 		<div class="md:hidden" id="mobile-menu">
 			<div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
 				<a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Home</a>
+				<a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">About</a>
 				<a href="#services" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Services</a>
 				<a href="#stylists" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Stylists</a>
-				<a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">About</a>
 				<div class="mt-4 px-3">
 					<PrimaryButton href="/book" class="w-full justify-center">Book Now</PrimaryButton>
 				</div>

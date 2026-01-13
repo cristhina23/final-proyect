@@ -4,7 +4,7 @@
   import hero3 from "../../assets/hero3.png";
 
 </script>
-<section class="relative bg-(image:--camel-gradient) flex flex-col lg:flex-row overflow-hidden min-h-[530px]">
+<section class="relative bg-(image:--camel-gradient) flex flex-col lg:flex-row overflow-hidden md:h-[calc(100vh-4rem)]">
 	<div class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-12 lg:py-20 ">
 		<div class="max-w-xl">
 			<h1 class="text-4xl font-bold tracking-tight text-text-primary sm:text-6xl font-serif">
