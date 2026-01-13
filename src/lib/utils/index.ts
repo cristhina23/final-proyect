@@ -1,15 +1,19 @@
 export function generateTimeSlots(
   openHour = 9,
-  closeHour = 19,
-  stepMinutes = 30
+  closeHour = 18,
+  interval = 30
 ): string[] {
   const slots: string[] = [];
 
   for (let h = openHour; h < closeHour; h++) {
-    for (let m = 0; m < 60; m += stepMinutes) {
-      slots.push(
-        `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`
-      );
+    for (let m = 0; m < 60; m += interval) {
+      if (h === closeHour - 1 && m > 0) break;
+
+      const hour = h % 12 || 12;
+      const period = h < 12 ? "AM" : "PM";
+      const minutes = m.toString().padStart(2, "0");
+
+      slots.push(`${hour}:${minutes} ${period}`);
     }
   }
 

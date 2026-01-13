@@ -1,151 +1,174 @@
 <script lang="ts">
   import * as Dialog from "$lib/components/ui/dialog";
-  import { Input } from "$lib/components/ui/input";
-  import { Textarea } from "$lib/components/ui/textarea";
-  import * as Select from "$lib/components/ui/select";
-  import { Calendar } from "$lib/components/ui/calendar";
   import { Alert, AlertDescription } from "$lib/components/ui/alert";
-  import { getLocalTimeZone, type DateValue, today } from "@internationalized/date";
-
+  import { Calendar } from "$lib/components/ui/calendar";
+  import { Separator } from "$lib/components/ui/separator";
+  import PrimaryButton from "$lib/components/ui/PrimaryButton.svelte";
   import { services } from "$lib/data/services";
   import { stylists } from "$lib/data/stylists";
-  import PrimaryButton from "../ui/PrimaryButton.svelte";
   import { generateTimeSlots } from "$lib/utils/index";
-  import { CLOSE_HOUR, OPEN_HOUR, STEP_MINUTES } from "$lib/data";
+  import { OPEN_HOUR, CLOSE_HOUR, STEP_MINUTES } from "$lib/data";
+  import { today, getLocalTimeZone, type DateValue } from "@internationalized/date";
 
-  const timeSlots = generateTimeSlots(
-  OPEN_HOUR,
-  CLOSE_HOUR,
-  STEP_MINUTES
-);
+  export let open = false;
 
-
-  let { open = $bindable(false) } = $props();
   const minDate = today(getLocalTimeZone());
+  const allSlots = generateTimeSlots(OPEN_HOUR, CLOSE_HOUR, STEP_MINUTES);
 
+  let loading = false;
+  let success = false;
 
-  let success = $state(false);
-  let loading = $state(false);
-
-  let form = $state({
+  let form = {
     name: "",
     phone: "",
     service: "",
-    stylist: "Any stylist",
+    stylist: "",
     date: undefined as DateValue | undefined,
     time: "",
     notes: ""
-  });
+  };
+
+  $: availableSlots = form.date ? allSlots : [];
 
   async function submitBooking() {
+    if (!form.name || !form.phone || !form.service || !form.date || !form.time) return;
 
-    // TODO: Implement booking logic
     loading = true;
-
-    await new Promise((r) => setTimeout(r, 1500));
-
+    await new Promise(r => setTimeout(r, 1000));
     loading = false;
     success = true;
 
     setTimeout(() => {
       success = false;
       open = false;
+      form = { name: "", phone: "", service: "", stylist: "", date: undefined, time: "", notes: "" };
     }, 2000);
   }
 </script>
 
 <Dialog.Root bind:open>
-  <Dialog.Content class="sm:max-w-[520px] rounded-2xl max-h-[90vh] overflow-y-auto">
+  <Dialog.Content class="sm:max-w-md w-full max-h-[90vh] overflow-y-auto rounded-2xl bg-[var(--background)] p-6 shadow-lg">
     <Dialog.Header>
-      <Dialog.Title class="text-2xl font-serif">
+      <Dialog.Title class="text-center text-2xl font-serif text-[var(--foreground)]">
         Book your appointment
       </Dialog.Title>
-      <Dialog.Description>
-        Fill in the details and we’ll contact you shortly.
-      </Dialog.Description>
     </Dialog.Header>
 
     {#if success}
-      <Alert class="mt-6 bg-green-50 border-green-200 flex items-start gap-3">
-        <svg
-          class="h-5 w-5 text-green-600 mt-0.5 shrink-0"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M5 13l4 4L19 7"
-          />
-        </svg>
-        <AlertDescription class="text-green-700">
-           Your appointment was scheduled successfully.  
-          We’ll contact you shortly.
+      <Alert class="mt-6 border-l-4 border-green-500 bg-green-50 text-green-800">
+        <AlertDescription>
+          Your message has been sent. We will contact you shortly.
         </AlertDescription>
       </Alert>
     {:else}
-      <div class="grid gap-5 mt-6">
-        <Input placeholder="Client name" bind:value={form.name} disabled={loading} />
-        <Input placeholder="Phone number" type="tel" bind:value={form.phone} disabled={loading} />
+      <div class="space-y-4 mt-6">
 
-        <Select.Root bind:value={form.service} disabled={loading}>
-          <Select.Trigger>{form.service || "Select service"}</Select.Trigger>
-          <Select.Content>
-            {#each services as service}
-              <Select.Item value={service.title}>{service.title}</Select.Item>
-            {/each}
-          </Select.Content>
-        </Select.Root>
-
-        <Select.Root bind:value={form.stylist} disabled={loading}>
-          <Select.Trigger>{form.stylist}</Select.Trigger>
-          <Select.Content>
-            <Select.Item value="Any stylist">Any stylist</Select.Item>
-            {#each stylists as stylist}
-              <Select.Item value={stylist.name}>{stylist.name}</Select.Item>
-            {/each}
-          </Select.Content>
-        </Select.Root>
-
-        <div class="border rounded-xl p-2">
-          <Calendar bind:value={form.date} minValue={minDate} />
-        </div>
-
-        <Select.Root bind:value={form.time} disabled={!form.date || loading}>
-  <Select.Trigger>
-    {form.time || "Select time"}
-  </Select.Trigger>
-
-  <Select.Content>
-    {#each timeSlots as slot}
-      <Select.Item value={slot}>
-        {slot}
-      </Select.Item>
-    {/each}
-  </Select.Content>
-</Select.Root>
-
-
-        <Textarea
-          rows="3"
-          placeholder="Additional comments"
-          bind:value={form.notes}
+        <!-- NAME -->
+        <input
+          type="text"
+          placeholder="Full Name"
+          bind:value={form.name}
           disabled={loading}
+          class="w-full rounded-xl border-[var(--secondary)] px-4 py-3 bg-[var(--muted)] text-[var(--foreground)] placeholder:text-[var(--foreground)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
         />
 
-        <PrimaryButton class="rounded-full w-full" on:click={submitBooking} disabled={loading}>
+        <!-- PHONE -->
+        <input
+          type="tel"
+          placeholder="Phone"
+          bind:value={form.phone}
+          disabled={loading}
+          class="w-full rounded-xl border-[var(--secondary)] px-4 py-3 bg-[var(--muted)] text-[var(--foreground)] placeholder:text-[var(--foreground)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+        />
+
+        <Separator />
+
+        <!-- SERVICE -->
+        <div class="relative">
+          <select
+            bind:value={form.service}
+            disabled={loading}
+            class="w-full rounded-xl border-[var(--secondary)] px-4 py-3 bg-[var(--muted)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+          >
+            <option value="" disabled selected>Select your treatment</option>
+            {#each services as s}
+              <option value={s.title}>{s.title}</option>
+            {/each}
+          </select>
+        </div>
+
+        <!-- STYLIST -->
+        <div class="relative">
+          <select
+            bind:value={form.stylist}
+            disabled={loading}
+            class="w-full rounded-xl border-[var(--secondary)] px-4 py-3 bg-[var(--muted)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+          >
+            <option value="" disabled selected>Select stylist</option>
+            {#each stylists as st}
+              <option value={st.name}>{st.name}</option>
+            {/each}
+          </select>
+        </div>
+
+        <Separator />
+
+        <!-- DATE -->
+        <div class="border-[var(--secondary)] rounded-xl p-2 flex justify-center bg-[var(--muted)]">
+          <Calendar
+            value={form.date}
+            onValueChange={(v: DateValue | undefined) => form.date = v}
+            minValue={minDate}
+          />
+        </div>
+
+        <Separator />
+
+        <!-- TIME -->
+        <select
+          bind:value={form.time}
+          disabled={!form.date || loading}
+          class="w-full rounded-xl border-[var(--secondary)] px-4 py-3 bg-[var(--muted)] text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+        >
+          <option value="" disabled selected>Select time</option>
+          {#each availableSlots as slot}
+            <option value={slot}>{slot}</option>
+          {/each}
+        </select>
+
+        <!-- NOTES -->
+        <textarea
+          placeholder="Additional comments (optional)"
+          bind:value={form.notes}
+          disabled={loading}
+          class="w-full rounded-xl border-[var(--secondary)] px-4 py-3 min-h-[80px] bg-[var(--muted)] text-[var(--foreground)] placeholder:text-[var(--foreground)]/50 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+        />
+
+        <!-- SUBMIT -->
+        <PrimaryButton
+          class="w-full mt-2 rounded-full"
+          disabled={!form.name || !form.phone || !form.service || !form.date || !form.time || loading}
+          on:click={submitBooking}
+        >
           {#if loading}
-            <span class="flex items-center gap-2">
-              <span class="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+            <span class="flex items-center justify-center gap-2">
+              <span class="h-4 w-4 border-2 border-[var(--primary-foreground)] border-t-transparent rounded-full animate-spin"></span>
               Sending…
             </span>
           {:else}
-            Schedule appointment
+            Schedule Appointment
           {/if}
         </PrimaryButton>
+
       </div>
     {/if}
   </Dialog.Content>
 </Dialog.Root>
+
+<style>
+  @media (max-width: 640px) {
+    .sm\:max-w-md {
+      max-width: 95%;
+    }
+  }
+</style>
