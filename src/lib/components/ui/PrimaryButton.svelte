@@ -9,7 +9,6 @@
 		class: className = '',
 		children, 
         target = '',
-        ...restProps
 	}: { 
 		type?: 'button' | 'submit' | 'reset';
 		disabled?: boolean;
@@ -20,7 +19,6 @@
 		class?: string;
 		children?: any;
         target?: string;
-        [key: string]: any;
 	} = $props();
 
     let baseClasses = $derived(`
@@ -38,7 +36,7 @@
 </script>
 
 {#if href}
-    <a {href} {target} class={baseClasses} {...restProps}>
+    <a {href} {target} class={baseClasses}>
         
         <span
             class="
@@ -55,7 +53,7 @@
         </span>
     </a>
 {:else}
-    <button {type} {disabled} class={baseClasses} {...restProps}>
+    <button {type} {disabled} class={baseClasses}>
         
         <span
             class="
