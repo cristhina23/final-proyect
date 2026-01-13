@@ -1,7 +1,12 @@
 <script lang="ts">
 	import PrimaryButton from '$lib/components/ui/PrimaryButton.svelte';
+	import BookingModal from '$lib/components/landing/BookingModal.svelte';
 	import logo from '$lib/assets/logo.png';
-	let isMenuOpen = false;
+
+	let isMenuOpen = $state(false);
+
+	let openBooking = $state(false);
+	
 
 	function toggleMenu() {
 		isMenuOpen = !isMenuOpen;
@@ -29,7 +34,7 @@
 
 		
 		<div class="hidden md:block">
-			<PrimaryButton href="/book">Book Now</PrimaryButton>
+			<PrimaryButton on:click={() => openBooking = true}>Book Now</PrimaryButton>
 		</div>
 
 		
@@ -70,3 +75,5 @@
 		</div>
 	{/if}
 </nav>
+
+<BookingModal bind:open={openBooking} />

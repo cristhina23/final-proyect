@@ -3,6 +3,9 @@
   import SecondaryButton from "../ui/SecondaryButton.svelte";
   import hero3 from "../../assets/hero3.png";
 
+	let open = $state(false);
+	
+
 </script>
 <section class="relative bg-(image:--camel-gradient) flex flex-col lg:flex-row overflow-hidden md:h-[calc(100vh-4rem)]">
 	<div class="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 pt-12 lg:py-20 ">
@@ -15,7 +18,7 @@
 				Our expert stylists are dedicated to making you look and feel your absolute best.
 			</p>
 			<div class="mt-10 flex flex-col lg:flex-row  items-center gap-6 lg:gap-x-6">
-				<PrimaryButton bg="bg-foreground" href="/book">Book Appointment</PrimaryButton>
+				<PrimaryButton bg="bg-foreground" on:click={() => open = true}>Book Appointment</PrimaryButton>
 				<SecondaryButton bg="bg-transparent " class="border border-foreground" href="#services">View Services</SecondaryButton>
 			</div>
 		</div>
