@@ -38,8 +38,11 @@
         <PrimaryButton href="/book" bg="bg-foreground">Book Appointment</PrimaryButton>
 
         
-        <span class="text-xs text-[#9a8b7b]">
-          ✔ No commitment · ✔ Instant confirmation
+        <span class="text-xs flex gap-2 items-center text-[#9a8b7b]">
+          
+           No commitment - 
+           
+           Instant confirmation
         </span>
       </div>
     </div>
