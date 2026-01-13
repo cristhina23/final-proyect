@@ -13,7 +13,7 @@
 
   <div class="relative mx-auto max-w-2xl px-6">
     <div
-      class="rounded-2xl p-10 text-center shadow-xl backdrop-blur-md md:p-14"
+      class="rounded-2xl p-10 text-center shadow-xl backdrop-blur-md md:p-14 border border-primary/70" 
     >
       
       <span
