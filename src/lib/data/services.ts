@@ -1,5 +1,6 @@
 export const services = [
   {
+    id: 1,
     title: 'Haircut & Styling',
     price: '$50+',
     duration: '60 min',
@@ -7,6 +8,7 @@ export const services = [
     image: '$lib/assets/services/service-1.jpg'
   },
   {
+    id: 2,
     title: 'Color & Highlights',
     price: '$120+',
     duration: '120 min',
@@ -14,6 +16,7 @@ export const services = [
     image: '$lib/assets/services/service-2.jpg'
   },
   {
+    id: 3,
     title: 'Hair Treatments',
     price: '$70+',
     duration: '60 min',
@@ -21,6 +24,7 @@ export const services = [
     image: '$lib/assets/services/service-3.jpg'
   },
   {
+    id: 4,
     title: 'Blow Dry & Finish',
     price: '$35+',
     duration: '45 min',
@@ -28,6 +32,7 @@ export const services = [
     image: '$lib/assets/services/service-4.jpg'   
   },
   {
+    id: 5,
     title: 'Manicure & Pedicure',
     price: '$40+',
     duration: '45 min',
@@ -35,6 +40,7 @@ export const services = [
     image: '$lib/assets/services/service-5.jpg'   
   },
   {
+    id: 6,
     title: 'Facial Treatments',
     price: '$80+',
     duration: '60 min',
@@ -42,6 +48,7 @@ export const services = [
     image: '$lib/assets/services/service-7.jpg'    
   },
   {
+    id: 7,
     title: 'Eyebrow & Lash Services',
     price: '$30+',
     duration: '30 min',
@@ -49,6 +56,7 @@ export const services = [
     image: '$lib/assets/services/service-8.jpg'   
   },
   {
+    id: 8,
     title: 'Makeup Services',
     price: '$90+',
     duration: '75 min',
