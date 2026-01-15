@@ -12,7 +12,11 @@
   import { OPEN_HOUR, CLOSE_HOUR, STEP_MINUTES } from "$lib/data/landing";
   import PrimaryButton from "../ui/PrimaryButton.svelte";
 
-  let { open = $bindable(false) } = $props();
+  let {
+    open = $bindable(false),
+    preselectedService = "",
+    preselectedStylist = ""
+  } = $props();
 
   let success = $state(false);
   let loading = $state(false);
@@ -27,6 +31,18 @@
     date: "",
     time: "",
     notes: ""
+  });
+
+  $effect(() => {
+    if (open) {
+      if (preselectedService) {
+        form.service = preselectedService;
+      }
+
+      if (preselectedStylist) {
+        form.stylist = preselectedStylist;
+      }
+    }
   });
 
 
@@ -90,7 +106,9 @@
 <Toast bind:show={showToast} message="Appointment scheduled successfully! We'll contact you shortly." />
 
 <Dialog.Root bind:open>
-  <Dialog.Content class="sm:max-w-[560px] rounded-3xl max-h-[90vh] overflow-hidden border-2 border-primary/20 shadow-2xl modal-content p-0">
+  <Dialog.Content class="sm:max-w-[560px] rounded-3xl max-h-[90vh] overflow-hidden
+         border-2 border-primary/20 shadow-2xl modal-content p-0
+         flex flex-col">
     
     <div class="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
     
@@ -106,7 +124,7 @@
       </Dialog.Header>
     </div>
 
-    <div class="relative overflow-y-auto max-h-[calc(85vh-220px)] px-6 styled-scrollbar">
+    <div class="relative flex-1 overflow-y-auto px-6 styled-scrollbar">
       {#if success && submittedData}
         
         <div class="py-6">
@@ -317,7 +335,8 @@
 
       
     {#if !success}
-      <div class="relative px-6 py-6 border-t border-primary/10 bg-background">
+      <div class="sticky bottom-0 px-6 py-4 border-t border-primary/10
+         bg-background/95 backdrop-blur-md">
         <PrimaryButton 
           class="w-full"
           on:click={submitBooking} 
