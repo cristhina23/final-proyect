@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import ctaBg from "../../assets/cta-bg.png";
 
   const steps = [
     { step: 1, title: 'Choose Service', desc: 'Browse our menu of premium treatments.' },
@@ -26,7 +27,7 @@
   });
 </script>
 
-<section class="py-18 bg-white">
+<section class="py-24" style="background-image: url('{ctaBg}');">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="text-center">
       <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-serif">
@@ -38,13 +39,13 @@
     </div>
 
     <div class="mt-16 relative">
-      <!-- Connecting Line (Desktop) -->
+     
       <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-muted -z-10"></div>
 
       <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
         {#each steps as item, i}
           <div
-            class="step flex flex-col items-center text-center bg-white px-4"
+            class="step flex flex-col items-center text-center  px-4"
             style="--delay: {i * 0.4}s"
           >
             <div class="relative h-24 w-24 mb-6 flex items-center justify-center">

@@ -1,6 +1,18 @@
 <script>
-    import PrimaryButton from "../ui/PrimaryButton.svelte";
-    import ctaBg from "../../assets/cta-bg.png";
+  import PrimaryButton from "../ui/PrimaryButton.svelte";
+  import ctaBg from "../../assets/cta-bg.png";
+
+  import BookingModal from '$lib/components/landing/BookingModal.svelte';
+
+	let isMenuOpen = $state(false);
+
+	let openBooking = $state(false);
+	
+
+	function toggleMenu() {
+		isMenuOpen = !isMenuOpen;
+	}
+
 </script>
 
 <section
@@ -35,7 +47,7 @@
 
       
       <div class="flex flex-col items-center gap-4">
-        <PrimaryButton href="/book" bg="bg-foreground">Book Appointment</PrimaryButton>
+        <PrimaryButton on:click={() => openBooking = true} bg="bg-foreground">Book Appointment</PrimaryButton>
 
         
         <span class="text-xs flex gap-2 items-center text-[#9a8b7b]">
@@ -48,3 +60,5 @@
     </div>
   </div>
 </section>
+
+<BookingModal bind:open={openBooking} />

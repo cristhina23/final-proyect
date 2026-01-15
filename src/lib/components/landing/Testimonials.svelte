@@ -9,11 +9,11 @@
     
     <div class="text-center max-w-3xl mx-auto mb-16">
       <span class="inline-block px-4 py-2 mb-4 text-sm font-medium tracking-wider uppercase bg-card text-primary rounded-full">
-        Opiniones reales
+        Real Testimonials
       </span>
 
       <h2 class="font-serif text-4xl md:text-5xl font-bold text-foreground mb-6">
-        Experiencias que hablan por sí solas
+        Experiences speak for themselves
       </h2>
 
       <div class="flex items-center justify-center gap-2 mb-4">
@@ -32,7 +32,7 @@
       </div>
 
       <p class="text-muted-foreground">
-        Valoraciones verificadas de clientas que confiaron en nuestro trabajo
+        Verified reviews from clients who trusted our work
       </p>
     </div>
 
@@ -114,7 +114,7 @@
           <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
         </svg>
 
-        <span>Ver todas las reseñas en Google</span>
+        <span>View all reviews on Google</span>
         </div>
       </PrimaryButton>
     </div>

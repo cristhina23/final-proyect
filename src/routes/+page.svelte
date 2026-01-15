@@ -9,6 +9,7 @@
   import Contact from '$lib/components/landing/Contact.svelte';
   import CTA from '$lib/components/landing/CTA.svelte';
   import Testimonials from '$lib/components/landing/Testimonials.svelte';
+  import Toast from '$lib/components/ui/Toast.svelte';
  
 
    
