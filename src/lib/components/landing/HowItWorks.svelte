@@ -27,56 +27,63 @@
   });
 </script>
 
-<section class="py-24" style="background-image: url('{ctaBg}');">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="text-center">
-      <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-serif">
-        How It Works
-      </h2>
-      <p class="mt-4 text-lg text-gray-600">
-        Your journey to beauty in 4 simple steps.
-      </p>
-    </div>
 
-    <div class="mt-16 relative">
-     
-      <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-muted -z-10"></div>
 
-      <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
-        {#each steps as item, i}
-          <div
-            class="step flex flex-col items-center text-center  px-4"
-            style="--delay: {i * 0.4}s"
-          >
-            <div class="relative h-24 w-24 mb-6 flex items-center justify-center">
-              <svg
-                class="absolute inset-0 step-circle"
-                viewBox="0 0 120 120"
-              >
-                <circle
-                  cx="60"
-                  cy="60"
-                  r="54"
-                  fill="none"
-                  stroke="var(--primary)"
-                  stroke-width="4"
-                />
-              </svg>
+<section class="py-24 relative bg-cover"
+    style="background-image: url('{ctaBg}')">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-serif">
+          How It Works
+        </h2>
+        <p class="mt-4 text-lg text-gray-600">
+          Your journey to beauty in 4 simple steps.
+        </p>
+      </div>
 
-              <span class="relative z-10 text-3xl font-bold text-primary">
-                {item.step}
-              </span>
+      <div class="mt-16 relative">
+      
+        <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-muted -z-10"></div>
+
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+          {#each steps as item, i}
+            <div
+              class="step flex flex-col items-center text-center  px-4"
+              style="--delay: {i * 0.4}s"
+            >
+              <div class="relative h-24 w-24 mb-6 flex items-center justify-center">
+                <svg
+                  class="absolute inset-0 step-circle text-primary"
+                  viewBox="0 0 120 120"
+                >
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="54"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  />
+
+                </svg>
+
+                <span class="relative z-10 text-3xl font-bold text-primary">
+                  {item.step}
+                </span>
+              </div>
+
+              <h3 class="text-lg font-bold text-foreground">
+                {item.title}
+              </h3>
+              <p class="mt-2 text-gray-600">
+                {item.desc}
+              </p>
             </div>
-
-            <h3 class="text-lg font-bold text-foreground">
-              {item.title}
-            </h3>
-            <p class="mt-2 text-gray-600">
-              {item.desc}
-            </p>
-          </div>
-        {/each}
+          {/each}
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+
+
+

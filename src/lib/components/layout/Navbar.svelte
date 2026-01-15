@@ -42,7 +42,7 @@
 			<button
 				type="button"
 				onclick={toggleMenu}
-				class="inline-flex items-center justify-center rounded-md p-2 text-foreground hover:bg-muted hover:text-primary focus:outline-none"
+				class="inline-flex items-center justify-center rounded-md p-2 text-foreground   focus:outline-none"
 				aria-controls="mobile-menu"
 				aria-expanded={isMenuOpen}
 			>
@@ -62,14 +62,14 @@
 
 	
 	{#if isMenuOpen}
-		<div class="md:hidden" id="mobile-menu">
-			<div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-				<a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Home</a>
-				<a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">About</a>
-				<a href="#services" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Services</a>
-				<a href="#stylists" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-primary">Stylists</a>
+		<div class=" absolute z-50 bg-white/90 backdrop-blur-sm w-full md:hidden" id="mobile-menu">
+			<div class="space-y-1 px-8 pb-3 pt-2 sm:px-3">
+				<a href="/" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-[#6b5a4a] hover:shadow-md hover:shadow-primary-100	 transition-colors">Home</a>
+				<a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-[#6b5a4a] hover:shadow-md hover:shadow-primary-100 transition-colors">About</a>
+				<a href="#services" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-[#6b5a4a] hover:shadow-md hover:shadow-primary-100 transition-colors">Services</a>
+				<a href="#stylists" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-[#6b5a4a] hover:shadow-md hover:shadow-primary-100 transition-colors">Stylists</a>
 				<div class="mt-4 px-3">
-					<PrimaryButton href="/book" class="w-full justify-center">Book Now</PrimaryButton>
+					<PrimaryButton on:click={() => openBooking = true} class="w-full justify-center">Book Now</PrimaryButton>
 				</div>
 			</div>
 		</div>

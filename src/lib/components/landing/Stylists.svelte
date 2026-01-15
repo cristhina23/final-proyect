@@ -3,25 +3,36 @@
   import { stylists } from "$lib/data";
   import { getStylistImage } from "$lib/utils/imageResolver";
   import PrimaryButton from "../ui/PrimaryButton.svelte";
+  import BookingModal from "./BookingModal.svelte";
 
   let selectedStylist = null;
+  let openBooking = false;
+  let preselectedStylistName = "";
 
-  const openModal = (stylist) => selectedStylist = stylist;
-  const closeModal = () => selectedStylist = null;
+  const openInfoModal = (stylist) => {
+    selectedStylist = stylist;
+  };
+
+  const closeInfoModal = () => {
+    selectedStylist = null;
+  };
+
+  const openBookingWithStylist = (stylist) => {
+    preselectedStylistName = stylist.name;
+    openBooking = true;
+  };
 </script>
 
 <section
   id="stylists"
   class="relative py-28 overflow-hidden bg-[#F6F2ED]"
 >
-  
+  <!-- background blobs -->
   <div class="absolute -top-40 -left-40 w-[420px] h-[420px] bg-[#D9B79A]/40 rounded-full blur-[140px]"></div>
   <div class="absolute top-1/3 -right-40 w-[380px] h-[380px] bg-[#C8A180]/40 rounded-full blur-[130px]"></div>
   <div class="absolute bottom-0 left-1/3 w-[420px] h-[420px] bg-[#EFE1D1]/60 rounded-full blur-[160px]"></div>
 
   <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-    
     <div class="text-center mb-20">
       <span class="inline-block mb-4 px-4 py-1.5 text-xs tracking-widest uppercase font-semibold rounded-full bg-[#936C4B]/10 text-[#936C4B]">
         Our Professional Team
@@ -34,45 +45,39 @@
       </p>
     </div>
 
-    
-    <div class="grid grid-cols-2  gap-16 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="grid grid-cols-2 gap-16 lg:grid-cols-4">
       {#each stylists as stylist}
         <div class="group">
-
-          
           <div class="relative aspect-[3/4] rounded-[2.5rem] overflow-hidden shadow-xl transition-transform duration-700 group-hover:-translate-y-2">
-
-            
-            <div class=" hidden md:block absolute top-5 left-5 z-10">
-              <span class="px-4 py-1.5 text-xs font-semibold rounded-full bg-[#936C4B]/90 text-white backdrop-blur-md shadow-lg">
+            <div class="hidden md:block absolute top-5 left-5 z-10">
+              <span class="px-4 py-1.5 text-xs font-semibold rounded-full bg-[#936C4B]/90 text-white">
                 {stylist.experience}+ yrs
               </span>
             </div>
 
-            
             <img
               src={getStylistImage(stylist.image)}
               alt={stylist.name}
               class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
             />
 
-            
-            <div
-              class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-[#2E1F14]/90 via-[#6B4A2F]/70 to-transparent hidden lg:flex flex-col justify-end p-8"
-            >
+            <!-- desktop overlay -->
+            <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-[#2E1F14]/90 via-[#6B4A2F]/70 to-transparent hidden lg:flex flex-col justify-end p-8">
               <p class="text-xs uppercase tracking-widest text-[#EAD9C8] mb-2">
                 {stylist.specialty}
               </p>
               <p class="text-white text-sm leading-relaxed mb-6 line-clamp-3">
                 {stylist.bio}
               </p>
-              <PrimaryButton href="/book" class="w-full text-sm">
-                Book with {stylist.name.split(' ')[0]}
+              <PrimaryButton
+                class="w-full text-sm"
+                on:click={() => openBookingWithStylist(stylist)}
+              >
+                Book with {stylist.name.split(" ")[0]}
               </PrimaryButton>
             </div>
           </div>
 
-          
           <div class="mt-8 text-center">
             <h3 class="text-2xl font-serif font-bold text-[#2E1F14]">
               {stylist.name}
@@ -81,10 +86,10 @@
               {stylist.specialty}
             </p>
 
-            
+            <!-- mobile -->
             <button
               class="mt-4 text-sm font-semibold text-[#936C4B] underline underline-offset-4 lg:hidden"
-              on:click={() => openModal(stylist)}
+              on:click={() => openInfoModal(stylist)}
             >
               View info
             </button>
@@ -94,14 +99,14 @@
     </div>
   </div>
 
-  
-  {#if selectedStylist}
+  <!-- Mobile info modal -->
+  {#if selectedStylist && !openBooking}
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4">
       <div class="bg-[#F6F2ED] rounded-[2.5rem] max-w-md w-full p-6 relative shadow-2xl">
-
         <button
+          aria-label="Close"
           class="absolute top-4 right-5 text-[#6B5A4A] hover:text-[#2E1F14]"
-          on:click={closeModal}
+          on:click={closeInfoModal}
         >
           ✕
         </button>
@@ -125,7 +130,14 @@
         </p>
 
         <div class="mt-8">
-          <PrimaryButton href="/book" class="w-full">
+          <PrimaryButton
+            class="w-full"
+            on:click={() => {
+              preselectedStylistName = selectedStylist.name;
+              openBooking = true;
+              closeInfoModal();
+            }}
+          >
             Book Appointment
           </PrimaryButton>
         </div>
@@ -133,3 +145,8 @@
     </div>
   {/if}
 </section>
+
+<BookingModal
+  bind:open={openBooking}
+  preselectedStylist={preselectedStylistName}
+/>
