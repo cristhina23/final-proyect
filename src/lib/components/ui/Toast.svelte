@@ -22,22 +22,22 @@
 
   const typeStyles = {
     success: {
-      bg: 'bg-white',
+      bg: 'bg-white/80',
       border: 'border-emerald-200',
       icon: 'text-emerald-600',
-      accent: 'bg-emerald-50'
+      accent: 'bg-emerald-100'
     },
     error: {
-      bg: 'bg-white',
+      bg: 'bg-white/80',
       border: 'border-red-200',
       icon: 'text-red-600',
-      accent: 'bg-red-50'
+      accent: 'bg-red-100'
     },
     info: {
-      bg: 'bg-white',
+      bg: 'bg-white/80',
       border: 'border-blue-200',
       icon: 'text-blue-600',
-      accent: 'bg-blue-50'
+      accent: 'bg-blue-100'
     }
   };
 
@@ -47,13 +47,11 @@
 {#if show}
   <div class="fixed top-4 right-4 z-100 animate-in slide-in-from-top-5 fade-in duration-300">
     <div class="{currentStyle.bg} {currentStyle.border} border-2 rounded-2xl shadow-2xl backdrop-blur-sm min-w-[350px] max-w-md overflow-hidden">
-      <!-- Accent bar -->
+      
       <div class="{currentStyle.accent} h-1.5"></div>
       
-      <!-- Content -->
       <div class="px-5 py-4">
         <div class="flex items-start gap-3">
-          <!-- Icon -->
           <div class="{currentStyle.accent} p-2 rounded-xl shrink-0">
             {#if type === 'success'}
               <svg class="w-5 h-5 {currentStyle.icon}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -70,12 +68,10 @@
             {/if}
           </div>
           
-          <!-- Message -->
           <div class="flex-1 pt-0.5">
             <p class="font-semibold text-foreground leading-relaxed">{message}</p>
           </div>
           
-          <!-- Close button -->
           <button 
             onclick={() => show = false}
             class="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-lg hover:bg-muted/50"

@@ -1,0 +1,1 @@
+<h1>Stylist Dashboard</h1>

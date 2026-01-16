@@ -34,7 +34,12 @@
 
 		
 		<div class="hidden md:block">
-			<PrimaryButton on:click={() => openBooking = true}>Book Now</PrimaryButton>
+			<div class="flex items-center gap-2">
+				<PrimaryButton on:click={() => openBooking = true}>Book Now</PrimaryButton>
+				<button aria-label="User" class=" rounded-md p-1 border border-primary-200 hover:text-primary hover:shadow-md hover:shadow-primary-100 transition-all duration-300 ease-in-out">
+					<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round-icon lucide-circle-user-round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
+				</button>
+			</div>
 		</div>
 
 		
@@ -68,9 +73,11 @@
 				<a href="#about" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-[#6b5a4a] hover:shadow-md hover:shadow-primary-100 transition-colors">About</a>
 				<a href="#services" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-[#6b5a4a] hover:shadow-md hover:shadow-primary-100 transition-colors">Services</a>
 				<a href="#stylists" class="block rounded-md px-3 py-2 text-base font-medium text-text-primary hover:bg-muted hover:text-[#6b5a4a] hover:shadow-md hover:shadow-primary-100 transition-colors">Stylists</a>
-				<div class="mt-4 px-3">
-					<PrimaryButton on:click={() => openBooking = true} class="w-full justify-center">Book Now</PrimaryButton>
-				</div>
+				
+					<PrimaryButton on:click={() => openBooking = true} class="w-full justify-center">
+						Book Now
+					</PrimaryButton>
+					
 			</div>
 		</div>
 	{/if}

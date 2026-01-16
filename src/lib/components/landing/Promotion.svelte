@@ -1,7 +1,15 @@
 <script>
     import PrimaryButton from "../ui/PrimaryButton.svelte";
+  import Toast from "../ui/Toast.svelte";
+
+  let showToast = $state(false);
+
+    function handleSubscribe() {
+        showToast = true;
+    }
 </script>
 
+<Toast bind:show={showToast} message="Thank you for subscribing!" />
 <div class="relative py-24 bg-[#936C4B] overflow-hidden isolate">
     
     <div class="absolute inset-0 -z-10 overflow-hidden">
@@ -55,7 +63,8 @@
             />
             <button 
                 type="submit" 
-                class="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary shadow-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 uppercase tracking-wider"
+                class="flex-none rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-primary shadow-sm hover:bg-secondary hover:text-foreground focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 uppercase tracking-wider"
+                onclick={() => handleSubscribe()}    
             >
                 Subscribe
             </button>
