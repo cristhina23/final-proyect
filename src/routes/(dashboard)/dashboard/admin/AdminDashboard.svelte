@@ -1,14 +1,15 @@
 <script>
   import Sidebar from "$lib/components/Dashboard/Sidebar.svelte";
+  import SidebarMobile from "$lib/components/Dashboard/SidebarMobile.svelte";
 
 </script>
 
-<div class="flex">
-	<div class="w-1/5 border-r border-muted">
+<div class="flex h-screen">
+	<div class="hidden md:flex  shrink-0 border-r border-muted">
 		<Sidebar />
 	</div>
-	<div class="w-4/5">
-		
+	<div class="flex-1 min-w-0">
 		<h1>Welcome to the Admin Dashboard</h1>
 	</div>
 </div>
+<SidebarMobile />
