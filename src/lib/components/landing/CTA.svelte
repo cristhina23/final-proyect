@@ -1,3 +1,9 @@
+<!--
+  CTA section that promotes booking an appointment.
+  Shows a special offer and opens the booking modal via the button.
+  Uses a background image with a soft overlay to improve readability.
+-->
+
 <script>
   import PrimaryButton from "../ui/PrimaryButton.svelte";
   import ctaBg from "../../assets/cta-bg.png";

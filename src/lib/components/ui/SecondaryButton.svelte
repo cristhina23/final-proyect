@@ -1,3 +1,9 @@
+<!--
+    SecondaryButton component for less prominent actions in the UI.
+    Supports custom styles, disabled state, and optional link behavior.
+    Use this for secondary or alternative actions.
+-->
+
 <script lang="ts">
 	let { 
 		type = 'button', 

@@ -1,3 +1,9 @@
+<!--
+	PrimaryButton component for main actions in the UI.
+	Supports custom styles, disabled state, and optional link behavior.
+	Use this for the most important or primary actions.
+-->
+
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 

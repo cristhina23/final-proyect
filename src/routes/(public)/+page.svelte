@@ -1,3 +1,9 @@
+<!--
+  Public landing page that composes the main site sections.
+  Imports and renders Hero, About, Services, How It Works, Promotion,
+  Stylists, Testimonials, Contact, and a final CTA to guide users.
+  Sets basic SEO metadata and relies on each section component for content.
+-->
 <script lang="ts">
 	
   import HowItWorks from '$lib/components/landing/HowItWorks.svelte';

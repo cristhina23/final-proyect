@@ -1,3 +1,9 @@
+<!--
+  BookingModal component for scheduling appointments.
+  Handles the booking form, validation, and confirmation summary for users.
+  Includes service, stylist, date, and time selection with feedback.
+-->
+
 <script lang="ts">
   import * as Dialog from "$lib/components/ui/dialog";
   import { Button } from "$lib/components/ui/button";
@@ -23,6 +29,7 @@
   let showToast = $state(false);
   let submittedData = $state<any>(null);
 
+  // State for the booking form and validation
   let form = $state({
     name: "",
     phone: "",
@@ -125,6 +132,7 @@
     </div>
 
     <div class="relative flex-1 overflow-y-auto px-6 styled-scrollbar">
+      <!-- Shows booking summary after successful submission -->
       {#if success && submittedData}
         
         <div class="py-6">
@@ -191,6 +199,7 @@
           </div>
         </div>
       {:else}
+        <!-- Booking form UI for user input -->
         <div class="grid gap-6 py-6">
             
           <div class="space-y-2">

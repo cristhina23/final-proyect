@@ -1,7 +1,13 @@
+<!--
+    Promotion section highlighting a first-visit discount.
+    Encourages users to subscribe, then shows a toast confirmation.
+    Includes decorative background, headline, and a simple email form.
+-->
 <script>
     import PrimaryButton from "../ui/PrimaryButton.svelte";
   import Toast from "../ui/Toast.svelte";
 
+    // Controls toast visibility; clicking "Subscribe" shows confirmation
   let showToast = $state(false);
 
     function handleSubscribe() {
@@ -12,6 +18,7 @@
 <Toast bind:show={showToast} message="Thank you for subscribing!" />
 <div class="relative py-24 bg-[#936C4B] overflow-hidden isolate">
     
+        <!-- Decorative blurred shapes and subtle SVG lines for visual depth -->
     <div class="absolute inset-0 -z-10 overflow-hidden">
         
         <div class="absolute -top-[20%] -left-[10%] w-[600px] h-[600px] rounded-full bg-white/10 blur-3xl"></div>
@@ -49,7 +56,7 @@
             Join our exclusive community. Subscribe to our newsletter to receive expert beauty tips, seasonal trends, and your 20% discount coupon immediately.
         </p>
 
-        <!-- Newsletter Form -->
+        <!-- Newsletter form: captures email and triggers toast on submit -->
         <form class="mx-auto mt-10 flex max-w-md gap-x-4">
             <label for="email-address" class="sr-only">Email address</label>
             <input 

@@ -1,3 +1,8 @@
+<!--
+  Services section showcasing available treatments with images, details, and pricing.
+  Lets users open the booking modal with a preselected service for a faster flow.
+  Uses a responsive grid and hover effects to reveal more visual detail.
+-->
 <script>
 // @ts-nocheck
 
@@ -5,6 +10,7 @@
   import { getServiceImage } from '$lib/utils/imageResolver';
   import BookingModal from "./BookingModal.svelte";
 
+  // UI state: menu toggle (if used globally), booking modal visibility, and selected service
   let isMenuOpen = $state(false);
 
 	let openBooking = $state(false);
@@ -26,13 +32,15 @@
 			{#each services as service}
 				<div class="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-(--muted) bg-white hover:border-transparent p-6 shadow-sm hover:shadow-xl transition-all duration-300">
                     
-            
-          <div class=" absolute inset-0 z-0 bg-cover bg-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
+          
+              <!-- Card background image, revealed on hover for visual impact -->
+              <div class=" absolute inset-0 z-0 bg-cover bg-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
             style="background-image: url({getServiceImage(service.image)})">
           </div>
             
             
-          <div class="absolute inset-0 z-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
+              <!-- Dark overlay to improve text contrast when image is visible -->
+              <div class="absolute inset-0 z-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
 
             
           <div class="relative z-10 flex flex-col justify-between h-full">
@@ -43,6 +51,7 @@
               </div>
               <div class="mt-6 flex items-center justify-between">
                 <span class="text-lg font-bold text-white md:text-foreground transition-colors duration-300 group-hover:text-white">{service.price}</span>
+                <!-- Book action: preselect service and open booking modal -->
                 <button aria-label="Book" onclick={() => {
                   selectedService = service.title;
                   openBooking = true;

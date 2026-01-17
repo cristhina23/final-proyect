@@ -1,3 +1,9 @@
+<!--
+  Testimonials section showing client reviews and ratings.
+  Pulls testimonial data and displays cards with stars, text, and service tags.
+  Includes a call-to-action to view all reviews on Google.
+-->
+
 <script>
   import { testimonials } from "$lib/data";
   import PrimaryButton from "../ui/PrimaryButton.svelte";
@@ -16,6 +22,7 @@
         Experiences speak for themselves
       </h2>
 
+      <!-- Summary rating display with 5 stars and average score -->
       <div class="flex items-center justify-center gap-2 mb-4">
         {#each Array(5) as _, i}
           <svg
@@ -37,6 +44,7 @@
     </div>
 
     
+    <!-- Grid of testimonial cards sourced from the testimonials data -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {#each testimonials as testimonial}
         <div
@@ -99,6 +107,7 @@
     </div>
 
     
+    <!-- CTA: link to see full list of reviews on Google -->
     <div class="mt-12 text-center">
       <PrimaryButton
         href="https://www.google.com/search?client=opera&sca_esv=a8f3f333d99b26eb&cs=1&output=search&kgmid=/g/11hy9rvm5s&q=MEY+New+York&shem=bdsle,shrtsdl&shndl=30&source=sh/x/kp/local/m1/1&kgs=91a064efa2e59c9f&utm_source=bdsle,shrtsdl,sh/x/kp/local/m1/1#lrd=0x89c259a35f733fa5:0xacad259fa097e07a,1,,,," target="_blank"

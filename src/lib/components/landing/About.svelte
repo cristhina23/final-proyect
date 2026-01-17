@@ -1,3 +1,9 @@
+<!--
+  About component for the landing page.
+  Presents the salon's philosophy, values, and unique features to visitors.
+  Includes a description, feature highlights, and an image section.
+-->
+
 <script>
  import AboutImage from '$lib/assets/about.jpg';
 </script>
@@ -6,6 +12,7 @@
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
      
+      <!-- Introductory text about the salon's philosophy and approach -->
       <div class="order-1 lg:order-2">
         <span class="text-primary font-bold tracking-wider uppercase text-sm">Who We Are</span>
         <h2 class="mt-4 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-serif">Redefining Beauty & Relaxation</h2>
@@ -17,6 +24,7 @@
         </p>
 
        
+        <!-- List of key features and values with icons -->
         <dl class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
           <div class="relative pl-12">
             <dt class="inline font-semibold text-foreground">
@@ -57,6 +65,7 @@
       </div>
 
      
+      <!-- Image section visually representing the salon -->
       <div class="order-2 lg:order-1 flex justify-center ">
         <div class="relative w-full max-w-lg aspect-4/5 lg:aspect-square">
            <div class="absolute inset-0 bg-primary/20 rounded-tr-[100px] rounded-bl-[100px] transform translate-x-4 translate-y-4 -z-10"></div>

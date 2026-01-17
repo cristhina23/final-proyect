@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Aquí puedes importar iconos y lógica de navegación
+  
   let active = 'home';
   const nav = [
     { name: 'Home', icon: 'home', route: '/dashboard' },
@@ -27,7 +27,7 @@
         on:click={() => active = item.name.toLowerCase()}
       >
         <span class="text-2xl mb-1">
-          <!-- Aquí deberías poner el icono real -->
+          
           {#if item.icon === 'home'}🏠{/if}
           {#if item.icon === 'calendar'}📅{/if}
           {#if item.icon === 'history'}⏱️{/if}

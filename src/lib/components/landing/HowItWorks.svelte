@@ -1,7 +1,13 @@
+<!--
+  HowItWorks section explaining the four-step booking flow.
+  Shows simple steps and animates them on scroll using an IntersectionObserver.
+  Uses a background image for style and a responsive grid to display steps.
+-->
 <script lang="ts">
   import { onMount } from 'svelte';
   import ctaBg from "../../assets/cta-bg.png";
 
+  // Steps displayed to guide users through the booking process
   const steps = [
     { step: 1, title: 'Choose Service', desc: 'Browse our menu of premium treatments.' },
     { step: 2, title: 'Select Stylist', desc: 'Pick your preferred expert.' },
@@ -9,6 +15,7 @@
     { step: 4, title: 'Confirm', desc: 'Receive instant confirmation via email.' }
   ];
 
+  // Adds a class when steps enter the viewport to trigger simple animations
   onMount(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -45,6 +52,7 @@
       
         <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-muted -z-10"></div>
 
+        <!-- Render each step card with a small sequential delay for effect -->
         <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
           {#each steps as item, i}
             <div

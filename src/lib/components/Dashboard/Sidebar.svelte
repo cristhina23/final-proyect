@@ -1,6 +1,12 @@
 
 
 
+<!--
+  Sidebar component for the dashboard.
+  Displays navigation links and user actions for different roles.
+  Handles menu open/close state and shows icons for each section.
+-->
+
 <script lang="ts">
   import Logo from "$lib/assets/logo.png"
   import { ChevronRight } from "lucide-svelte";
@@ -18,11 +24,14 @@
   let occupancy = 75;
   let open = $state(true);
 
+
+  // Controls whether the sidebar is collapsed or expanded
   let collapsed = $state(false);
 
-  // Estado para el link activo
+ 
   let active = $state('overview');
 
+// Function to toggle the sidebar open/collapsed state
 export function toggleSidebar() {
   collapsed = !collapsed;
 }
@@ -59,6 +68,7 @@ export function toggleSidebar() {
   <div class="my-4 w-full h-px bg-secondary/50"></div>
   
   <div class="flex flex-col justify-between h-full">
+    <!-- Navigation links for dashboard sections -->
     <div class="flex flex-col gap-2">
       <a href="/dashboard"
         class="flex items-center gap-3 p-2 rounded-lg border-l-4 transition-all duration-200 {active === 'overview' ? 'bg-secondary/30 border-secondary text-brown font-semibold' : 'border-transparent'} hover:bg-secondary/30 hover:border-secondary hover:text-brown hover:font-semibold"
@@ -118,6 +128,7 @@ export function toggleSidebar() {
     <div>
       <div class="my-4 w-full h-px bg-secondary/50"></div>
       
+      <!-- Displays the current occupancy percentage visually -->
       <div 
         class="border border-secondary/80 rounded-lg bg-secondary/30 p-3 transition-all duration-300"
         style="visibility: {collapsed ? 'hidden' : 'visible'}; opacity: {collapsed ? '0' : '1'};"
