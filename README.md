@@ -1,38 +1,68 @@
-# sv
+# Overview
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This project is a web application developed using SvelteKit as part of the Web Applications module. The application simulates a real-world service-based business (a beauty salon) and allows users to explore services, view stylists, and interact with a modern, responsive user interface.
 
-## Creating a project
+The software demonstrates core front-end and web application concepts such as component-based architecture, reactivity, routing, state management, responsive design, and user interaction patterns. It also applies modern UI/UX practices to create a clean and professional user experience.
 
-If you're seeing this, you've probably already done this step. Congrats!
+The purpose of creating this software was to strengthen my understanding of Svelte and SvelteKit, practice building interactive web interfaces, and apply web development principles that are commonly used in real production projects.
 
-```sh
-# create a new project in the current directory
-npx sv create
+[Software Demo Video](_TBD_)
 
-# create a new project in my-app
-npx sv create my-app
-```
+# Development Environment
 
-## Developing
+This project was developed using the following tools and technologies:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- Visual Studio Code as the primary code editor
 
-```sh
-npm run dev
+- Node.js to run the development server and manage dependencies
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+- pnpm for package management
 
-## Building
+- SvelteKit as the application framework
 
-To create a production version of your app:
+- HTML, CSS, and JavaScript (TypeScript-ready) for building the UI and logic
 
-```sh
-npm run build
-```
+- Git & GitHub for version control and project hosting
 
-You can preview the production build with `npm run preview`.
+The application was tested locally using the SvelteKit development server and viewed in modern web browsers.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+## Tech Stack
+- SvelteKit 2 / Svelte 5
+- Vite 7
+- Tailwind CSS v4
+- Drizzle ORM + drizzle‑kit
+- PostgreSQL (via Docker Compose for local dev)
+- Lucide icons, Bits UI, utilities
+
+# Technologies and Concepts Learned
+
+During the development of this project, the following concepts and skills were practiced:
+
+Svelte component structure and reusable components
+
+Reactive variables and state management in Svelte
+
+Page routing and layouts using SvelteKit
+
+Handling user interactions (clicks, hover states, mobile behavior)
+
+Responsive design for desktop and mobile devices
+
+Styling components with modern CSS
+
+Organizing a scalable project structure
+
+Debugging and problem-solving in a real web application
+
+# Useful Websites
+
+# Useful Websites
+
+* [https://kit.svelte.dev](https://kit.svelte.dev/docs)
+* [https://svelte.dev](https://svelte.dev/docs)
+* [https://tailwindcss.com](https://tailwindcss.com/docs)
+* [https://developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+* [https://vitejs.dev](https://vitejs.dev/guide)
+* [https://www.youtube.com](https://www.youtube.com/watch?v=4h8B080Mv4U)
+* [https://stackoverflow.com](https://stackoverflow.com/questions/tagged/svelte)
+
