@@ -6,7 +6,7 @@ The software demonstrates core front-end and web application concepts such as co
 
 The purpose of creating this software was to strengthen my understanding of Svelte and SvelteKit, practice building interactive web interfaces, and apply web development principles that are commonly used in real production projects.
 
-[Software Demo Video](_TBD_)
+[Software Demo Video](https://youtu.be/y4Pbc4CoYT4)
 
 # Development Environment
 
@@ -65,4 +65,4 @@ Debugging and problem-solving in a real web application
 * [https://vitejs.dev](https://vitejs.dev/guide)
 * [https://www.youtube.com](https://www.youtube.com/watch?v=4h8B080Mv4U)
 * [https://stackoverflow.com](https://stackoverflow.com/questions/tagged/svelte)
-
+* [https://www.youtube.com/watch?v=7-NZ0MlPpJA](https://www.youtube.com/watch?v=7-NZ0MlPpJA)

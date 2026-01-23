@@ -1,51 +1,56 @@
+<!--
+  Mobile bottom navigation.
+  Uses shared sidebarData.
+  Renders role-based navigation items.
+-->
+
 <script lang="ts">
+  import { sidebarData } from "$lib/data/sidebarData";
+  import type { UserRole } from "$lib/types/role";
+  import MoreMenuModal from "../ui/MoreMenuModal.svelte";
+
   
-  let active = 'home';
-  const nav = [
-    { name: 'Home', icon: 'home', route: '/dashboard' },
-    { name: 'Bookings', icon: 'calendar', route: '/dashboard/bookings' },
-    { name: 'Add', icon: 'plus', route: '/dashboard/add', center: true },
-    { name: 'History', icon: 'history', route: '/dashboard/history' },
-    { name: 'Profile', icon: 'user', route: '/dashboard/profile' }
-  ];
+  const props = $props<{ role: UserRole }>();
+  const role: UserRole = props.role;
+
+
+  let showModal = $state(false);
+
+  let active = $state("");
 </script>
 
-<nav class="fixed bottom-0 left-0 w-full bg-white shadow flex justify-around items-center h-20 z-50 md:hidden">
-  {#each nav as item}
-    {#if item.center}
+<nav
+  class="fixed bottom-0 left-0 right-0 z-50 h-20 bg-primary/30 border-t border-secondary/70
+         flex items-center justify-around md:hidden"
+>
+  {#each sidebarData[role].filter(item => item.mobile === true) as item}
+    
       <button
-        class="relative flex flex-col items-center justify-center w-16 h-16 rounded-full bg-brown text-white shadow-lg -mt-8 border-4 border-white focus:outline-none"
-        aria-label={item.name}
-        on:click={() => active = item.name.toLowerCase()}
+        type="button"
+        class="flex flex-col items-center justify-center flex-1 gap-1 transition"
+        aria-label={item.label}
+        onclick={() => {
+            if (item.modal) {
+              showModal = true;
+            } else {
+              active = item.label.toLowerCase();
+              window.location.href = item.route!;
+            }
+          }}
       >
-        <span class="text-3xl">+</span>
-      </button>
-    {:else}
-      <button
-        class="flex flex-col items-center justify-center flex-1 focus:outline-none"
-        aria-label={item.name}
-        on:click={() => active = item.name.toLowerCase()}
-      >
-        <span class="text-2xl mb-1">
-          
-          {#if item.icon === 'home'}🏠{/if}
-          {#if item.icon === 'calendar'}📅{/if}
-          {#if item.icon === 'history'}⏱️{/if}
-          {#if item.icon === 'user'}👤{/if}
-        </span>
-        <span class="text-xs {active === item.name.toLowerCase() ? 'text-brown font-semibold' : 'text-gray-400'}">
-          {item.name}
+        <!-- Icon -->
+        <item.icon
+          size={22}
+          class={active === item.label.toLowerCase() ? 'text-brown' : 'text-brown/60'}
+        ></item.icon>
+        <!-- Label -->
+        <span class={active === item.label.toLowerCase() ? 'text-xs text-brown font-semibold' : 'text-xs text-brown/60'}>
+          {item.label}
         </span>
       </button>
-    {/if}
+   
   {/each}
 </nav>
 
-<style>
-  .bg-brown {
-    background-color: #8d5524;
-  }
-  .text-brown {
-    color: #8d5524;
-  }
-</style>
+
+<MoreMenuModal role={role} bind:open={showModal} />
