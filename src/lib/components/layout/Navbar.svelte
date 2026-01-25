@@ -25,7 +25,7 @@
 		
 		<div class="hidden md:block">
 			<div class="ml-10 flex items-baseline space-x-8">
-				<a href="/" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+				<a href="/" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
 				<a href="#about" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">About</a>
 				<a href="#services" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Services</a>
 				<a href="#stylists" class="text-text-primary hover:text-primary transition-colors px-3 py-2 rounded-md text-sm font-medium">Stylists</a>
