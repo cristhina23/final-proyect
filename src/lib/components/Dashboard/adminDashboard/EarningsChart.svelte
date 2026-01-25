@@ -1,44 +1,43 @@
 <script lang="ts">
-   import { scaleBand } from "d3-scale";
-  import { BarChart } from "layerchart";
-  import TrendingUpIcon from "lucide-svelte/icons/trending-up";
-
-  import * as Chart from "$lib/components/ui/chart";
-  import * as Card from "$lib/components/ui/card";
-
+  import { scaleBand } from "d3-scale";
+  import { BarChart, type ChartContextValue } from "layerchart";
+  import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
+  import * as Chart from "$lib/components/ui/chart/index.js";
+  import * as Card from "$lib/components/ui/card/index.js";
   import { cubicInOut } from "svelte/easing";
 
-
   const chartData = [
-    { month: "January", desktop: 186 },
-    { month: "February", desktop: 305 },
-    { month: "March", desktop: 237 },
-    { month: "April", desktop: 73 },
-    { month: "May", desktop: 209 },
-    { month: "June", desktop: 214 },
-  ];
+  { day: "Mon", revenue: 820 },
+  { day: "Tue", revenue: 680 },
+  { day: "Wed", revenue: 350 },
+  { day: "Thu", revenue: 220 },
+  { day: "Fri", revenue: 940 },
+  { day: "Sat", revenue: 810 },
+  { day: "Sun", revenue: 660 },
+];
+
 
   const chartConfig = {
-    desktop: { label: "Desktop", color: "var(--chart-1)" },
+    desktop: { label: "Revenue", color: "var(--brown)" },
   } satisfies Chart.ChartConfig;
 
   let context = $state<ChartContextValue>();
 </script>
 
-<Card.Root>
+<Card.Root class="h-full flex flex-col">
   <Card.Header>
-    <Card.Title>Bar Chart</Card.Title>
-    <Card.Description>January - June 2024</Card.Description>
+    <Card.Title>Earnings</Card.Title>
+    <Card.Description>Weekly Revenue Overview</Card.Description>
   </Card.Header>
-  <Card.Content>
-    <Chart.Container config={chartConfig}>
+  <Card.Content class="flex-1 min-h-0 pb-4">
+    <Chart.Container config={chartConfig} class="h-full w-full">
       <BarChart
         bind:context
         data={chartData}
         xScale={scaleBand().padding(0.25)}
-        x="month"
+        x="day"
         axis="x"
-        series={[{ key: "desktop", label: "Desktop", color: chartConfig.desktop.color }]}
+        series={[{ key: "revenue", label: "Revenue", color: chartConfig.desktop.color }]}
         props={{
           bars: {
             stroke: "none",

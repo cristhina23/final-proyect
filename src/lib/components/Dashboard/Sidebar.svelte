@@ -6,21 +6,32 @@
 
 <script lang="ts">
   import Logo from "$lib/assets/logo.png";
+  import { page } from "$app/stores";
   import { ChevronRight, X, LogOut } from "lucide-svelte";
-  import Button from "../ui/button/button.svelte";
+  import { Button } from "$lib/components/ui/button";
   import { sidebarData } from "$lib/data/sidebarData";
   import type { UserRole } from "$lib/types/role";
 
-  const { role } = $props<{ role: UserRole }>();
+  const props = $props<{ role?: UserRole }>();
 
-  
   let collapsed = $state(false);
-  let active = $state("overview");
+  
+  // Safe derivation of items
+  const items = $derived(props.role ? sidebarData[props.role as UserRole] : []);
 
   function toggleSidebar() {
     collapsed = !collapsed;
   }
+
+  function isActive(route: string) {
+    if (!route) return false;
+    if (route === "/dashboard") {
+       return $page.url.pathname === route;
+    }
+    return $page.url.pathname.startsWith(route);
+  }
 </script>
+
 
 <div
   class="flex flex-col h-screen bg-muted p-4 relative transition-all duration-300 ease-in-out"
@@ -55,17 +66,16 @@
     
     <!-- NAVIGATION  -->
     <div class="flex flex-col gap-2 flex-1 overflow-y-auto overflow-x-hidden pr-1">
-      {#each sidebarData[role] as item}
+      {#each items as item}
         {#if item.desktop}
           <a
             href={item.route}
             class="flex items-center gap-3 p-2 h-10 rounded-lg border-l-4
               transition-all duration-200 text-foreground
-              {active === item.label.toLowerCase()
+              {isActive(item.route || '')
                 ? 'bg-secondary/30 border-secondary text-brown font-semibold'
                 : 'border-transparent'}
               hover:bg-secondary/30 hover:border-secondary hover:text-brown hover:font-semibold"
-            onclick={() => (active = item.label.toLowerCase())}
           >
             <item.icon size={20} class="shrink-0" />
             {#if !collapsed}

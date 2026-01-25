@@ -1,11 +1,16 @@
 <script>
   import { Bell, Moon } from "lucide-svelte";
+  import { page } from "$app/stores";
 
+  // Derive title from the last segment of the path, defaulting to "Overview" if at root or dashboard root
+  // e.g. /dashboard/admin/staff -> Staff
+  const title = $derived($page.url.pathname.split("/").pop() || "Overview");
+  const displayTitle = $derived(title.charAt(0).toUpperCase() + title.slice(1));
 </script>
 <header class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between    mb-6">
 	<div>
 		<h3 class="text-xs sm:text-sm text-stone-500">WELCOME BACK, ADMIN</h3>
-		<h1 class="text-xl sm:text-2xl md:text-3xl text-foreground">Admin Dashboard Overview</h1>
+		<h1 class="text-xl sm:text-2xl md:text-3xl text-foreground">Admin Dashboard: {displayTitle}</h1>
 	</div>
 
 	<div class="flex items-center gap-3 sm:gap-6">

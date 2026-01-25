@@ -7,23 +7,28 @@
 <script lang="ts">
   import { sidebarData } from "$lib/data/sidebarData";
   import type { UserRole } from "$lib/types/role";
+  import { page } from "$app/stores";
   import MoreMenuModal from "../ui/MoreMenuModal.svelte";
 
   
   const props = $props<{ role: UserRole }>();
-  const role: UserRole = props.role;
-
-
+  /* Restoring state and safe derivation */
+  const role = $derived(props.role);
   let showModal = $state(false);
-
   let active = $state("");
+
+  const items = $derived(
+    role && sidebarData[role as UserRole] 
+      ? sidebarData[role as UserRole].filter(item => item.mobile === true) 
+      : []
+  );
 </script>
 
 <nav
   class="h-20 w-full bg-primary/30 border-t border-secondary/70
          flex items-center justify-around"
 >
-  {#each sidebarData[role].filter(item => item.mobile === true) as item}
+  {#each items as item}
     
       <button
         type="button"

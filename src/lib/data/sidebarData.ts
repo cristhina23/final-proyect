@@ -44,42 +44,42 @@ export const sidebarData: Record<UserRole, SidebarItem[]> = {
     },
     {
       label: "Staff",
-      route: "/dashboard/staff",
+      route: "/dashboard/admin/staff",
       icon: Users,
       desktop: true,
       mobile: true
     },
     {
       label: "Schedule",
-      route: "/dashboard/schedule",
+      route: "/dashboard/admin/schedule",
       icon: CalendarCheck,
       desktop: true,
       mobile: true
     },
     {
       label: "Services",
-      route: "/dashboard/services",
+      route: "/dashboard/admin/services",
       icon: HandHeart,
       desktop: true,
       mobile: false
     },
     {
       label: "Payments",
-      route: "/dashboard/payments",
+      route: "/dashboard/admin/payments",
       icon: CreditCard,
       desktop: true,
       mobile: true
     },
     {
       label: "Reports",
-      route: "/dashboard/reports",
+      route: "/dashboard/admin/reports",
       icon: BarChart3,
       desktop: true,
       mobile: false
     },
     {
       label: "Settings",
-      route: "/dashboard/settings",
+      route: "/dashboard/admin/settings",
       icon: Settings,
       desktop: true,
       mobile: false
