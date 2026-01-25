@@ -9,6 +9,7 @@
   --background: #FEFCFF;
   --foreground: #2A2A2F;
   --card: oklch(1 0 0);
+  --dashboard-bg: red;
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
@@ -48,7 +49,7 @@
 }
 
 .dark {
-  --background: #FEFCFF;
+  --background:  oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -58,9 +59,9 @@
   --primary-foreground: oklch(0.205 0 0);
   --secondary: #D9B79A;
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: #F9ECE1;
+  --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: #d1b195;
+  --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
@@ -85,6 +86,7 @@
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
+  --dashboard-bg: var(--dashboard-bg);
   --radius-xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -181,3 +183,4 @@ h1, h2, h3, h4 {
 *::-webkit-scrollbar-thumb:hover {
   background-color: rgb(94 55 34); /* darker brown */
 }
+

@@ -20,8 +20,8 @@
 </script>
 
 <nav
-  class="fixed bottom-0 left-0 right-0 z-50 h-20 bg-primary/30 border-t border-secondary/70
-         flex items-center justify-around md:hidden"
+  class="h-20 w-full bg-primary/30 border-t border-secondary/70
+         flex items-center justify-around"
 >
   {#each sidebarData[role].filter(item => item.mobile === true) as item}
     
