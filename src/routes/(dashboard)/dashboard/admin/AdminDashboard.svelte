@@ -10,6 +10,7 @@
 	import Card from "$lib/components/Dashboard/adminDashboard/Card.svelte";
   import type { UserRole } from "$lib/types/role";
 	import { Wallet, Calendar, Users, ClipboardList, TrendingUp } from "lucide-svelte";
+  import EarningsChart from "$lib/components/Dashboard/adminDashboard/EarningsChart.svelte";
   
 
 	const { role } = $props<{ role: UserRole }>();
@@ -56,7 +57,10 @@
 			/>
 		</div>
 
-	
+	<section class="mt-6">
+		<!-- Additional admin dashboard content can go here -->
+		 <EarningsChart />
+	</section>
 		
 	</main>
 
