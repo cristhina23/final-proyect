@@ -102,35 +102,35 @@ export const sidebarData: Record<UserRole, SidebarItem[]> = {
   },
   {
     label: "My Schedule",
-    route: "/dashboard/schedule",
+    route: "/dashboard/stylist/my-schedule",
     icon: Calendar,
     desktop: true,
     mobile: true
   },
   {
     label: "Appointments",
-    route: "/dashboard/appointments",
+    route: "/dashboard/stylist/appointments",
     icon: ClipboardList,
     desktop: true,
     mobile: true
   },
   {
     label: "Earnings",
-    route: "/dashboard/earnings",
+    route: "/dashboard/stylist/earnings",
     icon: Wallet,
     desktop: true,
     mobile: false
   },
   {
     label: "My Services",
-    route: "/dashboard/services",
+    route: "/dashboard/stylist/services",
     icon: Scissors,
     desktop: true,
     mobile: false
   },
   {
     label: "Reviews",
-    route: "/dashboard/reviews",
+    route: "/dashboard/stylist/reviews",
     icon: Star,
     desktop: true,
     mobile: false

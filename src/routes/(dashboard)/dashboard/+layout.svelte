@@ -3,6 +3,9 @@
   import SidebarMobile from "$lib/components/Dashboard/SidebarMobile.svelte";
   import type { UserRole } from "$lib/types/role";
   import '../../app.css'
+  import '@fullcalendar/core/index.css';
+  import '@fullcalendar/daygrid/index.css';
+  import '@fullcalendar/timegrid/index.css';
   import { setContext } from 'svelte';
   let { children } = $props();
 
