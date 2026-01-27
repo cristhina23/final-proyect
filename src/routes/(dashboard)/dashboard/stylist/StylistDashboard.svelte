@@ -7,11 +7,8 @@
 
 </script>
 <div class="flex h-screen">
-	<div class="hidden md:flex  shrink-0 border-r border-muted">
-		<Sidebar role={role} />
-	</div>
 	<div class="flex-1 min-w-0">
-		<h1>Welcome to the Stylist Dashboard</h1>
+		<h1>Hello, {role}!</h1>
+    <p>Ready for another day of making people feel beautiful?</p>
 	</div>
 </div>
-<SidebarMobile role={role} />

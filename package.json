@@ -50,6 +50,10 @@
 		"vite": "^7.2.6"
 	},
 	"dependencies": {
+		"@fullcalendar/core": "^6.1.20",
+		"@fullcalendar/daygrid": "^6.1.20",
+		"@fullcalendar/interaction": "^6.1.20",
+		"@fullcalendar/timegrid": "^6.1.20",
 		"d3-scale": "^4.0.2",
 		"lucide-svelte": "^0.562.0",
 		"postgres": "^3.4.7"

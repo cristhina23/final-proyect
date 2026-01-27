@@ -6,7 +6,7 @@
   import { setContext } from 'svelte';
   let { children } = $props();
 
-  const role = $state<UserRole>("admin");
+  const role = $state<UserRole>("stylist");
 </script>
 
 <div class="flex h-screen bg-background">
