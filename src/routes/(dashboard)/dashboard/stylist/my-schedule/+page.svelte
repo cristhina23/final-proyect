@@ -263,7 +263,7 @@
       <div class="space-y-4">
         <!-- Client Name -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
+          <label for="clientName" class="block text-sm font-medium text-gray-700 mb-1">
             <div class="flex items-center gap-2">
               <User class="w-4 h-4" />
               Client Name *
@@ -271,6 +271,7 @@
           </label>
           <input
             type="text"
+            id="clientName"
             bind:value={clientName}
             placeholder="Enter client name"
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -279,13 +280,14 @@
 
         <!-- Service Type -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
+          <label for="serviceType" class="block text-sm font-medium text-gray-700 mb-1">
             <div class="flex items-center gap-2">
               <Scissors class="w-4 h-4" />
               Service Type *
             </div>
           </label>
           <select
+            id="serviceType"
             bind:value={serviceType}
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           >
@@ -303,11 +305,12 @@
 
         <!-- Date -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
+          <label for="selectedDate" class="block text-sm font-medium text-gray-700 mb-1">
             Date *
           </label>
           <input
             type="date"
+            id="selectedDate"
             bind:value={selectedDate}
             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           />
@@ -316,7 +319,7 @@
         <!-- Time and Duration -->
         <div class="grid grid-cols-2 gap-4">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
+            <label for="selectedTime" class="block text-sm font-medium text-gray-700 mb-1">
               <div class="flex items-center gap-2">
                 <Clock class="w-4 h-4" />
                 Time *
@@ -324,16 +327,18 @@
             </label>
             <input
               type="time"
+              id="selectedTime"
               bind:value={selectedTime}
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
 
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">
+            <label for="eventDuration" class="block text-sm font-medium text-gray-700 mb-1">
               Duration (min)
             </label>
             <select
+              id="eventDuration"
               bind:value={eventDuration}
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             >

@@ -10,14 +10,27 @@
   function close() {
     open = false;
   }
+
+  function onBackdropKeydown(event: KeyboardEvent) {
+    const key = event.key;
+    if (key === "Enter" || key === " ") {
+      // Space key can be reported as " "
+      event.preventDefault();
+      close();
+    }
+  }
 </script>
 
 {#if open}
   <!-- Backdrop -->
   <div
     class="fixed inset-0 z-40 bg-black/40"
+    role="button"
+    tabindex="0"
+    aria-label="Close modal"
     on:click={close}
-  />
+    on:keydown={onBackdropKeydown}
+  ></div>
 
   <!-- Modal -->
   <div

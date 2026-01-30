@@ -20,7 +20,7 @@
         <div class="flex flex-col gap-2">
           <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <div class="w-2 h-2 bg-primary rounded-full" />
+            <div class="w-2 h-2 bg-primary rounded-full"></div>
             <span>{service.name}</span>
           </div>
           <span>{service.percentage}%</span>
