@@ -1,0 +1,156 @@
+CRUD - Beauty Salon Database
+SERVICES (services.ts)
+
+createService(data) - Create a new service
+
+createService({ name: "Haircut", description: "Basic haircut", duration_minutes: 30, price: "25.00", category: "Cortes" })
+
+getAllServices() - Get all active services
+
+getAllServices() // → Array of services
+
+getServiceById(id) - Get a service by ID
+
+getServiceById(1) // → Service with id 1
+
+updateService(id, data) - Update a service
+
+updateService(1, { price: "30.00", is_active: false })
+
+deleteService(id) - Soft delete a service
+
+deleteService(1) // → stablish as deleted is_active = false
+
+USERS (users.ts)
+
+createUser(data) - Create a user (client, stylist or admin)
+
+createUser({ email: "ana@gmail.com", role: "CLIENT", full_name: "Ana López", phone: "555-1234" })
+
+getAllStylists() - Get all stylists
+
+getAllStylists() // → Array of users with role="STYLIST"
+
+getAllClients() - Get all clients
+
+getAllClients() // → Array of users with role="CLIENT"
+
+getUserById(id) - Get a user by ID
+
+getUserById(3) // → User with id 3
+
+getUserByEmail(email) - Get a user by email
+
+ getUserByEmail("ana@gmail.com") // → User with that email
+
+updateUser(id, data) - Update a user
+
+ updateUser(3, { full_name: "Ana María López", phone: "555-9999" })
+
+updatePassword(id, newPasswordHash) - Update a user password
+
+ updatePassword(3, "hashed_password_here")
+
+deleteUser(id) - Delete a user
+
+ deleteUser(3) // → Delete permanently
+
+APPOINTMENTS (appointments.ts)
+
+createAppointment(data) - Create an appointment
+
+ createAppointment({ client_id: 3, stylist_id: 2, start_time: new Date("2025-02-01 10:00"), end_time: new Date("2025-02-01 11:00") })
+
+addAppointmentItem(data) - Add a service/item to an appointment
+
+ addAppointmentItem({ appointment_id: 1, service_id: 5, name: "Corte", price_snapshot: "25.00" })
+
+getAppointmentsByClient(clientId) - Get appointments by client
+
+ getAppointmentsByClient(3) // → Array of appointments of client 3
+
+getAppointmentsByStylist(stylistId) - Get appointments by stylist
+
+ getAppointmentsByStylist(2) // → Array of appointments of stylist 2
+
+getAppointmentsByDate(date) - Get appointments by date
+
+ getAppointmentsByDate(new Date("2025-02-01")) // → All appointments on that date
+
+getAppointmentById(id) - Get an appointment with its items
+
+ getAppointmentById(1) // → Appointment with id 1 + its services
+
+updateAppointmentStatus(id, status) - Update an appointment status
+
+ updateAppointmentStatus(1, "CONFIRMED")
+
+rescheduleAppointment(id, data) - Reschedule an appointment
+
+ rescheduleAppointment(1, { start_time: new Date("2025-02-02 14:00"), end_time: new Date("2025-02-02 15:00") })
+
+cancelAppointment(id) - Cancel an appointment
+
+ cancelAppointment(1) // → Marca status = "CANCELLED"
+
+AVAILABILITY (availability.ts)
+
+getStylistAvailability(stylistId, dayOfWeek) - Get stylist availability
+
+ getStylistAvailability(2, 1) // → Stylist 2 availability on Monday (1=Monday)
+
+getStylistTimeOff(stylistId, date) - Get stylist time off
+
+ getStylistTimeOff(2, new Date("2025-02-01")) // → If has day off that day
+
+getStylistAppointments(stylistId, date) - Get stylist appointments on a date
+
+ getStylistAppointments(2, new Date("2025-02-01")) // → Appointments of stylist that day
+
+getAvailableTimeSlots(stylistId, date, serviceDuration) - Get available time slots
+
+ getAvailableTimeSlots(2, new Date("2025-02-01"), 60) // → ["09:00", "10:00", "14:30", ...]
+
+STYLIST SERVICES (stylist-services.ts)
+
+assignServiceToStylist(stylistId, serviceId) - Assign a service to a stylist
+
+ assignServiceToStylist(2, 5) // → Stylist 2 now offers service 5
+
+getStylistServices(stylistId) - Get services that a stylist offers
+
+ getStylistServices(2) // → Array of services of stylist 2
+
+removeServiceFromStylist(stylistId, serviceId) - Remove a service from a stylist
+
+ removeServiceFromStylist(2, 5) // → Stylist 2 no longer offers service 5
+
+REVIEWS (reviews.ts)
+
+createReview(data) - Create a review
+
+ createReview({ appointment_id: 1, client_id: 3, stylist_id: 2, rating: 5, comment: "Excelente!" })
+
+getReviewsByStylist(stylistId) - Get reviews by stylist
+
+ getReviewsByStylist(2) // → Array of reviews of stylist 2
+
+getReviewsByClient(clientId) - Get reviews by client
+
+ getReviewsByClient(3) // → Array of reviews of client 3
+
+getReviewByAppointment(appointmentId) - Get review by appointment
+
+ getReviewByAppointment(1) // → Review of appointment 1
+
+getStylistAverageRating(stylistId) - Get stylist average rating
+
+ getStylistAverageRating(2) // → 4.5
+
+updateReview(id, data) - Update a review
+
+ updateReview(1, { rating: 4, comment: "Muy bueno" })
+
+deleteReview(id) - Delete a review
+
+ deleteReview(1)

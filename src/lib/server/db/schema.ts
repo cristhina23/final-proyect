@@ -11,9 +11,9 @@ import {
   primaryKey,
 } from "drizzle-orm/pg-core";
 
-// ========================
+
 // ENUMS
-// ========================
+
 export const UserRole = pgEnum("user_role", ["ADMIN", "STYLIST", "CLIENT"]);
 export const AuthProvider = pgEnum("auth_provider", ["EMAIL", "GOOGLE"]);
 export const AppointmentStatus = pgEnum("appointment_status", [
