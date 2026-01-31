@@ -1,6 +1,6 @@
 import { db } from '../index';
 import { reviews } from '../schema';
-import { eq, and, gte } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 // create a review 
 export async function createReview(data: {

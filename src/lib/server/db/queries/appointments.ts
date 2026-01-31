@@ -1,7 +1,7 @@
 
 import { db } from '../index';
 import { appointments, appointment_items } from '../schema';
-import { eq, and, gte, lte, between } from 'drizzle-orm';
+import { eq, between } from 'drizzle-orm';
 
 //create appointment
 export async function createAppointment(data: {

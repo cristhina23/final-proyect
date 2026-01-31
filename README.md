@@ -6,7 +6,13 @@ The software demonstrates core front-end and web application concepts such as co
 
 The purpose of creating this software was to strengthen my understanding of Svelte and SvelteKit, practice building interactive web interfaces, and apply web development principles that are commonly used in real production projects.
 
+Video for module 1:
 [Software Demo Video](https://youtu.be/y4Pbc4CoYT4)
+
+Video for module 2
+[Software Demo Video](https://youtu.be/Ospjq77kkuI)
+
+
 
 # Module 1: Web Application Development (SvelteKit)
 

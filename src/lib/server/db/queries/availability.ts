@@ -3,9 +3,8 @@ import {
   stylist_availability,
   stylist_time_off,
   appointments,
-  salon_hours
 } from '../schema';
-import {eq, and, gte, lt, between, ne} from 'drizzle-orm';
+import {eq, and, between, ne} from 'drizzle-orm';
 
 // format helper
 function timeToMinutes(time: string): number {
