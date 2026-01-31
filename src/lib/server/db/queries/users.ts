@@ -5,8 +5,8 @@ import { eq } from "drizzle-orm";
 //Create a new user
 export async function createUser(data: {
   email: string;
-  password_hash: string;
-  auth_provider: 'EMAIL' | 'GOOGLE';
+  password_hash?: string;
+  auth_provider?: 'EMAIL' | 'GOOGLE';
   role: 'ADMIN' | 'STYLIST' | 'CLIENT';
   full_name?: string;
   age?: number;

@@ -2,7 +2,7 @@ export type Employee = {
   id: string;
   name: string;
   email: string;
-  role: "Stylist" | "Manager";
+  role: "STYLIST";
   avatar?: string;
   status: "active" | "inactive";
 };

@@ -10,7 +10,7 @@ export async function createService(data: {
   duration_minutes: number;
   price: string;
   category: string;
-  is_active: boolean;
+  is_active?: boolean;
 }) {
   const [service] = await db.insert(services).values(data).returning();
   return service;
