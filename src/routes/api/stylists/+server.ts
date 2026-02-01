@@ -12,6 +12,7 @@ export const POST: RequestHandler = async ({ request }) => {
     const photo_url = body?.photo_url ? body.photo_url.toString().trim() : undefined;
     const notes = body?.notes ? body.notes.toString().trim() : undefined;
     const age = typeof body?.age === 'number' ? body.age : undefined;
+    const years_of_experience = typeof body?.years_of_experience === 'number' ? body.years_of_experience : undefined;
     
 
     if (!email) {
@@ -37,6 +38,7 @@ export const POST: RequestHandler = async ({ request }) => {
       photo_url,
       notes,
       age,
+      years_of_experience,
     });
 
     return json(stylist, { status: 201 });
