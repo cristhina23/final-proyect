@@ -3,10 +3,10 @@ POST http://localhost:5173/api/stylists
 Content-Type: application/json
 
 {
-  "email": "sofia.l@salon.com",
-  "full_name": "Sofia L.",
-  "years_of_experience": 3,
-  "photo_url": "/assets/stylists/stylist-7.png",
+  "email": "ana.c@salon.com",
+  "full_name": "Ana C.",
+  "years_of_experience": 15,
+  "photo_url": "/assets/stylists/stylist-8.png",
   "phone": "555-0007",
-  "notes": "Customized facials focused on skin health and rejuvenation."
+  "notes": "Professional makeup for events, photoshoots, and special occasions."
 }
