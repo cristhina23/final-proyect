@@ -1,4 +1,3 @@
-// src/db/schema.ts
 import {
   pgTable,
   integer,
@@ -25,7 +24,7 @@ export const AppointmentStatus = pgEnum("appointment_status", [
 ]);
 
 
-// USERS (Clientes y estilistas)
+// USERS TABLE
 
 export const users = pgTable("users", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
@@ -34,6 +33,7 @@ export const users = pgTable("users", {
   auth_provider: AuthProvider("auth_provider").default("EMAIL").notNull(),
   role: UserRole("role").default("CLIENT").notNull(),
   full_name: varchar("full_name", { length: 255 }),
+  years_of_experience: integer("years_of_experience"),
   age: integer("age"),
   photo_url: varchar("photo_url", { length: 512 }),
   phone: varchar("phone", { length: 20 }),

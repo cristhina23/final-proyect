@@ -6,7 +6,7 @@
 -->
 <script>
   // @ts-nocheck
-  import { stylists } from "$lib/data";
+  export let stylists = [];
   import { getStylistImage } from "$lib/utils/imageResolver";
   import PrimaryButton from "../ui/PrimaryButton.svelte";
   import BookingModal from "./BookingModal.svelte";
@@ -15,6 +15,8 @@
   let selectedStylist = null;
   let openBooking = false;
   let preselectedStylistName = "";
+
+  // Data is provided via page `load` and passed as prop.
 
   const openInfoModal = (stylist) => {
     selectedStylist = stylist;

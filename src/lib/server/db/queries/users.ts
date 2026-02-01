@@ -1,6 +1,7 @@
 import { users } from "../schema";
 import { db } from "../index";
 import { eq } from "drizzle-orm";
+import { getStylistServices } from './stylist-services';
 
 //Create a new user
 export async function createUser(data: {
@@ -10,6 +11,7 @@ export async function createUser(data: {
   role: 'ADMIN' | 'STYLIST' | 'CLIENT';
   full_name?: string;
   age?: number;
+  years_of_experience?: number; 
   photo_url?: string;
   phone?: string;
   notes?: string;
@@ -21,6 +23,30 @@ export async function createUser(data: {
 //Get only stylists
 export async function getAllStylists() {
   return await db.select().from(users).where(eq(users.role, 'STYLIST'));
+}
+
+//Get stylists with their services and specialty
+export async function getStylistsWithServices() {
+  const stylists = await getAllStylists();
+  
+  const stylistsWithServices = await Promise.all(
+    stylists.map(async (stylist) => {
+      
+      const stylistServicesData = await getStylistServices(stylist.id);
+      
+      
+      const serviceNames = stylistServicesData.map(s => s.service.name);
+      const specialty = serviceNames.length > 0 ? serviceNames.join(', ') : 'General Stylist';
+      
+      return {
+        ...stylist,
+        specialty,
+        services: stylistServicesData.map(s => s.service)
+      };
+    })
+  );
+  
+  return stylistsWithServices;
 }
 
 //Read all users

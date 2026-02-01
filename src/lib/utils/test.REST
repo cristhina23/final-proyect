@@ -1,0 +1,15 @@
+POST  http://localhost:5173/api/stylists
+Content-Type: application/json
+
+{
+  "email": "stylistnew@example.com",
+  "full_name": "Jane Doe",
+  "phone": "123-456-7890",
+  "photo_url": "http://example.com/photo.jpg",
+  "notes": "Experienced stylist",
+  "age": 30
+}
+
+
+
+

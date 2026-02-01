@@ -5,11 +5,12 @@
   Sets basic SEO metadata and relies on each section component for content.
 -->
 <script lang="ts">
-	
+  import type { PageData } from '../(public)/$types';
   import HowItWorks from '$lib/components/landing/HowItWorks.svelte';
   import Hero from '$lib/components/landing/Hero.svelte';
   import Services from '$lib/components/landing/Services.svelte';
   import Stylists from '$lib/components/landing/Stylists.svelte';
+ 
   import About from '$lib/components/landing/About.svelte';
   import Promotion from '$lib/components/landing/Promotion.svelte';
   import Contact from '$lib/components/landing/Contact.svelte';
@@ -17,7 +18,7 @@
   import Testimonials from '$lib/components/landing/Testimonials.svelte';
   import Toast from '$lib/components/ui/Toast.svelte';
  
-
+ export let data: PageData;
    
     
 </script>
@@ -38,7 +39,7 @@
 
 <Promotion />
 
-<Stylists />
+<Stylists stylists={data?.stylists ?? []} />
 
 <Testimonials />
 
