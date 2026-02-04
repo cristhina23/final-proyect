@@ -15,6 +15,13 @@
       "when": 1769914461078,
       "tag": "0001_sparkling_blob",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1770227243609,
+      "tag": "0002_sweet_mongoose",
+      "breakpoints": true
     }
   ]
 }

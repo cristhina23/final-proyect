@@ -8,6 +8,7 @@ import {
   boolean,
   pgEnum,
   primaryKey,
+  uuid
 } from "drizzle-orm/pg-core";
 
 
@@ -27,7 +28,7 @@ export const AppointmentStatus = pgEnum("appointment_status", [
 // USERS TABLE
 
 export const users = pgTable("users", {
-  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  id: uuid("id").primaryKey().defaultRandom(),
   email: varchar("email", { length: 255 }).notNull().unique(),
   password_hash: varchar("password_hash", { length: 255 }),
   auth_provider: AuthProvider("auth_provider").default("EMAIL").notNull(),
@@ -60,7 +61,7 @@ export const services = pgTable("services", {
 // STYLIST SERVICES
 
 export const stylist_services = pgTable("stylist_services", {
-  stylist_id: integer("stylist_id").notNull().references(() => users.id),
+  stylist_id: uuid("stylist_id").notNull().references(() => users.id),
   service_id: integer("service_id").notNull().references(() => services.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -85,7 +86,7 @@ export const salon_hours = pgTable("salon_hours", {
 
 export const stylist_availability = pgTable("stylist_availability", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  stylist_id: integer("stylist_id").notNull().references(() => users.id),
+  stylist_id: uuid("stylist_id").notNull().references(() => users.id),
   day_of_week: integer("day_of_week").notNull(),
   start_time: varchar("start_time", { length: 5 }).notNull(),
   end_time: varchar("end_time", { length: 5 }).notNull(),
@@ -98,7 +99,7 @@ export const stylist_availability = pgTable("stylist_availability", {
 
 export const stylist_time_off = pgTable("stylist_time_off", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  stylist_id: integer("stylist_id").notNull().references(() => users.id),
+  stylist_id: uuid("stylist_id").notNull().references(() => users.id),
   date: timestamp("date").notNull(),
   start_time: varchar("start_time", { length: 5 }),
   end_time: varchar("end_time", { length: 5 }),
@@ -112,8 +113,8 @@ export const stylist_time_off = pgTable("stylist_time_off", {
 
 export const appointments = pgTable("appointments", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  client_id: integer("client_id").notNull().references(() => users.id),
-  stylist_id: integer("stylist_id").references(() => users.id),
+  client_id: uuid("client_id").notNull().references(() => users.id),
+  stylist_id: uuid("stylist_id").references(() => users.id),
   start_time: timestamp("start_time").notNull(),
   end_time: timestamp("end_time").notNull(),
   status: AppointmentStatus("status").default("PENDING").notNull(),
@@ -144,8 +145,8 @@ export const appointment_items = pgTable("appointment_items", {
 export const reviews = pgTable("reviews", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   appointment_id: integer("appointment_id").notNull().references(() => appointments.id),
-  client_id: integer("client_id").notNull().references(() => users.id),
-  stylist_id: integer("stylist_id").notNull().references(() => users.id),
+  client_id: uuid("client_id").notNull().references(() => users.id),
+  stylist_id: uuid("stylist_id").notNull().references(() => users.id),
   rating: integer("rating").notNull(),
   comment: text("comment"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -157,7 +158,7 @@ export const reviews = pgTable("reviews", {
 
 export const client_preferences = pgTable("client_preferences", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  client_id: integer("client_id").notNull().references(() => users.id),
+  client_id: uuid("client_id").notNull().references(() => users.id),
   preference_key: varchar("preference_key", { length: 50 }).notNull(),
   preference_value: varchar("preference_value", { length: 255 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
