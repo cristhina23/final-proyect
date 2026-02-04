@@ -13,16 +13,23 @@ import {
 
 
 // ENUMS
+export const userRoleValues = ["ADMIN", "STYLIST", "CLIENT"] as const;
+export type UserRole = (typeof userRoleValues)[number];
+export const UserRoleEnum = pgEnum("user_role", userRoleValues);
 
-export const UserRole = pgEnum("user_role", ["ADMIN", "STYLIST", "CLIENT"]);
-export const AuthProvider = pgEnum("auth_provider", ["EMAIL", "GOOGLE"]);
-export const AppointmentStatus = pgEnum("appointment_status", [
+export const authProviderValues = ["EMAIL", "GOOGLE"] as const;
+export type AuthProvider = (typeof authProviderValues)[number];
+export const AuthProviderEnum = pgEnum("auth_provider", authProviderValues);
+
+export const appointmentStatusValues = [
   "PENDING",
   "CONFIRMED",
   "COMPLETED",
   "CANCELLED",
   "RESCHEDULED",
-]);
+] as const;
+export type AppointmentStatus = (typeof appointmentStatusValues)[number];
+export const AppointmentStatusEnum = pgEnum("appointment_status", appointmentStatusValues);
 
 
 // USERS TABLE
@@ -31,8 +38,8 @@ export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: varchar("email", { length: 255 }).notNull().unique(),
   password_hash: varchar("password_hash", { length: 255 }),
-  auth_provider: AuthProvider("auth_provider").default("EMAIL").notNull(),
-  role: UserRole("role").default("CLIENT").notNull(),
+  auth_provider: AuthProviderEnum("auth_provider").default("EMAIL").notNull(),
+  role: UserRoleEnum("role").default("CLIENT").notNull(),
   full_name: varchar("full_name", { length: 255 }),
   years_of_experience: integer("years_of_experience"),
   age: integer("age"),
@@ -117,7 +124,7 @@ export const appointments = pgTable("appointments", {
   stylist_id: uuid("stylist_id").references(() => users.id),
   start_time: timestamp("start_time").notNull(),
   end_time: timestamp("end_time").notNull(),
-  status: AppointmentStatus("status").default("PENDING").notNull(),
+  status: AppointmentStatusEnum("status").default("PENDING").notNull(),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),

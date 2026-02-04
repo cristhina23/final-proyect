@@ -51,8 +51,8 @@
   // Use real stylists data with calculated ratings
   const allStylistsWithRatings = allStylists.map((stylist, index) => ({
     ...stylist,
-    rating: 4.5 + (stylist.experience / 30), // Calculate rating based on experience
-    reviewCount: Math.floor(stylist.experience * 8),
+    rating: 4.5 + ((stylist.experience ?? 0) / 30), // Calculate rating based on experience
+    reviewCount: Math.floor((stylist.experience ?? 0) * 8),
     isRecommended: index === 0 // First stylist is recommended
   }));
 
@@ -85,9 +85,9 @@
   function selectStylist(stylist: typeof allStylistsWithRatings[0]) {
     selectedStylist = {
       name: stylist.name,
-      specialty: stylist.specialty,
+      specialty: stylist.specialty ?? "Generalist",
       image: stylist.image,
-      experience: stylist.experience
+      experience: stylist.experience ?? 0
     };
     currentStep = 3;
   }
@@ -168,9 +168,9 @@
               {#each filteredStylists as stylist}
                 <StylistCard
                   name={stylist.name}
-                  image={stylist.image}
-                  specialty={stylist.specialty}
-                  experience={stylist.experience}
+                  image={stylist.image ?? ""}
+                  specialty={stylist.specialty ?? "Generalist"}
+                  experience={stylist.experience ?? 0}
                   rating={stylist.rating}
                   reviewCount={stylist.reviewCount}
                   isSelected={selectedStylist?.name === stylist.name}

@@ -3,7 +3,7 @@ import { stylist_services, services } from '../schema';
 import { eq, and } from 'drizzle-orm';
 
 // assign a service to a stylist
-export async function assignServiceToStylist(stylistId: number, serviceId: number) {
+export async function assignServiceToStylist(stylistId: string, serviceId: number) {
   const [assignment] = await db.insert(stylist_services)
     .values({ stylist_id: stylistId, service_id: serviceId })
     .returning();
@@ -11,7 +11,7 @@ export async function assignServiceToStylist(stylistId: number, serviceId: numbe
 }
 
 // get all the services that a stylist offers
-export async function getStylistServices(stylistId: number) {
+export async function getStylistServices(stylistId: string) {
   return await db.select({
     service: services
   })
@@ -21,7 +21,7 @@ export async function getStylistServices(stylistId: number) {
 }
 
 // remove a service from a stylist
-export async function removeServiceFromStylist(stylistId: number, serviceId: number) {
+export async function removeServiceFromStylist(stylistId: string, serviceId: number) {
   const [deleted] = await db.delete(stylist_services)
     .where(
       and(

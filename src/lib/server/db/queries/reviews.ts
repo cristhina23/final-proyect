@@ -5,8 +5,8 @@ import { eq } from 'drizzle-orm';
 // create a review 
 export async function createReview(data: {
   appointment_id: number;
-  client_id: number;
-  stylist_id: number;
+  client_id: string;
+  stylist_id: string;
   rating: number;
   comment?: string;
 }) {
@@ -15,12 +15,12 @@ export async function createReview(data: {
 }
 
 // get reviews by stylist
-export async function getReviewsByStylist(stylistId: number) {
+export async function getReviewsByStylist(stylistId: string) {
   return await db.select().from(reviews).where(eq(reviews.stylist_id, stylistId));
 }
 
 // get reviews by client
-export async function getReviewsByClient(clientId: number) {
+export async function getReviewsByClient(clientId: string) {
   return await db.select().from(reviews).where(eq(reviews.client_id, clientId));
 }
 
@@ -33,7 +33,7 @@ export async function getReviewByAppointment(appointmentId: number) {
 }
 
 // get average rating of a stylist
-export async function getStylistAverageRating(stylistId: number) {
+export async function getStylistAverageRating(stylistId: string) {
   const stylistReviews = await getReviewsByStylist(stylistId);
   
   if (stylistReviews.length === 0) return 0;

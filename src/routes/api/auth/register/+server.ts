@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { hashPasword } from '$lib/server/auth/auth.service.js';
 import { createUser, getUserByEmail } from '$lib/server/db/queries';
-import { UserRole } from '$lib/server/db/schema';
+import type { UserRole } from '$lib/server/db/schema';
 
 
 export const POST = async ({ request }) => {
@@ -29,7 +29,7 @@ export const POST = async ({ request }) => {
     email, 
     password_hash: hashedPassword, 
     full_name, 
-    role: UserRole.CLIENT };
+    role: "CLIENT" as UserRole };
 
   const createdUser = await createUser(newUser);
 

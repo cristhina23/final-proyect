@@ -5,16 +5,16 @@
   import UserDashboard from "./user/UserDashboard.svelte";
 
 
-		let role = $state<UserRole>("stylist");	
+		let role = $state<UserRole>("STYLIST");	
       
      // For testing purposes, set the role here
 	// <Sidebar role={user.role} /> use this when you need to use the actual user role
 </script>
 
 
-{#if role === "admin"}
+{#if role === "ADMIN"}
   <AdminDashboard role={role} />
-{:else if role === "stylist"}
+{:else if role === "STYLIST"}
   <StylistDashboard role={role} />
 {:else}
   <UserDashboard role={role} />
