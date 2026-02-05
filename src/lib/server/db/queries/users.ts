@@ -4,9 +4,8 @@ import { db } from "../index";
 import { eq } from "drizzle-orm";
 import { getStylistServices } from './stylist-services';
 
-// ---------------------------
 // CREATE USER
-// ---------------------------
+
 export async function createUser(data: {
   email: string;
   password_hash?: string;
@@ -30,9 +29,9 @@ export async function createUser(data: {
   return user;
 }
 
-// ---------------------------
+
 // GET USERS
-// ---------------------------
+
 export async function getAllStylists() {
   return await db.select().from(users).where(eq(users.role, "STYLIST"));
 }
@@ -51,9 +50,9 @@ export async function getUserByEmail(email: string) {
   return user;
 }
 
-// ---------------------------
+
 // GET STYLISTS WITH SERVICES
-// ---------------------------
+
 export async function getStylistsWithServices() {
   const stylists = await getAllStylists();
   
@@ -74,9 +73,9 @@ export async function getStylistsWithServices() {
   return stylistsWithServices;
 }
 
-// ---------------------------
+
 // UPDATE USERS
-// ---------------------------
+
 export async function updateUser(
   id: string,
   data: Partial<{
@@ -104,9 +103,9 @@ export async function updatePassword(id: string, newPasswordHash: string) {
   return updated;
 }
 
-// ---------------------------
+
 // DELETE USER
-// ---------------------------
+
 export async function deleteUser(id: string) {
   const [deleted] = await db
     .delete(users)

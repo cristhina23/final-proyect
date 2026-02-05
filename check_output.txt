@@ -1,0 +1,258 @@
+Loading svelte-check in workspace: c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect
+Getting Svelte diagnostics...
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\routes\(app)\+page.server.ts[39m:1:15
+[31mError[39m: Module '"../$types"' has no exported member 'PageServerLoad'. 
+[36mimport type { [35mPageServerLoad[36m } from '../$types';[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\routes\(app)\+page.server.ts[39m:3:31
+[31mError[39m: Binding element 'fetch' implicitly has an 'any' type. 
+[36m
+export const load = (async ({ [35mfetch[36m }) => {
+  try {[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:20:23
+[31mError[39m: Namespace '"c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema"' has no exported member 'Session'. 
+[36m	const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
+	const session: table.[35mSession[36m = {
+		id: sessionId,[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:25:24
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m	};
+	await db.insert(table.[35msession[36m).values(session);
+	return session;[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:34:22
+[31mError[39m: Property 'user' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. Did you mean 'users'? 
+[36m			// Adjust user table here to tweak returned data
+			user: { id: table.[35muser[36m.id, username: table.user.username },
+			session: table.session[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:34:47
+[31mError[39m: Property 'user' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. Did you mean 'users'? 
+[36m			// Adjust user table here to tweak returned data
+			user: { id: table.user.id, username: table.[35muser[36m.username },
+			session: table.session[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:35:19
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m			user: { id: table.user.id, username: table.user.username },
+			session: table.[35msession[36m
+		})[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:37:15
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m		})
+		.from(table.[35msession[36m)
+		.innerJoin(table.user, eq(table.session.userId, table.user.id))[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:38:20
+[31mError[39m: Property 'user' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. Did you mean 'users'? 
+[36m		.from(table.session)
+		.innerJoin(table.[35muser[36m, eq(table.session.userId, table.user.id))
+		.where(eq(table.session.id, sessionId));[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:38:35
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m		.from(table.session)
+		.innerJoin(table.user, eq(table.[35msession[36m.userId, table.user.id))
+		.where(eq(table.session.id, sessionId));[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:38:57
+[31mError[39m: Property 'user' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. Did you mean 'users'? 
+[36m		.from(table.session)
+		.innerJoin(table.user, eq(table.session.userId, table.[35muser[36m.id))
+		.where(eq(table.session.id, sessionId));[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:39:19
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m		.innerJoin(table.user, eq(table.session.userId, table.user.id))
+		.where(eq(table.[35msession[36m.id, sessionId));[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:48:25
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m	if (sessionExpired) {
+		await db.delete(table.[35msession[36m).where(eq(table.session.id, session.id));
+		return { session: null, user: null };[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:48:49
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m	if (sessionExpired) {
+		await db.delete(table.session).where(eq(table.[35msession[36m.id, session.id));
+		return { session: null, user: null };[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:56:18
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m		await db
+			.update(table.[35msession[36m)
+			.set({ expiresAt: session.expiresAt })[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:58:20
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36m			.set({ expiresAt: session.expiresAt })
+			.where(eq(table.[35msession[36m.id, session.id));
+	}[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:67:24
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36mexport async function invalidateSession(sessionId: string) {
+	await db.delete(table.[35msession[36m).where(eq(table.session.id, sessionId));
+}[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth.ts[39m:67:48
+[31mError[39m: Property 'session' does not exist on type 'typeof import("c:/Users/lenovo/Desktop/cristhina/BYU/TERM-7/CSE310/final-proyect/src/lib/server/db/schema")'. 
+[36mexport async function invalidateSession(sessionId: string) {
+	await db.delete(table.session).where(eq(table.[35msession[36m.id, sessionId));
+}[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\components\ui\chart\chart-container.svelte[39m:20:27
+[33mWarn[39m: This reference only captures the initial value of `id`. Did you mean to reference it inside a closure instead?
+https://svelte.dev/e/state_referenced_locally (svelte)
+[36m
+	const chartId = `chart-${[35mid[36m || uid.replace(/:/g, "")}`;[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\data\sidebarData.ts[39m:37:3
+[31mError[39m: Object literal may only specify known properties, but 'admin' does not exist in type 'Record<UserRole, SidebarItem[]>'. Did you mean to write 'ADMIN'? 
+[36mexport const sidebarData: Record<UserRole, SidebarItem[]> = {
+  [35madmin[36m: [
+    {[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth\auth.utils.ts[39m:13:27
+[31mError[39m: No overload matches this call.
+  Overload 1 of 5, '(payload: string | object | Buffer<ArrayBufferLike>, secretOrPrivateKey: null, options?: (SignOptions & { algorithm: "none"; }) | undefined): string', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'null'.
+      Type 'undefined' is not assignable to type 'null'.
+  Overload 2 of 5, '(payload: string | object | Buffer<ArrayBufferLike>, secretOrPrivateKey: Buffer<ArrayBufferLike> | Secret | PrivateKeyInput | JsonWebKeyInput, options?: SignOptions | undefined): string', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'Buffer<ArrayBufferLike> | Secret | PrivateKeyInput | JsonWebKeyInput'.
+      Type 'undefined' is not assignable to type 'Buffer<ArrayBufferLike> | Secret | PrivateKeyInput | JsonWebKeyInput'.
+  Overload 3 of 5, '(payload: string | object | Buffer<ArrayBufferLike>, secretOrPrivateKey: Buffer<ArrayBufferLike> | Secret | PrivateKeyInput | JsonWebKeyInput, callback: SignCallback): void', gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'Buffer<ArrayBufferLike> | Secret | PrivateKeyInput | JsonWebKeyInput'.
+      Type 'undefined' is not assignable to type 'Buffer<ArrayBufferLike> | Secret | PrivateKeyInput | JsonWebKeyInput'. 
+[36mexport function generateToken(user: TokenPayload) {
+    return jwt.sign(user, [35mJWT_SECRET[36m, { expiresIn: JWT_EXPIRATION });
+}[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\auth\auth.utils.ts[39m:17:30
+[31mError[39m: No overload matches this call.
+  The last overload gave the following error.
+    Argument of type 'string | undefined' is not assignable to parameter of type 'Buffer<ArrayBufferLike> | Secret | JsonWebKeyInput | PublicKeyInput | GetPublicKeyOrSecret'.
+      Type 'undefined' is not assignable to type 'Buffer<ArrayBufferLike> | Secret | JsonWebKeyInput | PublicKeyInput | GetPublicKeyOrSecret'. 
+[36mexport function verifyToken(token: string) {
+    return jwt.verify(token, [35mJWT_SECRET[36m);
+}[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\queries\appointments.ts[39m:15:62
+[31mError[39m: No overload matches this call.
+  Overload 1 of 2, '(value: { start_time: SQL<unknown> | Date | Placeholder<string, any>; end_time: SQL<unknown> | Date | Placeholder<string, any>; client_id: string | SQL<...> | Placeholder<...>; ... 4 more ...; status?: "PENDING" | ... 6 more ... | undefined; }): PgInsertBase<...>', gave the following error.
+    Argument of type '{ client_id: number; stylist_id?: number | undefined; start_time: Date; end_time: Date; status?: "PENDING" | "CONFIRMED" | "COMPLETED" | "CANCELLED" | "RESCHEDULED" | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ start_time: SQL<unknown> | Date | Placeholder<string, any>; end_time: SQL<unknown> | Date | Placeholder<string, any>; client_id: string | SQL<...> | Placeholder<...>; ... 4 more ...; status?: "PENDING" | ... 6 more ... | undefined; }'.
+      Types of property 'client_id' are incompatible.
+        Type 'number' is not assignable to type 'string | SQL<unknown> | Placeholder<string, any>'.
+  Overload 2 of 2, '(values: { start_time: SQL<unknown> | Date | Placeholder<string, any>; end_time: SQL<unknown> | Date | Placeholder<string, any>; client_id: string | SQL<...> | Placeholder<...>; ... 4 more ...; status?: "PENDING" | ... 6 more ... | undefined; }[]): PgInsertBase<...>', gave the following error.
+    Argument of type '{ client_id: number; stylist_id?: number | undefined; start_time: Date; end_time: Date; status?: "PENDING" | "CONFIRMED" | "COMPLETED" | "CANCELLED" | "RESCHEDULED" | undefined; notes?: string | undefined; }' is not assignable to parameter of type '{ start_time: SQL<unknown> | Date | Placeholder<string, any>; end_time: SQL<unknown> | Date | Placeholder<string, any>; client_id: string | SQL<...> | Placeholder<...>; ... 4 more ...; status?: "PENDING" | ... 6 more ... | undefined; }[]'.
+      Type '{ client_id: number; stylist_id?: number | undefined; start_time: Date; end_time: Date; status?: "PENDING" | "CONFIRMED" | "COMPLETED" | "CANCELLED" | "RESCHEDULED" | undefined; notes?: string | undefined; }' is missing the following properties from type '{ start_time: SQL<unknown> | Date | Placeholder<string, any>; end_time: SQL<unknown> | Date | Placeholder<string, any>; client_id: string | SQL<...> | Placeholder<...>; ... 4 more ...; status?: "PENDING" | ... 6 more ... | undefined; }[]': length, pop, push, concat, and 35 more. 
+[36m}) {
+  const [appointment] = await db.insert(appointments).values([35mdata[36m).returning();
+  return appointment;[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\queries\appointments.ts[39m:35:53
+[31mError[39m: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "client_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<number>, right: number | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "client_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<number>'.
+      Type 'PgColumn<{ name: "client_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<number>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "client_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'. 
+[36mexport async function getAppointmentsByClientId(client_id: number) {
+  return await db.select().from(appointments).where([35meq[36m(appointments.client_id, client_id));
+}[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\queries\appointments.ts[39m:40:53
+[31mError[39m: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "stylist_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: false; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<number>, right: number | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "stylist_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: false; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<number>'.
+      Type 'PgColumn<{ name: "stylist_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: false; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<number>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "stylist_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: false; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'. 
+[36mexport async function getAppointmentsByStylistId(stylist_id: number) {
+  return await db.select().from(appointments).where([35meq[36m(appointments.stylist_id, stylist_id));
+}[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\queries\appointments.ts[39m:85:55
+[31mError[39m: Argument of type '{ status: "RESCHEDULED"; updatedAt: Date; start_time: Date; end_time: Date; stylist_id?: number; }' is not assignable to parameter of type '{ start_time?: SQL<unknown> | PgColumn<ColumnBaseConfig<ColumnDataType, string>, {}, {}> | Date | undefined; end_time?: SQL<...> | PgColumn<...> | Date | undefined; ... 5 more ...; status?: "PENDING" | ... 6 more ... | undefined; }'.
+  Types of property 'stylist_id' are incompatible.
+    Type 'number | undefined' is not assignable to type 'string | SQL<unknown> | PgColumn<ColumnBaseConfig<ColumnDataType, string>, {}, {}> | null | undefined'.
+      Type 'number' is not assignable to type 'string | SQL<unknown> | PgColumn<ColumnBaseConfig<ColumnDataType, string>, {}, {}> | null | undefined'. 
+[36m) {
+  const [updated] = await db.update(appointments).set([35m{ ...data, status: 'RESCHEDULED', updatedAt: new Date() }[36m).where(eq(appointments.id, id)).returning();
+  return updated;[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\queries\availability.ts[39m:28:9
+[31mError[39m: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "stylist_id"; tableName: "stylist_availability"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<number>, right: number | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "stylist_id"; tableName: "stylist_availability"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<number>'.
+      Type 'PgColumn<{ name: "stylist_id"; tableName: "stylist_availability"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<number>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "stylist_id"; tableName: "stylist_availability"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'. 
+[36m      and(
+        [35meq[36m(stylist_availability.stylist_id, stylistId),
+        eq(stylist_availability.day_of_week, dayOfWeek)[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\queries\availability.ts[39m:47:9
+[31mError[39m: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "stylist_id"; tableName: "stylist_time_off"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; ... 5 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<number>, right: number | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "stylist_id"; tableName: "stylist_time_off"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<number>'.
+      Type 'PgColumn<{ name: "stylist_id"; tableName: "stylist_time_off"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<number>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "stylist_id"; tableName: "stylist_time_off"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'. 
+[36m      and(
+        [35meq[36m(stylist_time_off.stylist_id, stylistId),
+        between(stylist_time_off.date, startOfDay, endOfDay)[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\queries\availability.ts[39m:65:9
+[31mError[39m: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "stylist_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: false; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'number' is not assignable to parameter of type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<number>, right: number | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "stylist_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: false; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<number>'.
+      Type 'PgColumn<{ name: "stylist_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: false; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<number>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "stylist_id"; tableName: "appointments"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: false; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'. 
+[36m      and(
+        [35meq[36m(appointments.stylist_id, stylistId),
+        between(appointments.start_time, startOfDay, endOfDay),[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\seed.ts[39m:99:7
+[31mError[39m: Type 'string' is not assignable to type 'number'. 
+[36m    const apt1 = await queries.createAppointment({
+      [35mclient_id[36m: client1.id,
+      stylist_id: stylist1.id,[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\server\db\seed.ts[39m:100:7
+[31mError[39m: Type 'string' is not assignable to type 'number'. 
+[36m      client_id: client1.id,
+      [35mstylist_id[36m: stylist1.id,
+      start_time: tomorrow,[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\lib\components\Dashboard\userDashboard\PromotionCard.svelte[39m:38:105
+[31mError[39m: Element implicitly has an 'any' type because expression of type 'any' can't be used to index type '{ new: string; members: string; }'. (ts)
+[36m      <div class="mb-3">
+        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide {[35mbadgeStyles[badgeVariant][36m}">
+          {badgeText}[39m
+
+c:\Users\lenovo\Desktop\cristhina\BYU\TERM-7\CSE310\final-proyect\[32msrc\routes\(app)\+page.svelte[39m:8:33
+[31mError[39m: Cannot find module '../(public)/$types' or its corresponding type declarations. (ts)
+[36m<script lang="ts">
+  import type { PageData } from [35m'../(public)/$types'[36m;
+  import HowItWorks from '$lib/components/landing/HowItWorks.svelte';[39m
+
+====================================
+[31msvelte-check found 32 errors and 1 warning in 10 files
+[39m
