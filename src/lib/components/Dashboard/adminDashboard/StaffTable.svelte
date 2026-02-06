@@ -4,7 +4,9 @@
   import StaffActions from "./StaffActions.svelte";
   import type { Employee } from "$lib/types/staff";
 
-  const { staff } = $props<{ staff: Employee[] }>();
+  export let staff: Employee[];
+
+
 </script>
 
 <Table.Root>
@@ -18,7 +20,15 @@
   </Table.Header>
 
   <Table.Body>
-    {#each staff as emp}
+    {#if staff.length === 0}
+      <Table.Row>
+        <Table.Cell colspan={4} class="h-24 text-center">
+          No results.
+        </Table.Cell>
+      </Table.Row>
+
+    {:else}
+      {#each staff as emp}
       <Table.Row>
         <!-- EMPLOYEE -->
         <Table.Cell>
@@ -58,5 +68,8 @@
         </Table.Cell>
       </Table.Row>
     {/each}
+    {/if}
+
+  
   </Table.Body>
 </Table.Root>
