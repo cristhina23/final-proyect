@@ -11,15 +11,13 @@
   import MoreMenuModal from "../ui/MoreMenuModal.svelte";
 
   
-  const props = $props<{ role: UserRole }>();
-  /* Restoring state and safe derivation */
-  const role = $derived(props.role);
+  let { role } = $props<{ role: UserRole }>();
   let showModal = $state(false);
   let active = $state("");
 
   const items = $derived(
     role && sidebarData[role as UserRole] 
-      ? sidebarData[role as UserRole].filter(item => item.mobile === true) 
+      ? sidebarData[role as UserRole].filter(item => item.mobile) 
       : []
   );
 </script>

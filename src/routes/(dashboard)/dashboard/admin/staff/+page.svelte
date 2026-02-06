@@ -2,8 +2,6 @@
 <script lang="ts">
   import Header from "$lib/components/Dashboard/adminDashboard/Header.svelte";
   import StaffTable from "$lib/components/Dashboard/adminDashboard/StaffTable.svelte";
-  import Sidebar from "$lib/components/Dashboard/Sidebar.svelte";
-  import SidebarMobile from "$lib/components/Dashboard/SidebarMobile.svelte";
   import { stylists } from "$lib/data";
   import type { UserRole } from "$lib/types/role";
   
@@ -12,7 +10,7 @@
 </script>
 
 
-    <!-- Header (no scroll) -->
+    
     <Header />
 
     <!-- CONTENT -->

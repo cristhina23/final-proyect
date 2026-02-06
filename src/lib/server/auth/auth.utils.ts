@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken";
 import { JWT_SECRET, JWT_EXPIRATION } from "$env/static/private";
 
+import type { UserRole } from "$lib/types/role";
+
 interface TokenPayload {
   id: string;
   email: string;
-  role: string;
+  role: UserRole;
 }
 
 export function generateToken(user: TokenPayload) {

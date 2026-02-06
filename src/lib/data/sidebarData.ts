@@ -17,7 +17,8 @@ import {
   Calendar,
   CalendarPlus,
   Heart,
-  ClipboardList
+  ClipboardList,
+  User
 } from "lucide-svelte";
 import type { ComponentType } from "svelte";
 
@@ -34,7 +35,7 @@ export type SidebarItem = {
 };
 
 export const sidebarData: Record<UserRole, SidebarItem[]> = {
-  admin: [
+  ADMIN: [
     {
       label: "Overview",
       route: "/dashboard",
@@ -92,7 +93,7 @@ export const sidebarData: Record<UserRole, SidebarItem[]> = {
     }
   ],
 
-  stylist: [
+  STYLIST: [
   {
     label: "Overview",
     route: "/dashboard",
@@ -136,6 +137,13 @@ export const sidebarData: Record<UserRole, SidebarItem[]> = {
     mobile: false
   },
   {
+    label: "Profile",
+    route: "/dashboard/stylist/profile",
+    icon: User,
+    desktop: true,
+    mobile: false
+  },
+  {
     label: "More",
     icon: MoreHorizontal,
     mobile: true,
@@ -143,7 +151,7 @@ export const sidebarData: Record<UserRole, SidebarItem[]> = {
   }
 ],
 
-  user: [
+  CLIENT: [
     {
       label: "Overview",
       route: "/dashboard",
@@ -159,7 +167,7 @@ export const sidebarData: Record<UserRole, SidebarItem[]> = {
       mobile: true
     },
     {
-      label: "My Appointments",
+      label: "Appointments",
       route: "/dashboard/user/my-appointments",
       icon: CalendarCheck,
       desktop: true,
@@ -185,6 +193,13 @@ export const sidebarData: Record<UserRole, SidebarItem[]> = {
       icon: Heart,
       desktop: true,
       mobile: false
+    },
+    {
+      label: "Profile",
+      route: "/dashboard/user/profile",
+      icon: User,
+      desktop: true,
+      mobile: true
     },
     {
       label: "More",
