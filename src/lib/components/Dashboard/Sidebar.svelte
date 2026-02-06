@@ -26,6 +26,15 @@
     }
     return $page.url.pathname.startsWith(route);
   }
+
+  const logout = async () => {
+    const response = await fetch('/api/auth/logout', {
+      method: 'POST',
+    });
+    if (response.ok) {
+      window.location.href = '/';
+    }
+  };
 </script>
 
 <div
@@ -45,7 +54,7 @@
       onclick={toggleSidebar}
     >
       {#if collapsed}
-        <ChevronRight size={20} />
+        <ChevronRight size={20}  />
       {:else}
         <X size={20} />
       {/if}
@@ -83,16 +92,26 @@
   <div class="shrink-0 pt-3">
     <div class="my-4 h-px bg-secondary/50"></div>
 
+    {#if collapsed}
+        <Button
+          variant="ghost"
+          size="icon"
+          class="w-full flex items-center justify-center gap-2
+        hover:text-brown hover:shadow-lg hover:scale-[1.02] transition-all"
+          onclick={logout}
+        >
+          <LogOut size={20} />
+        </Button>
+
+    {:else}
     <Button
       href="/"
       class="w-full flex items-center justify-center gap-2
         hover:text-brown hover:shadow-lg hover:scale-[1.02] transition-all"
-    >
-      {#if collapsed}
-        <LogOut size={20} />
-      {:else}
+        aria-label="Logout"
+        >
         View Website Live
-      {/if}
     </Button>
+    {/if}
   </div>
 </div>
