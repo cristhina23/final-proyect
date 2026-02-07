@@ -46,6 +46,12 @@ export const users = pgTable("users", {
   photo_url: varchar("photo_url", { length: 512 }),
   phone: varchar("phone", { length: 20 }),
   notes: text("notes"),
+
+  invitation_token: varchar("invitation_token", { length: 255 }), 
+  invitation_expires_at: timestamp("invitation_expires_at"), 
+  is_active: boolean("is_active").default(true).notNull(), 
+
+
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

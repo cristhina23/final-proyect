@@ -8,6 +8,8 @@
   import type { Employee } from "$lib/types/staff";
   
 
+  import AddStylistModal from "$lib/components/Dashboard/adminDashboard/AddStylistModal.svelte";
+
   const { role } = $props<{ role: UserRole }>();
   let staff: Employee[] = [];
   let open = $state(false);
@@ -38,18 +40,20 @@
     
     <Header />
 
-    
+    <AddStylistModal bind:open onCreate={handleCreateStylist} />
 
     <!-- CONTENT -->
     <main class="flex-1 min-w-0 overflow-y-auto p-6">
       <div class="flex justify-end py-2">
-        <Button size="sm" onclick={() => {handleCreateStylist}}>Add New Stylist</Button>
+        <Button size="sm" onclick={() => open = true}>Add New Stylist</Button>
       </div>
 
       <StaffTable staff={stylists} />
 
+      
 
     </main>
+
 
  
 
