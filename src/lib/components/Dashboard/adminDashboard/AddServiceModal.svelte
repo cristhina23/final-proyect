@@ -1,113 +1,164 @@
 <script lang="ts">
+  import Select from "$lib/components/ui/Select.svelte";
+  import type { Service, Category } from "$lib/types/services";
   import { X } from "lucide-svelte";
 
   let { open = $bindable(false), onAdd } = $props<{
     open: boolean;
-    onAdd: (data: Omit<Service, 'id' | 'created_at' | 'updated_at'>) => void;
+    onAdd: (data: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>) => void;
   }>();
 
   let name = $state("");
   let price = $state("");
   let duration = $state("");
   let description = $state("");
-  let category = $state("");
+  let category = $state<number | null>(null);
   let is_active = $state(true);
 
+  let categories = $state<Category[]>([]);
+
+  $effect(() => {
+    fetch("/api/categories")
+      .then(res => res.json())
+      .then(data => categories = data);
+  });
+
+  let categoryOptions = $derived(categories.map(cat => ({
+    label: cat.name,
+    value: cat.id
+  })));
+
   function submit() {
+    if (!category) return;
+
     onAdd({
       name,
       description,
       duration_minutes: Number(duration),
       price: Number(price),
-      category,
+      category_id: Number(category),
       is_active
     });
+
     open = false;
-  }
+}
 </script>
 
 {#if open}
-  <div class="fixed inset-0 bg-black/50 flex items-center justify-end z-50">
-    <div class="bg-white relative h-full p-8 w-full max-w-md">
-      <div class="flex justify-between items-center">
-        <h2 class="text-xl font-bold mb-6">Add Service</h2>
+  <div class="fixed inset-0 z-50 flex items-center justify-end bg-black/50">
+    <div class="relative h-full w-full max-w-md bg-white p-8">
+
+      <!-- Header -->
+      <div class="mb-6 flex items-center justify-between">
+        <h2 class="text-xl font-bold">Add Service</h2>
         <button
           type="button"
-          class="absolute top-4 right-4 text-sm text-foreground cursor-pointer hover:text-red-400 hover:bg-red-500/10 rounded-lg p-2 transition-colors duration-200"
-          onclick={() => open = false}
+          class="rounded-lg p-2 text-foreground transition-colors hover:bg-red-500/10 hover:text-red-400"
+          onclick={() => (open = false)}
         >
           <X />
         </button>
       </div>
+
+      <!-- Form -->
       <form class="space-y-6">
+
+        <!-- Name -->
         <div>
-          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-          <input 
+          <label for="name" class="block text-sm font-medium text-gray-700">
+            Name
+          </label>
+          <input
             id="name"
-            bind:value={name} 
-            placeholder="Service Name" 
-            class="w-full border rounded p-2"
+            bind:value={name}
+            placeholder="Service Name"
+            class="w-full rounded border p-2"
           />
         </div>
-        <div>
-          <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-          <input 
-            id="price"
-            bind:value={price} 
-            placeholder="Price" 
-            class="w-full border rounded p-2"
-          />
+
+        <!-- Price & Duration -->
+        <div class="flex gap-4">
+          <div class="flex-1">
+            <label for="price" class="block text-sm font-medium text-gray-700">
+              Price
+            </label>
+            <input
+              id="price"
+              bind:value={price}
+              placeholder="Price"
+              class="w-full rounded border p-2"
+            />
+          </div>
+
+          <div class="flex-1">
+            <label for="duration" class="block text-sm font-medium text-gray-700">
+              Duration
+            </label>
+            <input
+              id="duration"
+              bind:value={duration}
+              placeholder="Duration"
+              class="w-full rounded border p-2"
+            />
+          </div>
         </div>
+
+        <!-- Description -->
         <div>
-          <label for="duration" class="block text-sm font-medium text-gray-700">Duration</label>
-          <input 
-            id="duration"
-            bind:value={duration} 
-            placeholder="Duration" 
-            class="w-full border rounded p-2"
-          />
-        </div>
-        <div>
-          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-          <textarea 
+          <label for="description" class="block text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <textarea
             id="description"
-            bind:value={description} 
-            placeholder="Description" 
-            class="w-full border rounded p-2"
+            bind:value={description}
+            placeholder="Description"
+            class="w-full rounded border p-2"
           />
         </div>
-        <div>
-          <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-          <input 
-            id="category"
-            bind:value={category} 
-            placeholder="Category" 
-            class="w-full border rounded p-2"
-          />
-        </div>
-        <div class="flex items-center space-x-2">
-          <input 
+
+        <!-- Category -->
+        <Select
+          label="Category"
+          placeholder="Select a category"
+          bind:value={category}
+          options={categoryOptions}
+        />
+
+        <!-- Active checkbox -->
+        <div class="flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2">
+          <input
             id="is_active"
             type="checkbox"
-            bind:checked={is_active} 
-            class="w-4 h-4"
+            bind:checked={is_active}
+            class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary"
           />
-          <label for="is_active" class="text-sm font-medium text-gray-700">Active</label>
+          <label
+            for="is_active"
+            class="cursor-pointer text-sm font-medium text-gray-700"
+          >
+            Service is active
+          </label>
         </div>
-        <div class="flex justify-end space-x-2 pt-4">
-          <button 
-            onclick={() => open = false}
+
+        <!-- Actions -->
+        <div class="flex justify-end gap-2 pt-4">
+          <button
+            type="button"
+            onclick={() => (open = false)}
             class="px-4 py-2 text-gray-600 hover:text-gray-800"
           >
             Cancel
           </button>
-          <button 
+
+          <button
+            type="button"
             onclick={submit}
-            class="px-4 py-2 bg-brown-600 text-white rounded hover:bg-brown-700"
+            class="rounded bg-primary px-4 py-2 text-white transition-colors hover:bg-primary/80"
           >
             Add
           </button>
         </div>
+
       </form>
     </div>
   </div>

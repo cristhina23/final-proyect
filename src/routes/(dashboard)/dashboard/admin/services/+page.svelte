@@ -2,6 +2,9 @@
   import AddServiceModal from "$lib/components/Dashboard/adminDashboard/AddServiceModal.svelte";
   import ServiceCard from "$lib/components/Dashboard/adminDashboard/ServiceCard.svelte";
   import type { Service } from "$lib/types/services";
+  import { onMount } from "svelte";
+  import { toast } from 'svelte-french-toast';
+
 
   let { data } = $props();
 
@@ -9,9 +12,10 @@
   let open = $state(false);
   let selectedService = $state<Service | null>(null);
 
-  $effect(() => {
-    services = data.services ?? [];
-  });
+  onMount(async () => {
+  const res = await fetch("/api/services");
+  services = await res.json();
+});
 
   function openCreate() {
     selectedService = null;
@@ -23,28 +27,94 @@
     open = true;
   }
 
-  const handleAdd = (service: Omit<Service, 'id' | 'created_at' | 'updated_at'>) => {
-    console.log(service);
-  };
+  const handleAdd = async (
+  service: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>
+) => {
+  await toast.promise(
+    (async () => {
+      const res = await fetch('/api/services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(service)
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to create service');
+      }
+
+      const data = await res.json();
+      services = [...services, data];
+
+      open = false;
+      selectedService = null;
+
+      return data;
+    })(),
+    {
+      loading: 'Creating service...',
+      success: 'Service created successfully',
+      error: (err) => err.message
+    }
+  );
+};
+
 
   function handleUpdate(updated: Partial<Service>) {
-    if (!selectedService) return;
+  if (!selectedService) return;
 
-    services = services.map(s =>
-      s.id === selectedService!.id ? { ...s, ...updated } : s
-    );
+  toast.promise(
+    (async () => {
+      const res = await fetch(`/api/services/${selectedService.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updated)
+      });
 
-    open = false;
-    selectedService = null;
-  }
+      if (!res.ok) {
+        throw new Error('Failed to update service');
+      }
+
+      services = services.map(s =>
+        s.id === selectedService!.id ? { ...s, ...updated } : s
+      );
+
+      open = false;
+      selectedService = null;
+    })(),
+    {
+      loading: 'Updating service...',
+      success: 'Service updated',
+      error: (err) => err.message
+    }
+  );
+}
+
 
   function handleDelete() {
-    if (!selectedService) return;
+  if (!selectedService) return;
 
-    services = services.filter(s => s.id !== selectedService!.id);
-    open = false;
-    selectedService = null;
-  }
+  toast.promise(
+    (async () => {
+      const res = await fetch(`/api/services/${selectedService.id}`, {
+        method: 'DELETE'
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to delete service');
+      }
+
+      services = services.filter(s => s.id !== selectedService!.id);
+      open = false;
+      selectedService = null;
+    })(),
+    {
+      loading: 'Deleting service...',
+      success: 'Service deleted',
+      error: (err) => err.message
+    }
+  );
+}
+
 </script>
 
 <div class="p-8">
@@ -69,7 +139,6 @@
         <ServiceCard
           service={service}
           open={open}
-          onEdit={() => openEdit(service)}
           onUpdate={handleUpdate}
           onDelete={handleDelete}
         />

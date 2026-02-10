@@ -3,6 +3,7 @@
   import SidebarMobile from "$lib/components/Dashboard/SidebarMobile.svelte";
   import type { UserRole } from "$lib/types/role";
   import '../../app.css'
+  import { Toaster } from 'svelte-french-toast';
 
   export let data: {
     role: UserRole;
@@ -18,6 +19,7 @@
 
   <div class="flex-1 flex flex-col min-w-0">
     <main class="flex-1 overflow-y-auto md:p-6">
+      <Toaster position="top-right" />
       <slot />
     </main>
 

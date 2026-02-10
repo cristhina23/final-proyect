@@ -65,10 +65,19 @@ export const services = pgTable("services", {
   description: text("description").notNull(),
   duration_minutes: integer("duration_minutes").notNull(),
   price: numeric("price", { precision: 10, scale: 2 }).notNull(),
-  category: varchar("category", { length: 50 }).notNull(),
+  category_id: integer("category_id").notNull().references(() => service_categories.id),
   is_active: boolean("is_active").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// SERVICE CATEGORIES
+export const service_categories = pgTable("service_categories", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar("name", { length: 100 }).notNull(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  is_active: boolean("is_active").default(true).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 // STYLIST SERVICES

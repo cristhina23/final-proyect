@@ -9,7 +9,7 @@ export async function createService(data: {
   description: string;
   duration_minutes: number;
   price: string;
-  category: string;
+  category_id: number;
   is_active?: boolean;
 }) {
   const [service] = await db.insert(services).values(data).returning();
@@ -33,7 +33,7 @@ export async function updateService(id: number, data: {
   description: string;
   duration_minutes: number;
   price: string;
-  category: string;
+  category_id: number;
   is_active: boolean;
 }) {
   const [updated] = await db.update(services)

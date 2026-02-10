@@ -1,0 +1,10 @@
+POST http://localhost:5173/api/services
+Content-Type: application/json
+
+{
+  "name": "Haircut & Styling",
+  "price": "35",
+  "duration_minutes": 60,
+  "description": "Expert haircut and styling tailored to your face shape and lifestyle.",
+  "category": "Haircut"
+}
