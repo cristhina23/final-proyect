@@ -1,21 +1,40 @@
 <script lang="ts">
   import AddServiceModal from "$lib/components/Dashboard/adminDashboard/AddServiceModal.svelte";
   import ServiceCard from "$lib/components/Dashboard/adminDashboard/ServiceCard.svelte";
-  import type { Service } from "$lib/types/services";
+  import { Input } from "$lib/components/ui/input";
+  import type { Service, Category } from "$lib/types/services";
   import { onMount } from "svelte";
   import { toast } from 'svelte-french-toast';
+  import { Search } from "lucide-svelte";
+  
 
 
   let { data } = $props();
 
   let services = $state<Service[]>(data.services ?? []);
+  let categories = $state<Category[]>([]);
   let open = $state(false);
   let selectedService = $state<Service | null>(null);
+  let search = $state("");
+  let selectedCategoryId = $state<number | null>(null);
+
+  let filteredServices = $derived(
+    services.filter(service => {
+      const matchesSearch = service.name.toLowerCase().includes(search.toLowerCase()) || service.description?.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = selectedCategoryId === null || service.category_id === selectedCategoryId;
+      return matchesSearch && matchesCategory;
+    })
+  );
 
   onMount(async () => {
-  const res = await fetch("/api/services");
-  services = await res.json();
-});
+    const [servicesRes, categoriesRes] = await Promise.all([
+      fetch("/api/services"),
+      fetch("/api/categories")
+    ]);
+    
+    if (servicesRes.ok) services = await servicesRes.json();
+    if (categoriesRes.ok) categories = await categoriesRes.json();
+  });
 
   function openCreate() {
     selectedService = null;
@@ -119,15 +138,41 @@
 
 </script>
 
-<div class="p-8">
+<div class="p-8 flex flex-col gap-6">
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">Services</h1>
-    <button
-      onclick={openCreate}
-      class="px-4 py-2 bg-primary text-white rounded hover:bg-primary/80"
-    >
-      Add Service
-    </button>
+    <h1 class="text-2xl font-bold">Services Management</h1>
+    
+  </div>
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-wrap gap-2">
+      <button
+        onclick={() => selectedCategoryId = null}
+        class="px-4 py-2 rounded-full text-sm font-medium transition-colors {selectedCategoryId === null ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
+      >
+        All
+      </button>
+      {#each categories as category}
+        <button
+          onclick={() => selectedCategoryId = category.id}
+          class="px-4 py-2 rounded-full text-sm font-medium transition-colors {selectedCategoryId === category.id ? 'bg-primary text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}"
+        >
+          {category.name}
+        </button>
+      {/each}
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="relative w-full max-w-sm">
+        <Search class="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+        <Input placeholder="Search services" class="pl-8" bind:value={search} />
+      </div>
+      <button
+        onclick={openCreate}
+        class="w-full md:w-auto px-6 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-all shadow-sm active:scale-95"
+      >
+        Add Service
+      </button>
+    </div>
   </div>
 
   <AddServiceModal
@@ -141,9 +186,9 @@
     }}
   />
 
-  {#if services.length > 0}
+  {#if filteredServices.length > 0}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {#each services as service (service.id)}
+      {#each filteredServices as service (service.id)}
         <ServiceCard
           service={service}
           onEdit={() => openEdit(service)}

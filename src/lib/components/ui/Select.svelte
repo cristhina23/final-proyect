@@ -1,10 +1,19 @@
 <script lang="ts">
-  export let label: string;
-  export let placeholder = "Select an option";
-  export let options: { label: string; value: number }[] = [];
-  export let value: number | null = null;
+    let { 
+    id,
+    label, 
+    placeholder = "Select an option", 
+    options = [], 
+    value = $bindable(null) 
+  } = $props<{
+    id?: string;
+    label?: string;
+    placeholder?: string;
+    options: { label: string; value: number }[];
+    value: number | null;
+  }>();
 
-  let open = false;
+  let open = $state(false);
 
   type SelectOption = {
     label: string;
@@ -16,13 +25,14 @@
     open = false;
   }
 
-  $: selectedLabel =
-    options.find(o => o.value === value)?.label ?? null;
+  let selectedLabel = $derived(
+    options.find((o: SelectOption) => o.value === value)?.label ?? null
+  );
 </script>
 
 <div class="space-y-1">
   {#if label}
-    <label class="block text-sm font-medium text-gray-700">
+    <label for={id} class="block text-sm font-medium text-gray-700">
       {label}
     </label>
   {/if}
@@ -30,6 +40,7 @@
   <div class="relative">
     <!-- Trigger -->
     <button
+      {id}
       type="button"
       class="
         flex w-full items-center justify-between
@@ -40,7 +51,7 @@
         hover:border-gray-400
         focus:outline-none focus:ring-2 focus:ring-primary/20
       "
-      on:click={() => (open = !open)}
+      onclick={() => (open = !open)}
     >
       <span class={selectedLabel ? "text-gray-900" : "text-gray-400"}>
         {selectedLabel ?? placeholder}
@@ -72,15 +83,18 @@
         "
       >
         {#each options as option}
-          <li
-            class="
-              cursor-pointer px-3 py-2 text-sm
-              hover:bg-primary/10
-              hover:text-primary
-            "
-            on:click={() => select(option)}
-          >
-            {option.label}
+          <li>
+            <button
+              type="button"
+              class="
+                w-full text-left cursor-pointer px-3 py-2 text-sm
+                hover:bg-primary/10
+                hover:text-primary
+              "
+              onclick={() => select(option)}
+            >
+              {option.label}
+            </button>
           </li>
         {/each}
       </ul>
