@@ -3,11 +3,12 @@
   import type { Service, Category } from "$lib/types/services";
   import { X } from "lucide-svelte";
 
-  let { open = $bindable(false), service = null, onAdd, onUpdate } = $props<{
+  let { open = $bindable(false), service = null, onAdd, onUpdate, onClose } = $props<{
     open: boolean;
     service?: Service | null;
     onAdd: (data: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>) => void;
     onUpdate: (data: Partial<Service>) => void;
+    onClose: () => void;
   }>();
 
   let name = $state("");
@@ -77,13 +78,11 @@
 
     if (service) {
       onUpdate(data);
-      resetForm();
     } else {
       onAdd(data);
-      resetForm();
     }
 
-    open = false;
+    onClose();
 }
 </script>
 
@@ -97,7 +96,7 @@
         <button
           type="button"
           class="rounded-lg p-2 text-foreground transition-colors hover:bg-red-500/10 hover:text-red-400"
-          onclick={() => (open = false)}
+          onclick={() => onClose()}
         >
           <X />
         </button>

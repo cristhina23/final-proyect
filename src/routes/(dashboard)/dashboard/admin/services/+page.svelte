@@ -61,10 +61,11 @@
 
   function handleUpdate(updated: Partial<Service>) {
   if (!selectedService) return;
+  const serviceId = selectedService.id;
 
   toast.promise(
     (async () => {
-      const res = await fetch(`/api/services/${selectedService.id}`, {
+      const res = await fetch(`/api/services/${serviceId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updated)
@@ -75,7 +76,7 @@
       }
 
       services = services.map(s =>
-        s.id === selectedService!.id ? { ...s, ...updated } : s
+        s.id === serviceId ? { ...s, ...updated } : s
       );
 
       open = false;
@@ -92,10 +93,11 @@
 
   function handleDelete(service: Service) {
   if (!confirm(`Are you sure you want to delete ${service.name}?`)) return;
+  const serviceId = service.id;
 
   toast.promise(
     (async () => {
-      const res = await fetch(`/api/services/${service.id}`, {
+      const res = await fetch(`/api/services/${serviceId}`, {
         method: 'DELETE'
       });
 
@@ -103,7 +105,7 @@
         throw new Error('Failed to delete service');
       }
 
-      services = services.filter(s => s.id !== service.id);
+      services = services.filter(s => s.id !== serviceId);
       open = false;
       selectedService = null;
     })(),
@@ -129,10 +131,14 @@
   </div>
 
   <AddServiceModal
-    open={open}
+    bind:open={open}
     service={selectedService}
     onAdd={handleAdd}
     onUpdate={handleUpdate}
+    onClose={() => {
+      open = false;
+      selectedService = null;
+    }}
   />
 
   {#if services.length > 0}
