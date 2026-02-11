@@ -90,12 +90,12 @@
 }
 
 
-  function handleDelete() {
-  if (!selectedService) return;
+  function handleDelete(service: Service) {
+  if (!confirm(`Are you sure you want to delete ${service.name}?`)) return;
 
   toast.promise(
     (async () => {
-      const res = await fetch(`/api/services/${selectedService.id}`, {
+      const res = await fetch(`/api/services/${service.id}`, {
         method: 'DELETE'
       });
 
@@ -103,7 +103,7 @@
         throw new Error('Failed to delete service');
       }
 
-      services = services.filter(s => s.id !== selectedService!.id);
+      services = services.filter(s => s.id !== service.id);
       open = false;
       selectedService = null;
     })(),
@@ -130,7 +130,9 @@
 
   <AddServiceModal
     open={open}
+    service={selectedService}
     onAdd={handleAdd}
+    onUpdate={handleUpdate}
   />
 
   {#if services.length > 0}
@@ -138,9 +140,8 @@
       {#each services as service (service.id)}
         <ServiceCard
           service={service}
-          open={open}
-          onUpdate={handleUpdate}
-          onDelete={handleDelete}
+          onEdit={() => openEdit(service)}
+          onDelete={() => handleDelete(service)}
         />
       {/each}
     </div>

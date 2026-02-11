@@ -3,9 +3,11 @@
   import type { Service, Category } from "$lib/types/services";
   import { X } from "lucide-svelte";
 
-  let { open = $bindable(false), onAdd } = $props<{
+  let { open = $bindable(false), service = null, onAdd, onUpdate } = $props<{
     open: boolean;
+    service?: Service | null;
     onAdd: (data: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>) => void;
+    onUpdate: (data: Partial<Service>) => void;
   }>();
 
   let name = $state("");
@@ -23,22 +25,63 @@
       .then(data => categories = data);
   });
 
+  $effect(() => {
+    if (service) {
+      name = service.name;
+      price = service.price.toString();
+      duration = service.duration_minutes.toString();
+      description = service.description;
+      category = service.category_id;
+      is_active = service.is_active;
+    } else {
+      name = "";
+      price = "";
+      duration = "";
+      description = "";
+      category = null;
+      is_active = true;
+    }
+  });
+
+  $effect(() => {
+    if (!open) {
+      resetForm();
+    }
+  });
+
   let categoryOptions = $derived(categories.map(cat => ({
     label: cat.name,
     value: cat.id
   })));
 
+  function resetForm() {
+    name = "";
+    price = "";
+    duration = "";
+    description = "";
+    category = null;
+    is_active = true;
+  }
+
   function submit() {
     if (!category) return;
 
-    onAdd({
+    const data = {
       name,
       description,
       duration_minutes: Number(duration),
-      price: Number(price),
+      price: price.toString(),
       category_id: Number(category),
       is_active
-    });
+    };
+
+    if (service) {
+      onUpdate(data);
+      resetForm();
+    } else {
+      onAdd(data);
+      resetForm();
+    }
 
     open = false;
 }
@@ -50,7 +93,7 @@
 
       <!-- Header -->
       <div class="mb-6 flex items-center justify-between">
-        <h2 class="text-xl font-bold">Add Service</h2>
+        <h2 class="text-xl font-bold">{service ? 'Edit Service' : 'Add Service'}</h2>
         <button
           type="button"
           class="rounded-lg p-2 text-foreground transition-colors hover:bg-red-500/10 hover:text-red-400"
@@ -113,7 +156,7 @@
             bind:value={description}
             placeholder="Description"
             class="w-full rounded border p-2"
-          />
+          ></textarea>
         </div>
 
         <!-- Category -->
@@ -155,7 +198,7 @@
             onclick={submit}
             class="rounded bg-primary px-4 py-2 text-white transition-colors hover:bg-primary/80"
           >
-            Add
+            {service ? 'Update' : 'Add'}
           </button>
         </div>
 
