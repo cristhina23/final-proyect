@@ -5,7 +5,7 @@
   Sets basic SEO metadata and relies on each section component for content.
 -->
 <script lang="ts">
-  import type { PageData } from '../(public)/$types';
+  import type { PageData } from './$types';
   import HowItWorks from '$lib/components/landing/HowItWorks.svelte';
   import Hero from '$lib/components/landing/Hero.svelte';
   import Services from '$lib/components/landing/Services.svelte';
@@ -18,7 +18,7 @@
   import Testimonials from '$lib/components/landing/Testimonials.svelte';
   import Toast from '$lib/components/ui/Toast.svelte';
  
- export let data: PageData;
+  let { data }: { data: PageData } = $props();
    
     
 </script>
@@ -33,13 +33,13 @@
 
 <About />
 
-<Services />
+<Services services={data?.services ?? []} stylists={data?.stylists ?? []} />
 
 <HowItWorks />
 
 <Promotion />
 
-<Stylists stylists={data?.stylists ?? []} />
+<Stylists stylists={data?.stylists ?? []} services={data?.services ?? []} />
 
 <Testimonials />
 

@@ -13,7 +13,7 @@ export type Service = {
   name: string;
   description: string;
   duration_minutes: number;
-  price: number;  
+  price: number | string;  
   category_id: number;
   is_active: boolean;
   createdAt?: string | Date;

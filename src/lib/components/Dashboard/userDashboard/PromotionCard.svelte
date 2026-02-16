@@ -35,7 +35,7 @@
     <!-- Badge -->
     {#if badgeText}
       <div class="mb-3">
-        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide {badgeStyles[badgeVariant]}">
+        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wide {(badgeStyles as Record<string, string>)[badgeVariant]}">
           {badgeText}
         </span>
       </div>

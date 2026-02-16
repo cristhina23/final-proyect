@@ -3,12 +3,15 @@ import type { UserRole } from "$lib/server/db/schema";
 export type Employee = {
   id: string;
   name: string;
+  full_name?: string | null;
   email: string;
   role: UserRole;
   image?: string;
-  status: "active" | "inactive";
+  photo_url?: string;
+  status?: "active" | "inactive";
   specialty?: string;
   bio?: string;
   experience?: number;
-  services?: string[];
+  years_of_experience?: number;
+  services?: any[];
 };

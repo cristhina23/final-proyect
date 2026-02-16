@@ -1,37 +1,30 @@
-import type { PageServerLoad } from '../$types';
+import type { PageServerLoad } from './$types';
+import { getAllServices, getStylistsWithServices } from '$lib/server/db/queries';
 
-export const load = (async ({ fetch }) => {
+export const load: PageServerLoad = async () => {
   try {
-    const response = await fetch('/api/stylists');
+    const [services, stylists] = await Promise.all([
+      getAllServices(),
+      getStylistsWithServices()
+    ]);
     
-    if (!response.ok) {
-      console.error('Failed to fetch stylists');
-      return { stylists: [] };
-    }
-    
-    const stylists = await response.json();
-    
-    interface StylistFromAPI {
-      id: number;
-      full_name: string | null;
-      specialty?: string;
-      years_of_experience: number | null;
-      notes: string | null;
-      photo_url: string | null;
-    }
-    
-    const formattedStylists = (stylists as StylistFromAPI[]).map((stylist) => ({
-      id: stylist.id,
+    const formattedStylists = stylists.map((stylist) => ({
+      ...stylist,
       name: stylist.full_name || 'Unknown',
-      specialty: stylist.specialty || 'General Stylist',
       experience: stylist.years_of_experience || 0,
-      bio: stylist.notes || 'Professional stylist',
-      image: stylist.photo_url || 'default-stylist.jpg'
+      image: stylist.photo_url || 'default-stylist.jpg',
+      bio: stylist.notes || 'Professional stylist'
     }));
 
-    return { stylists: formattedStylists };
+    return { 
+      services, 
+      stylists: formattedStylists 
+    };
   } catch (error) {
-    console.error('Error loading stylists:', error);
-    return { stylists: [] };
+    console.error('Error loading landing page data:', error);
+    return { 
+      services: [], 
+      stylists: [] 
+    };
   }
-}) satisfies PageServerLoad;
+};

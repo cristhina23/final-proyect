@@ -3,12 +3,26 @@
   Lets users open the booking modal with a preselected service for a faster flow.
   Uses a responsive grid and hover effects to reveal more visual detail.
 -->
-<script>
+<script lang="ts">
 // @ts-nocheck
 
-  import { services } from "$lib/data";
+  import { services as defaultServices } from "$lib/data";
+  import { stylists as defaultStylists } from "$lib/data/stylists";
   import { getServiceImage } from '$lib/utils/imageResolver';
   import BookingModal from "./BookingModal.svelte";
+
+  import type { Service } from '$lib/types/services';
+  import type { Employee } from '$lib/types/staff';
+
+  interface Props {
+    services?: Service[];
+    stylists?: Employee[];
+  }
+
+  let { 
+    services = defaultServices as Service[], 
+    stylists = defaultStylists as Employee[] 
+  } = $props<Props>();
 
   // UI state: menu toggle (if used globally), booking modal visibility, and selected service
   let isMenuOpen = $state(false);
@@ -35,7 +49,7 @@
           
               <!-- Card background image, revealed on hover for visual impact -->
               <div class=" absolute inset-0 z-0 bg-cover bg-center opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"
-            style="background-image: url({getServiceImage(service.image)})">
+            style="background-image: url({getServiceImage(service.image || service.name)})">
           </div>
             
             
@@ -45,15 +59,15 @@
             
           <div class="relative z-10 flex flex-col justify-between h-full">
             <div>
-              <h3 class="text-xl font-semibold text-primary md:text-primary md:group-hover:text-white">{service.title}</h3>
-              <p class="  mt-4 text-white md:text-gray-600 md:group-hover:text-white">{service.duration}</p>
+              <h3 class="text-xl font-semibold text-primary md:text-primary md:group-hover:text-white">{service.name || service.title}</h3>
+              <p class="  mt-4 text-white md:text-gray-600 md:group-hover:text-white">{service.duration_minutes || service.duration} {service.duration_minutes ? 'min' : ''}</p>
               <p class=" mt-4 text-white md:text-gray-600 md:group-hover:text-white">{service.description}</p>
               </div>
               <div class="mt-6 flex items-center justify-between">
-                <span class="text-lg font-bold text-white md:text-foreground transition-colors duration-300 group-hover:text-white">{service.price}</span>
+                <span class="text-lg font-bold text-white md:text-foreground transition-colors duration-300 group-hover:text-white">${service.price}</span>
                 <!-- Book action: preselect service and open booking modal -->
                 <button aria-label="Book" onclick={() => {
-                  selectedService = service.title;
+                  selectedService = service.name || service.title;
                   openBooking = true;
                 }} 
                 class="text-sm font-semibold text-primary hover:underline group-hover:text-primary border border-primary px-2 py-1 rounded-xl">Book &rarr;</button>
@@ -68,4 +82,6 @@
 <BookingModal
   bind:open={openBooking}
   preselectedService={selectedService}
+  {services}
+  {stylists}
 />

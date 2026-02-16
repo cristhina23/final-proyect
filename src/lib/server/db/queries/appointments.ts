@@ -1,12 +1,11 @@
-
 import { db } from '../index';
-import { appointments, appointment_items } from '../schema';
-import { eq, between } from 'drizzle-orm';
+import { appointments, appointment_items, users, services } from '../schema';
+import { eq, between, desc } from 'drizzle-orm';
 
 //create appointment
 export async function createAppointment(data: {
- client_id: number;
-  stylist_id?: number;
+  client_id: string;
+  stylist_id?: string;
   start_time: Date;
   end_time: Date;
   status?: 'PENDING' | 'CONFIRMED' | 'COMPLETED' | 'CANCELLED' | 'RESCHEDULED';
@@ -31,12 +30,12 @@ export async function addAppointmentItem(data: {
 }
 
 // get appointments of a client
-export async function getAppointmentsByClientId(client_id: number) {
+export async function getAppointmentsByClientId(client_id: string) {
   return await db.select().from(appointments).where(eq(appointments.client_id, client_id));
 }
 
 // get appointments of a stylist
-export async function getAppointmentsByStylistId(stylist_id: number) {
+export async function getAppointmentsByStylistId(stylist_id: string) {
   return await db.select().from(appointments).where(eq(appointments.stylist_id, stylist_id));
 }
 
@@ -79,7 +78,7 @@ export async function rescheduleAppointment(
   data: {
     start_time: Date;
     end_time: Date;
-    stylist_id?: number;
+    stylist_id?: string;
   }
 ) {
   const [updated] = await db.update(appointments).set({ ...data, status: 'RESCHEDULED', updatedAt: new Date() }).where(eq(appointments.id, id)).returning();
@@ -90,4 +89,47 @@ export async function rescheduleAppointment(
 export async function deleteAppointment(id: number) {
   const [cancelled] = await db.update(appointments).set({ status: 'CANCELLED', updatedAt: new Date() }).where(eq(appointments.id, id)).returning();
   return cancelled;
+}
+
+// get all schedule
+export async function getSchedule() {
+  const appointmentsData = await db
+    .select({
+      id: appointments.id,
+      start_time: appointments.start_time,
+      end_time: appointments.end_time,
+      status: appointments.status,
+      notes: appointments.notes,
+      stylist: {
+        id: users.id,
+        full_name: users.full_name,
+        photo_url: users.photo_url
+      }
+    })
+    .from(appointments)
+    .leftJoin(users, eq(appointments.stylist_id, users.id))
+    .orderBy(desc(appointments.start_time));
+
+  const scheduleWithItems = await Promise.all(
+    appointmentsData.map(async (apt) => {
+      const items = await db
+        .select({
+          id: appointment_items.id,
+          name: appointment_items.name,
+          duration: appointment_items.duration_snapshot,
+          price: appointment_items.price_snapshot,
+          service: {
+            id: services.id,
+            name: services.name
+          }
+        })
+        .from(appointment_items)
+        .leftJoin(services, eq(appointment_items.service_id, services.id))
+        .where(eq(appointment_items.appointment_id, apt.id));
+      
+      return { ...apt, items };
+    })
+  );
+
+  return scheduleWithItems;
 }

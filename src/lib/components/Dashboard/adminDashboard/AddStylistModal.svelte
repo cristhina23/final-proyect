@@ -36,17 +36,19 @@
     availability = availability.filter((_, i) => i !== index);
   }
   
-  function submit() {
-    onCreate({
-      name,
+  async function submit() {
+    const result = await onCreate({
+      full_name: name,
       email,
       role: "STYLIST",
       specialty,
-      yearsOfExperience,
+      years_of_experience: yearsOfExperience,
       availability
     });
 
-    open = false;
+    if (result) {
+      open = false;
+    }
   }
 </script>
 

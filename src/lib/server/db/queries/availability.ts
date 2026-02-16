@@ -5,6 +5,7 @@ import {
   appointments,
 } from '../schema';
 import {eq, and, between, ne} from 'drizzle-orm';
+import { getSalonHours } from './salon';
 
 // format helper
 function timeToMinutes(time: string): number {
@@ -19,7 +20,7 @@ function minutesToTime(minutes: number): string {
 }
 
 // get stylist availability for a date 
-export async function getStylistAvailability(stylistId: number, dayOfWeek: number) {
+export async function getStylistAvailability(stylistId: string, dayOfWeek: number) {
   const availability = await db
     .select()
     .from(stylist_availability)
@@ -33,7 +34,7 @@ export async function getStylistAvailability(stylistId: number, dayOfWeek: numbe
 }
 
 // get days off for a stylist
-export async function getStylistTimeOff(stylistId: number, date: Date) {
+export async function getStylistTimeOff(stylistId: string, date: Date) {
   const startOfDay = new Date(date);
   startOfDay.setHours(0, 0, 0, 0);
   
@@ -51,7 +52,7 @@ export async function getStylistTimeOff(stylistId: number, date: Date) {
 }
 
 // get appointments for a stylist on a date
-export async function getStylistAppointments(stylistId: number, date: Date) {  // ← Cambiar a Date
+export async function getStylistAppointments(stylistId: string, date: Date) {  // ← Cambiar a Date
   const startOfDay = new Date(date);
   startOfDay.setHours(0, 0, 0, 0);
   
@@ -71,24 +72,50 @@ export async function getStylistAppointments(stylistId: number, date: Date) {  /
 
 // get available slots for a stylist on a date
 export async function getAvailableTimeSlots(
-  stylistId: number, 
+  stylistId: string, 
   date: Date,
   serviceDuration: number 
 ): Promise<string[]> {
   const dayOfWeek = date.getDay();
   
   //get the stylist schedule for that day
-  const availability = await getStylistAvailability(stylistId, dayOfWeek);
-  if (availability.length === 0) return []; 
+  let availability = await getStylistAvailability(stylistId, dayOfWeek);
+  
+  if (availability.length === 0) {
+    // Try to get general salon hours from DB
+    const allSalonHours = await getSalonHours();
+    const specificSalonDay = allSalonHours.find(h => h.day_of_week === dayOfWeek);
+
+    if (specificSalonDay) {
+      if (!specificSalonDay.is_open) {
+        console.log(`  Salon is CLOSED on day ${dayOfWeek}`);
+        return [];
+      }
+      console.log(`  No availability for stylist. Using salon hours: ${specificSalonDay.open_time}-${specificSalonDay.close_time}`);
+      availability = [{
+        start_time: specificSalonDay.open_time,
+        end_time: specificSalonDay.close_time
+      }] as any;
+    } else {
+      console.log(`  No availability records found. Using hardcoded defaults (09:00-18:00).`);
+      availability = [{
+        start_time: '09:00',
+        end_time: '18:00'
+      }] as any;
+    }
+  }
   
   //get the stylist free time for that day
   const timeOff = await getStylistTimeOff(stylistId, date);
+  console.log(`  Time off found: ${timeOff.length} records`);
   if (timeOff.length > 0 && !timeOff[0].start_time) {
+    console.log(`  Stylist has whole day off`);
     return []; 
   }
   
   //get the stylist appointments for that day
   const existingAppointments = await getStylistAppointments(stylistId, date);
+  console.log(`  Existing appointments: ${existingAppointments.length}`);
   
   //generate available slots
   const slots: string[] = [];

@@ -9,8 +9,14 @@
   import DateTimePicker from "$lib/components/Dashboard/userDashboard/Booking/DateTimePicker.svelte";
   import BookingSummary from "$lib/components/Dashboard/userDashboard/Booking/BookingSummary.svelte";
   import { Scissors, Palette, Sparkles, User as UserIcon } from "lucide-svelte";
-  import { services as allServices } from "$lib/data/services";
-  import { stylists as allStylists } from "$lib/data/stylists";
+  import type { PageData } from "./$types";
+
+  let { data }: { data: PageData } = $props();
+  
+  // Use derived for all data items from data prop
+  const allServices = $derived(data.services);
+  const allStylists = $derived(data.stylists);
+  const categories = $derived(data.categories);
 
   // State management
   let currentStep = $state(1);
@@ -20,50 +26,30 @@
   let selectedTime = $state<string | null>(null);
 
   // Group services by category
-  const serviceCategories = [
-    {
-      id: 'hair',
-      title: 'Hair',
-      description: 'Cuts, styling & treatments',
-      icon: Scissors,
-      services: allServices.filter(s => 
-        s.title.includes('Haircut') || s.title.includes('Blow Dry') || s.title.includes('Treatment')
-      )
-    },
-    {
-      id: 'color',
-      title: 'Color',
-      description: 'Highlights & coloring',
-      icon: Palette,
-      services: allServices.filter(s => s.title.includes('Color') || s.title.includes('Highlights'))
-    },
-    {
-      id: 'beauty',
-      title: 'Beauty',
-      description: 'Nails, makeup & skincare',
-      icon: Sparkles,
-      services: allServices.filter(s => 
-        s.title.includes('Manicure') || s.title.includes('Facial') || s.title.includes('Makeup') || s.title.includes('Eyebrow')
-      )
-    }
-  ];
+  const serviceCategories = $derived(categories.map(cat => {
+    let icon = Scissors;
+    if (cat.slug === 'hair') icon = Scissors;
+    if (cat.slug === 'color') icon = Palette;
+    if (cat.slug === 'beauty' || cat.slug === 'facial' || cat.slug === 'nails') icon = Sparkles;
 
-  // Use real stylists data with calculated ratings
-  const allStylistsWithRatings = allStylists.map((stylist, index) => ({
-    ...stylist,
-    rating: 4.5 + ((stylist.experience ?? 0) / 30), // Calculate rating based on experience
-    reviewCount: Math.floor((stylist.experience ?? 0) * 8),
-    isRecommended: index === 0 // First stylist is recommended
+    return {
+      id: cat.id.toString(),
+      title: cat.name,
+      description: cat.slug === 'hair' ? 'Cuts, styling & treatments' : 
+                   cat.slug === 'color' ? 'Highlights & coloring' : 
+                   'Beauty & wellness services',
+      icon,
+      services: allServices.filter(s => s.category_id === cat.id)
+    };
   }));
 
-  // Filter stylists based on selected service category
-  const filteredStylists = $derived(
-    selectedService
-      ? allStylistsWithRatings.filter(stylist => 
-          stylist.services?.includes(selectedService?.category ?? '')
-        )
-      : allStylistsWithRatings
-  );
+  // Use real stylists data with calculated ratings
+  const allStylistsWithRatings = $derived(allStylists.map((stylist, index) => ({
+    ...stylist,
+    rating: 4.5 + ((stylist.years_of_experience ?? 0) / 30), // Calculate rating based on experience
+    reviewCount: Math.floor((stylist.years_of_experience ?? 0) * 8),
+    isRecommended: index === 0 // First stylist is recommended
+  })));
 
   const steps = ['SERVICE', 'STYLIST', 'SCHEDULE'];
 
@@ -71,12 +57,13 @@
   function selectServiceCategory(categoryId: string) {
     const category = serviceCategories.find(c => c.id === categoryId);
     if (category && category.services.length > 0) {
+      
       const service = category.services[0];
       selectedService = {
-        name: service.title,
-        price: parseInt(service.price.replace(/[^0-9]/g, '')),
+        name: service.name,
+        price: typeof service.price === 'string' ? parseFloat(service.price) : service.price,
         category: category.title,
-        duration: service.duration
+        duration: service.duration_minutes.toString()
       };
       currentStep = 2;
     }
@@ -84,10 +71,10 @@
 
   function selectStylist(stylist: typeof allStylistsWithRatings[0]) {
     selectedStylist = {
-      name: stylist.name,
+      name: stylist.full_name ?? "Unknown",
       specialty: stylist.specialty ?? "Generalist",
-      image: stylist.image,
-      experience: stylist.experience ?? 0
+      image: stylist.photo_url ?? undefined,
+      experience: stylist.years_of_experience ?? 0
     };
     currentStep = 3;
   }
@@ -120,6 +107,12 @@
         }
       : null
   );
+
+  $effect(() => {
+    console.log('allStylists:', allStylists);
+    console.log('selectedService:', selectedService);
+    console.log('filteredStylists:', filteredStylists);
+  });
 </script>
 
 <svelte:head>
@@ -164,16 +157,16 @@
         {#if currentStep === 2}
           <div>
             <h2 class="text-xl font-heading font-bold text-foreground mb-6">• Choose Stylist</h2>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-              {#each filteredStylists as stylist}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {#each allStylistsWithRatings as stylist}
                 <StylistCard
-                  name={stylist.name}
-                  image={stylist.image ?? ""}
-                  specialty={stylist.specialty ?? "Generalist"}
-                  experience={stylist.experience ?? 0}
+                  name={stylist.full_name || stylist.name}
+                  image={stylist.photo_url || ""}
+                  specialty={stylist.specialty}
+                  experience={stylist.years_of_experience ?? 0}
                   rating={stylist.rating}
                   reviewCount={stylist.reviewCount}
-                  isSelected={selectedStylist?.name === stylist.name}
+                  isSelected={selectedStylist?.name === (stylist.full_name || stylist.name)}
                   isRecommended={stylist.isRecommended}
                   onclick={() => selectStylist(stylist)}
                 />
@@ -189,6 +182,8 @@
             <DateTimePicker
               {selectedDate}
               {selectedTime}
+              stylistId={data.stylists.find(s => s.full_name === selectedStylist?.name)?.id}
+              duration={selectedService ? parseInt(selectedService.duration) : 60}
               onDateSelect={handleDateSelect}
               onTimeSelect={handleTimeSelect}
             />

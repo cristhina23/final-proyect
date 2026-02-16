@@ -5,3 +5,4 @@ export * from './appointments';
 export * from './availability';
 export * from './stylist-services';
 export * from './reviews';
+export * from './categories';

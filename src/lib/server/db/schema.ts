@@ -56,6 +56,17 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+export const user = users;
+
+export const sessions = pgTable("sessions", {
+  id: varchar("id", { length: 255 }).primaryKey(),
+  userId: uuid("user_id").notNull().references(() => users.id),
+  expiresAt: timestamp("expires_at").notNull(),
+});
+
+export const session = sessions;
+export type Session = typeof sessions.$inferSelect;
+
 
 // SERVICES
 
@@ -96,9 +107,10 @@ export const stylist_services = pgTable("stylist_services", {
 
 export const salon_hours = pgTable("salon_hours", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  day_of_week: integer("day_of_week").notNull(), // 0=Domingo ... 6=Sábado
+  day_of_week: integer("day_of_week").notNull().unique(), // 0=Domingo ... 6=Sábado
   open_time: varchar("open_time", { length: 5 }).notNull(),
   close_time: varchar("close_time", { length: 5 }).notNull(),
+  is_open: boolean("is_open").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

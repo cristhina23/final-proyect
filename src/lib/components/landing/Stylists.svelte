@@ -4,21 +4,33 @@
   Users can view stylist details (mobile modal) or book directly with a preselected stylist.
   Responsive cards with desktop hover overlays provide extra info and a direct book action.
 -->
-<script>
-  // @ts-nocheck
-  export let stylists = [];
+<script lang="ts">
+  import { services as defaultServices } from "$lib/data/services";
+  import type { Service } from '$lib/types/services';
+  import type { Employee } from '$lib/types/staff';
+
+  interface Props {
+    stylists?: Employee[];
+    services?: Service[];
+  }
+
+  let { 
+    stylists = [], 
+    services = defaultServices as Service[] 
+  } = $props<Props>();
+
   import { getStylistImage } from "$lib/utils/imageResolver";
   import PrimaryButton from "../ui/PrimaryButton.svelte";
   import BookingModal from "./BookingModal.svelte";
 
   // Manages selected stylist, booking modal visibility, and prefilled stylist name
-  let selectedStylist = null;
-  let openBooking = false;
-  let preselectedStylistName = "";
+  let selectedStylist = $state<Employee | null>(null);
+  let openBooking = $state(false);
+  let preselectedStylistName = $state("");
 
   // Data is provided via page `load` and passed as prop.
 
-  const openInfoModal = (stylist) => {
+  const openInfoModal = (stylist: Employee) => {
     selectedStylist = stylist;
   };
 
@@ -26,7 +38,7 @@
     selectedStylist = null;
   };
 
-  const openBookingWithStylist = (stylist) => {
+  const openBookingWithStylist = (stylist: Employee) => {
     preselectedStylistName = stylist.name;
     openBooking = true;
   };
@@ -81,9 +93,9 @@
               </p>
               <PrimaryButton
                 class="w-full text-sm"
-                on:click={() => openBookingWithStylist(stylist)}
+                onclick={() => openBookingWithStylist(stylist)}
               >
-                Book with {stylist.name.split(" ")[0]}
+                Book with {stylist.name?.split(" ")[0] ?? 'Stylist'}
               </PrimaryButton>
             </div>
           </div>
@@ -99,7 +111,7 @@
             <!-- mobile -->
             <button
               class="mt-4 text-sm font-semibold text-[#936C4B] underline underline-offset-4 lg:hidden"
-              on:click={() => openInfoModal(stylist)}
+              onclick={() => openInfoModal(stylist)}
             >
               View info
             </button>
@@ -117,7 +129,7 @@
         <button
           aria-label="Close"
           class="absolute top-4 right-5 text-[#6B5A4A] hover:text-[#2E1F14]"
-          on:click={closeInfoModal}
+          onclick={closeInfoModal}
         >
           ✕
         </button>
@@ -143,10 +155,12 @@
         <div class="mt-8">
           <PrimaryButton
             class="w-full"
-            on:click={() => {
-              preselectedStylistName = selectedStylist.name;
-              openBooking = true;
-              closeInfoModal();
+            onclick={() => {
+              if (selectedStylist) {
+                preselectedStylistName = selectedStylist.name;
+                openBooking = true;
+                closeInfoModal();
+              }
             }}
           >
             Book Appointment
@@ -160,4 +174,6 @@
 <BookingModal
   bind:open={openBooking}
   preselectedStylist={preselectedStylistName}
+  {services}
+  {stylists}
 />

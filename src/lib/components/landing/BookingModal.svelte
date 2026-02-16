@@ -12,8 +12,8 @@
   import * as Select from "$lib/components/ui/select";
   import Toast from "$lib/components/ui/Toast.svelte";
 
-  import { services } from "$lib/data/services";
-  import { stylists } from "$lib/data/stylists";
+  import { services as defaultServices } from "$lib/data/services";
+  import { stylists as defaultStylists } from "$lib/data/stylists";
   import { generateTimeSlots } from "$lib/utils/index";
   import { OPEN_HOUR, CLOSE_HOUR, STEP_MINUTES } from "$lib/data/landing";
   import PrimaryButton from "../ui/PrimaryButton.svelte";
@@ -21,7 +21,9 @@
   let {
     open = $bindable(false),
     preselectedService = "",
-    preselectedStylist = ""
+    preselectedStylist = "",
+    services = defaultServices,
+    stylists = defaultStylists
   } = $props();
 
   let success = $state(false);
@@ -246,10 +248,10 @@
               </Select.Trigger>
               <Select.Content>
                 {#each services as service}
-                  <Select.Item value={service.title}>
+                  <Select.Item value={service.name}>
                     <div class="flex flex-col items-start">
-                      <span class="font-medium">{service.title}</span>
-                      <span class="text-xs text-muted-foreground">{service.duration} · {service.price}</span>
+                      <span class="font-medium">{service.name}</span>
+                      <span class="text-xs text-muted-foreground">{service.duration_minutes} min · ${service.price}</span>
                     </div>
                   </Select.Item>
                 {/each}
@@ -271,9 +273,9 @@
                   <span class="italic text-muted-foreground">Any stylist</span>
                 </Select.Item>
                 {#each stylists as stylist}
-                  <Select.Item value={stylist.name}>
+                  <Select.Item value={stylist.full_name || stylist.name}>
                     <div class="flex flex-col items-start">
-                      <span class="font-medium">{stylist.name}</span>
+                      <span class="font-medium">{stylist.full_name || stylist.name}</span>
                       <span class="text-xs text-muted-foreground">{stylist.specialty}</span>
                     </div>
                   </Select.Item>
