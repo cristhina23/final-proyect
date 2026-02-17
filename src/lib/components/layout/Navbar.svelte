@@ -41,7 +41,15 @@
 		<div class="hidden md:block">
 			<div class="flex items-center gap-2">
 				<PrimaryButton on:click={() => openBooking = true}>Book Now</PrimaryButton>
-				<button aria-label="User" onclick={handleClick} class=" rounded-md p-1 border border-primary-200 hover:text-primary hover:shadow-md hover:shadow-primary-100 transition-all duration-300 ease-in-out"
+				<button aria-label="User"
+				onclick={() => {
+   
+					if (typeof window !== 'undefined') {
+						window.location.href = '/login';
+					}
+				}}
+
+				class=" rounded-md p-1 border border-primary-200 hover:text-primary hover:shadow-md hover:shadow-primary-100 transition-all duration-300 ease-in-out"
 				>
 					<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-user-round-icon lucide-circle-user-round"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
 					
