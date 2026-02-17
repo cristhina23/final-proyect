@@ -10,78 +10,48 @@
   let activeTab = $state<'upcoming' | 'past'>('upcoming');
   let viewMode = $state<'list' | 'calendar'>('list');
 
-  // Mock appointment data
-  const mockAppointments = [
-    {
-      id: '1',
-      serviceName: 'Balayage & Styling',
-      serviceImage: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=200&h=200&fit=crop',
-      stylistName: 'Elena Rodriguez',
-      stylistImage: '',
-      date: 'Oct 10, 2023',
-      time: '2:30 PM',
-      duration: 60,
-      price: 85.00,
-      status: 'upcoming' as const,
-    },
-    {
-      id: '2',
-      serviceName: 'Color & Conditioning',
-      serviceImage: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=200&h=200&fit=crop',
-      stylistName: 'Sarah J.',
-      stylistImage: '',
-      date: 'Oct 16, 2023',
-      time: '10:30 AM',
-      duration: 120,
-      price: 150.00,
-      status: 'upcoming' as const,
-    },
-    {
-      id: '3',
-      serviceName: 'Signature Trim & Blowout',
-      serviceImage: 'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=200&h=200&fit=crop',
-      stylistName: 'Michael R.',
-      stylistImage: '',
-      date: 'Sep 15, 2023',
-      time: '3:00 PM',
-      duration: 45,
-      price: 65.00,
-      status: 'completed' as const,
-      rating: 5.0,
-    },
-    {
-      id: '4',
-      serviceName: 'Full Head Highlights',
-      serviceImage: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=200&h=200&fit=crop',
-      stylistName: 'Jessica T.',
-      stylistImage: '',
-      date: 'Aug 20, 2023',
-      time: '11:00 AM',
-      duration: 180,
-      price: 200.00,
-      status: 'completed' as const,
-    },
-    {
-      id: '5',
-      serviceName: 'Deep Hydration Mask',
-      serviceImage: 'https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=200&h=200&fit=crop',
-      stylistName: 'Emily K.',
-      stylistImage: '',
-      date: 'Jul 5, 2023',
-      time: '1:00 PM',
-      duration: 60,
-      price: 75.00,
-      status: 'completed' as const,
-      rating: 4.5,
-    }
-  ];
+  import type { PageData } from './$types';
+
+  let { data }: { data: PageData } = $props();
+
+  // Transform database appointments to view model
+  const appointmentsCallback = $derived(
+    data.appointments.map(apt => {
+      const mainService = apt.items[0]?.service;
+      const dateDate = new Date(apt.start_time);
+      const statusLower = apt.status.toLowerCase();
+      
+      let mappedStatus: 'upcoming' | 'completed' | 'cancelled';
+      if (['pending', 'confirmed', 'rescheduled'].includes(statusLower)) {
+        mappedStatus = 'upcoming';
+      } else if (statusLower === 'completed') {
+        mappedStatus = 'completed';
+      } else {
+        mappedStatus = 'cancelled';
+      }
+      
+      return {
+        id: apt.id.toString(),
+        serviceName: mainService?.name || 'Custom Service',
+        serviceImage: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=200&h=200&fit=crop', // Fallback as services satisfy no image
+        stylistName: apt.stylist?.full_name || 'Unknown Stylist',
+        stylistImage: apt.stylist?.photo_url || '',
+        date: dateDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        time: dateDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
+        duration: apt.items.reduce((acc, item) => acc + (item.duration || 0), 0),
+        price: apt.items.reduce((acc, item) => acc + parseFloat(item.price || '0'), 0),
+        status: mappedStatus,
+        // TODO: specific rating query if needed
+      };
+    })
+  );
 
   const upcomingAppointments = $derived(
-    mockAppointments.filter(apt => apt.status === 'upcoming')
+    appointmentsCallback.filter(apt => apt.status === 'upcoming')
   );
 
   const pastAppointments = $derived(
-    mockAppointments.filter(apt => apt.status !== 'upcoming')
+    appointmentsCallback.filter(apt => ['completed', 'cancelled'].includes(apt.status))
   );
 
   const displayedAppointments = $derived(

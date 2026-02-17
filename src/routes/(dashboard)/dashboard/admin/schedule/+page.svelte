@@ -35,39 +35,18 @@
   };
 
   async function applySalonHours() {
-    try {
-      const res = await fetch("/api/admin/salon-hours");
-      if (res.ok) {
-        const data = await res.json();
-        if (data.length > 0) {
-          // Find the earliest start and latest end from open days
-          const openDays = data.filter((d: any) => d.is_open);
-          
-          let minTime = '09:00:00';
-          let maxTime = '18:00:00';
-          
-          if (openDays.length > 0) {
-            const openTimes = openDays.map((d: any) => d.open_time).sort();
-            const closeTimes = openDays.map((d: any) => d.close_time).sort();
-            
-            minTime = `${openTimes[0]}:00`;
-            maxTime = `${closeTimes[closeTimes.length - 1]}:00`;
-          }
-          
-          calendar.setOption('slotMinTime', minTime);
-          calendar.setOption('slotMaxTime', maxTime);
-        }
-      }
-    } catch (error) {
-      console.error("Error applying salon hours:", error);
-    }
+    console.log(' Salon hours updated - reloading page to refresh calendar...');
+    // Simply reload the page - the calendar will initialize with the new hours
+    window.location.reload();
   }
 
   async function loadSchedule() {
+    console.log(' Loading appointments from database...');
     try {
       const res = await fetch("/api/schedule");
       if (res.ok) {
         const data = await res.json();
+        console.log(` Fetched ${data.length} appointments:`, data);
         schedule = data;
         
         // Map to FullCalendar events
@@ -85,23 +64,53 @@
           }
         }));
 
+        console.log(` Mapped ${events.length} events for calendar:`, events);
         calendar.removeAllEvents();
         calendar.addEventSource(events);
+        console.log(' Events added to calendar');
       }
     } catch (error) {
-      console.error("Error loading schedule:", error);
+      console.error(" Error loading schedule:", error);
     } finally {
       loading = false;
     }
   }
 
   onMount(async () => {
+    // Fetch salon hours FIRST to get the correct time range
+    let initialMinTime = '09:00:00';
+    let initialMaxTime = '18:00:00';
+    
+    console.log(' Initializing calendar - fetching salon hours...');
+    try {
+      const res = await fetch("/api/admin/salon-hours");
+      if (res.ok) {
+        const data = await res.json();
+        console.log(' Fetched salon hours:', data);
+        if (data.length > 0) {
+          const openDays = data.filter((d: any) => d.is_open);
+          console.log(' Open days:', openDays);
+          if (openDays.length > 0) {
+            const openTimes = openDays.map((d: any) => d.open_time).sort();
+            const closeTimes = openDays.map((d: any) => d.close_time).sort();
+            initialMinTime = `${openTimes[0]}:00`;
+            initialMaxTime = `${closeTimes[closeTimes.length - 1]}:00`;
+            console.log(` Calculated times - Min: ${initialMinTime}, Max: ${initialMaxTime}`);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching initial salon hours:", error);
+    }
+    
+    console.log(`Creating calendar with times: ${initialMinTime} to ${initialMaxTime}`);
+    // NOW create the calendar with the correct values
     calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek',
       headerToolbar: false, // We use our custom header
-      slotMinTime: '09:00:00',
-      slotMaxTime: '18:00:00',
+      slotMinTime: initialMinTime,
+      slotMaxTime: initialMaxTime,
       allDaySlot: false,
       height: 'auto',
       editable: true,
@@ -134,7 +143,6 @@
     });
 
     calendar.render();
-    await applySalonHours();
     loadSchedule();
   });
 

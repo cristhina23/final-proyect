@@ -133,3 +133,48 @@ export async function getSchedule() {
 
   return scheduleWithItems;
 }
+
+// get appointments for a specific client with details
+export async function getClientAppointments(client_id: string) {
+  const appointmentsData = await db
+    .select({
+      id: appointments.id,
+      start_time: appointments.start_time,
+      end_time: appointments.end_time,
+      status: appointments.status,
+      notes: appointments.notes,
+      stylist: {
+        id: users.id,
+        full_name: users.full_name,
+        photo_url: users.photo_url
+      }
+    })
+    .from(appointments)
+    .leftJoin(users, eq(appointments.stylist_id, users.id))
+    .where(eq(appointments.client_id, client_id))
+    .orderBy(desc(appointments.start_time));
+
+  const appointmentsWithItems = await Promise.all(
+    appointmentsData.map(async (apt) => {
+      const items = await db
+        .select({
+          id: appointment_items.id,
+          name: appointment_items.name,
+          duration: appointment_items.duration_snapshot,
+          price: appointment_items.price_snapshot,
+          service: {
+            id: services.id,
+            name: services.name,
+            // Services table doesn't have an image column based on schema
+          }
+        })
+        .from(appointment_items)
+        .leftJoin(services, eq(appointment_items.service_id, services.id))
+        .where(eq(appointment_items.appointment_id, apt.id));
+      
+      return { ...apt, items };
+    })
+  );
+
+  return appointmentsWithItems;
+}

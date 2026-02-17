@@ -3,8 +3,15 @@ import type { RequestHandler } from './$types';
 import { getSalonHours, updateSalonHours } from '$lib/server/db/queries/salon';
 
 export const GET: RequestHandler = async () => {
-  const hours = await getSalonHours();
-  return json(hours);
+  try {
+    console.log('--- GET /api/admin/salon-hours ---');
+    const hours = await getSalonHours();
+    console.log(`Retrieved ${hours.length} salon hours`);
+    return json(hours);
+  } catch (err) {
+    console.error('Error getting salon hours:', err);
+    return json({ error: 'Failed to get salon hours', details: String(err) }, { status: 500 });
+  }
 };
 
 export const POST: RequestHandler = async ({ request, locals }) => {
