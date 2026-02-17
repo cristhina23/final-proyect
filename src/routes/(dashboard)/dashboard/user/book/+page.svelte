@@ -356,7 +356,7 @@
                     <Clock size={20} />
                   </div>
                   <div>
-                    <p class="text-xs text-muted-foreground uppercase font-bold tracking-wider">Time</p>
+                    <p class="text-xs text-muted-foreground uppercase font-bold tracking-wider">Time </p>
                     <p class="font-medium text-foreground text-lg">
                       {new Date(confirmedAppointment?.start_time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })} - 
                       {new Date(confirmedAppointment?.end_time).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
@@ -377,7 +377,7 @@
 
           <!-- Actions -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/dashboard/user" class="px-6 py-3 border border-border rounded-lg text-foreground font-medium hover:bg-gray-50 transition-colors text-center">
+            <a href="/dashboard" class="px-6 py-3 border border-border rounded-lg text-foreground font-medium hover:bg-gray-50 transition-colors text-center">
               Go to Dashboard
             </a>
             <button 

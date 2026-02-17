@@ -52,14 +52,13 @@ export async function getStylistTimeOff(stylistId: string, date: Date) {
 }
 
 // get appointments for a stylist on a date
-export async function getStylistAppointments(stylistId: string, date: Date) {  // ← Cambiar a Date
-  const startOfDay = new Date(date);
-  startOfDay.setHours(0, 0, 0, 0);
+export async function getStylistAppointments(stylistId: string, date: Date) {
+  const dateStr = date.toISOString().split('T')[0];
   
-  const endOfDay = new Date(date);
-  endOfDay.setHours(23, 59, 59, 999);
+  const startOfDay = new Date(`${dateStr}T00:00:00.000Z`);
+  const endOfDay = new Date(`${dateStr}T23:59:59.999Z`);
   
-  return await db.select()
+  const result = await db.select()
     .from(appointments)
     .where(
       and(
@@ -68,6 +67,8 @@ export async function getStylistAppointments(stylistId: string, date: Date) {  /
         ne(appointments.status, 'CANCELLED')
       ) 
     );
+  
+  return result;
 }
 
 // get available slots for a stylist on a date
@@ -78,26 +79,23 @@ export async function getAvailableTimeSlots(
 ): Promise<string[]> {
   const dayOfWeek = date.getDay();
   
-  //get the stylist schedule for that day
+  // Get stylist schedule for that day
   let availability = await getStylistAvailability(stylistId, dayOfWeek);
   
+  // If no stylist availability, fall back to salon hours
   if (availability.length === 0) {
-    // Try to get general salon hours from DB
     const allSalonHours = await getSalonHours();
     const specificSalonDay = allSalonHours.find(h => h.day_of_week === dayOfWeek);
 
     if (specificSalonDay) {
       if (!specificSalonDay.is_open) {
-        console.log(`  Salon is CLOSED on day ${dayOfWeek}`);
         return [];
       }
-      console.log(`  No availability for stylist. Using salon hours: ${specificSalonDay.open_time}-${specificSalonDay.close_time}`);
       availability = [{
         start_time: specificSalonDay.open_time,
         end_time: specificSalonDay.close_time
       }] as any;
     } else {
-      console.log(`  No availability records found. Using hardcoded defaults (09:00-18:00).`);
       availability = [{
         start_time: '09:00',
         end_time: '18:00'
@@ -105,36 +103,32 @@ export async function getAvailableTimeSlots(
     }
   }
   
-  //get the stylist free time for that day
+  // Check for full day off
   const timeOff = await getStylistTimeOff(stylistId, date);
-  console.log(`  Time off found: ${timeOff.length} records`);
   if (timeOff.length > 0 && !timeOff[0].start_time) {
-    console.log(`  Stylist has whole day off`);
     return []; 
   }
   
-  //get the stylist appointments for that day
+  // Get existing appointments for that day
   const existingAppointments = await getStylistAppointments(stylistId, date);
-  console.log(`  Existing appointments: ${existingAppointments.length}`);
   
-  //generate available slots
+  // Generate available slots
   const slots: string[] = [];
   const startMinutes = timeToMinutes(availability[0].start_time);
   const endMinutes = timeToMinutes(availability[0].end_time);
   
   for (let time = startMinutes; time + serviceDuration <= endMinutes; time += 30) {
     const slotStart = minutesToTime(time);
-    const slotEnd = minutesToTime(time + serviceDuration);
     
-    //check if there is a conflict with existing appointments
     const hasConflict = existingAppointments.some(apt => {
-      const startTime = new Date(apt.start_time);  // ← Convertir a Date
-      const endTime = new Date(apt.end_time);      // ← Convertir a Date
+      const aptStartTime = new Date(apt.start_time);
+      const aptEndTime = new Date(apt.end_time);
       
-      const aptStart = timeToMinutes(startTime.toTimeString().slice(0, 5));
-      const aptEnd = timeToMinutes(endTime.toTimeString().slice(0, 5));
+      // Extract hours and minutes directly
+      const aptStart = aptStartTime.getHours() * 60 + aptStartTime.getMinutes();
+      const aptEnd = aptEndTime.getHours() * 60 + aptEndTime.getMinutes();
       
-      return (time < aptEnd && time + serviceDuration > aptStart);
+      return (time < aptEnd && (time + serviceDuration) > aptStart);
     });
     
     if (!hasConflict) {
