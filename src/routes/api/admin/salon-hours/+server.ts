@@ -3,6 +3,7 @@ import type { RequestHandler } from './$types';
 import { getSalonHours, updateSalonHours } from '$lib/server/db/queries/salon';
 
 export const GET: RequestHandler = async () => {
+  
   try {
     console.log('--- GET /api/admin/salon-hours ---');
     const hours = await getSalonHours();

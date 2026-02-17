@@ -1,6 +1,7 @@
 <script lang="ts">
   import salonBg from '$lib/assets/hero3.png';
 
+  // function to handle login
   const handleLogin = async (e: Event) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget as HTMLFormElement)

@@ -1,7 +1,7 @@
 <script lang="ts">
   import salonBg from '$lib/assets/hero3.png';
 
-
+  // function to handle register
   const handleRegister = async (e: Event) => {
     e.preventDefault()
     const data = {
