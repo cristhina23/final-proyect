@@ -1,4 +1,4 @@
-import { createCategory, getAllCategories, getCategoryById } from "$lib/server/db/queries/categories";
+import { createCategory, getAllCategories } from "$lib/server/db/queries/categories";
 import { json } from "@sveltejs/kit";
 
 

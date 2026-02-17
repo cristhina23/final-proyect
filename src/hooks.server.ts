@@ -10,11 +10,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 
       event.locals.user = {
         id: payload.id,
+        full_name: payload.full_name,
         email: payload.email,
         role: payload.role,
       };
     } catch (error) {
-      
+      console.log(error)
       event.locals.user = null;
       event.cookies.delete('token', { path: '/' });
     }

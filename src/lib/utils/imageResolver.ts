@@ -1,4 +1,5 @@
-// @ts-nocheck
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 
 const stylistImages = import.meta.glob(
   '$lib/assets/stylists/*.{jpg,jpeg,png,webp}',

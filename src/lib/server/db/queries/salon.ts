@@ -1,6 +1,6 @@
 import { db } from '../index';
 import { salon_hours } from '../schema';
-import { eq } from 'drizzle-orm';
+
 
 export async function getSalonHours() {
   return await db.select().from(salon_hours).orderBy(salon_hours.day_of_week);

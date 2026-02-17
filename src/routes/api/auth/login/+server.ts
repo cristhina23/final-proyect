@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // src/routes/api/auth/login/+server.ts
 import { json } from '@sveltejs/kit';
 import { dev } from '$app/environment';

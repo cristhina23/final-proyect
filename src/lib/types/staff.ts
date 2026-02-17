@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UserRole } from "$lib/server/db/schema";
 
 export type Employee = {

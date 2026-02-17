@@ -95,7 +95,7 @@
         <h2 class="text-xl font-bold">{service ? 'Edit Service' : 'Add Service'}</h2>
         <button
           type="button"
-          class="rounded-lg p-2 text-foreground transition-colors hover:bg-red-500/10 hover:text-red-400"
+          class ="rounded-lg p-2 text-foreground transition-colors hover:bg-red-500/10 hover:text-red-400"
           onclick={() => onClose()}
         >
           <X />

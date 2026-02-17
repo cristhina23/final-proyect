@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import jwt from "jsonwebtoken";
 import { JWT_SECRET, JWT_EXPIRATION } from "$env/static/private";
 
 import type { UserRole } from "$lib/types/role";
 
 interface TokenPayload {
+  [x: string]: string | null;
   id: string;
   email: string;
   role: UserRole;
