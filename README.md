@@ -120,3 +120,76 @@ During the development of this module, the following concepts and skills were pr
 * [Drizzle ORM Documentation](https://orm.drizzle.team/docs/overview)
 * [PostgreSQL Tutorial](https://www.postgresqltutorial.com/)
 * [Database Design Best Practices Video](https://www.youtube.com/watch?v=QpdhBUYk7Kk)
+
+
+# Module 3: Backend Logic & Appointment Management
+
+## Development Environment
+
+This module focuses on building the core backend functionality for the application, including API routes, business logic, and administrative tools.
+
+Tools and technologies used:
+
+- Visual Studio Code as the primary code editor
+- Node.js to run server-side code
+- pnpm for package management
+- SvelteKit endpoints for API routes
+- PostgreSQL as the relational database
+- Drizzle ORM for type-safe queries and schema management
+- TypeScript for enforcing type safety and reducing runtime errors
+- Git & GitHub for version control
+
+API endpoints were tested locally using SvelteKit’s server and Postman for request simulation.
+
+### Tech Stack
+
+- SvelteKit 2 / Svelte 5  
+- TypeScript 5  
+- PostgreSQL (relational database)  
+- Drizzle ORM 0.45.0 + Drizzle Kit 0.31.8  
+- Node.js for backend logic  
+- Jest + ts-jest for optional testing of complex functions  
+
+## Backend Features and Concepts
+
+During this module, the following core backend skills and logic were implemented:
+
+- **API Routes**: All endpoints required for CRUD operations on appointments, services, and employees
+- **Appointment Scheduling**: 
+  - Users can book appointments with specific stylists
+  - Time slots are checked to prevent double-booking
+  - Availability is calculated dynamically based on stylist schedules and time-off
+- **Administrative Tools**:
+  - Admin can manage employees and services via CRUD operations
+  - Admin can view, confirm, reschedule, or cancel appointments
+  - Business logic ensures that appointments do not overlap
+- **Database Interaction**:
+  - Type-safe queries for all operations
+  - Use of relational database relationships (appointments ↔ services ↔ employees)
+  - Snapshots for service pricing to preserve historical data
+- **Time & Conflict Management**:
+  - Convert times to minutes for slot calculations
+  - Compare existing appointments to requested slots
+  - Respect stylist availability and salon hours
+- **Security & Robustness**:
+  - Endpoints handle missing parameters or invalid data
+  - Status updates and cancellations maintain data integrity
+  - Server-side logic ensures consistency even with concurrent requests
+
+## Technologies and Concepts Learned
+
+- Designing and implementing robust backend logic for real-world applications
+- Handling date and time operations for scheduling and availability
+- Writing modular and reusable server-side code
+- Enforcing business rules to prevent double-booking or invalid appointments
+- Implementing administrative functionality to manage the business efficiently
+- Integrating PostgreSQL with SvelteKit via Drizzle ORM
+- Using TypeScript to catch errors at compile time and ensure type safety
+
+## Useful Websites
+
+* [https://orm.drizzle.team/docs/overview](https://orm.drizzle.team/docs/overview)  
+* [https://www.postgresqltutorial.com/](https://www.postgresqltutorial.com/)  
+* [https://kit.svelte.dev/docs/routing](https://kit.svelte.dev/docs/routing)  
+* [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)  
+* [https://www.typescriptlang.org/docs/](https://www.typescriptlang.org/docs/)  
