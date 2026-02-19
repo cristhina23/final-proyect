@@ -13,8 +13,13 @@ const serviceImages = import.meta.glob(
 
 function getImage(images: Record<string, any>, path: string) {
   if (!path) return '';
+
   const filename = path.split('/').pop();
-  return images[Object.keys(images).find((k) => k.endsWith(filename))] || '';
+  if (!filename) return '';
+
+  const key = Object.keys(images).find(k => k.endsWith(filename));
+
+  return key ? images[key] : '';
 }
 
 export function getStylistImage(path: string) {

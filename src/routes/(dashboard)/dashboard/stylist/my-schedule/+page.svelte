@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { Calendar } from '@fullcalendar/core';
   import dayGridPlugin from '@fullcalendar/daygrid';
   import timeGridPlugin from '@fullcalendar/timegrid';
@@ -16,48 +16,25 @@
   let serviceType = $state('');
   let eventDuration = $state('60');
   let editingEvent: any = $state(null);
+  let events = $state<any[]>([]);
 
-  // Sample events data
-  let events = $state([
-    {
-      id: '1',
-      title: 'Isabella Thorne - Balayage',
-      start: '2026-01-27T10:00:00',
-      end: '2026-01-27T12:00:00',
-      backgroundColor: '#f59e0b',
-      borderColor: '#f59e0b',
-      extendedProps: {
-        client: 'Isabella Thorne',
-        service: 'Balayage & Haircut'
-      }
-    },
-    {
-      id: '2',
-      title: 'Sarah Miller - Color Treatment',
-      start: '2026-01-27T14:30:00',
-      end: '2026-01-27T16:00:00',
-      backgroundColor: '#8b5cf6',
-      borderColor: '#8b5cf6',
-      extendedProps: {
-        client: 'Sarah Miller',
-        service: 'Color Treatment'
-      }
-    },
-    {
-      id: '3',
-      title: 'Julianne Moore - Blowout',
-      start: '2026-01-28T11:00:00',
-      end: '2026-01-28T12:00:00',
-      backgroundColor: '#10b981',
-      borderColor: '#10b981',
-      extendedProps: {
-        client: 'Julianne Moore',
-        service: 'Blowout'
-      }
+  const statusColors: Record<string, string> = {
+    CONFIRMED: '#10b981',
+    PENDING: '#f59e0b',
+    COMPLETED: '#8b5cf6',
+    CANCELLED: '#ef4444',
+    RESCHEDULED: '#3b82f6',
+  };
+
+  onMount(async () => {
+    await tick(); 
+
+    if (!calendarEl) {
+      console.error('calendarEl no está disponible');
+      return;
     }
-  ]);
 
-  onMount(() => {
+    
     calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       initialView: 'timeGridWeek',
@@ -70,14 +47,13 @@
       slotMaxTime: '20:00:00',
       allDaySlot: false,
       height: 'auto',
-      events: events,
+      events: [],
       editable: true,
       selectable: true,
       selectMirror: true,
       dayMaxEvents: true,
       weekends: true,
-      
-      // Handle date selection
+
       select: (info) => {
         selectedDate = info.startStr.split('T')[0];
         selectedTime = info.startStr.split('T')[1]?.substring(0, 5) || '09:00';
@@ -88,8 +64,7 @@
         editingEvent = null;
         showModal = true;
       },
-      
-      // Handle event click for editing
+
       eventClick: (info) => {
         editingEvent = info.event;
         const startDate = new Date(info.event.start!);
@@ -98,27 +73,46 @@
         clientName = info.event.extendedProps.client || '';
         serviceType = info.event.extendedProps.service || '';
         eventTitle = info.event.title;
-        
-        // Calculate duration
+
         if (info.event.end) {
           const duration = (info.event.end.getTime() - info.event.start!.getTime()) / (1000 * 60);
           eventDuration = duration.toString();
         }
-        
         showModal = true;
       },
-      
-      // Handle event drop/resize
-      eventDrop: (info) => {
-        updateEventInArray(info.event);
-      },
-      
-      eventResize: (info) => {
-        updateEventInArray(info.event);
-      }
+
+      eventDrop: (info) => { updateEventInArray(info.event); },
+      eventResize: (info) => { updateEventInArray(info.event); }
     });
 
     calendar.render();
+
+    
+    try {
+      const res = await fetch('/api/appointments/my-schedule');
+      if (res.ok) {
+        const data = await res.json();
+        data.forEach((apt: any) => {
+          calendar.addEvent({
+            id: apt.id.toString(),
+            title: `${apt.client?.full_name ?? 'Client'} - ${apt.items?.[0]?.name ?? 'Service'}`,
+            start: apt.start_time,
+            end: apt.end_time,
+            backgroundColor: statusColors[apt.status] ?? '#6b7280',
+            borderColor: statusColors[apt.status] ?? '#6b7280',
+            extendedProps: {
+              client: apt.client?.full_name ?? 'Unknown',
+              service: apt.items?.[0]?.name ?? 'Unknown',
+              status: apt.status,
+            }
+          });
+        });
+      } else {
+        console.error('Error fetching appointments:', res.statusText);
+      }
+    } catch (error) {
+      console.error('Error loading appointments:', error);
+    }
   });
 
   function updateEventInArray(event: any) {
@@ -140,19 +134,16 @@
 
     const startDateTime = new Date(`${selectedDate}T${selectedTime}`);
     const endDateTime = new Date(startDateTime.getTime() + parseInt(eventDuration) * 60000);
-
     const colors = ['#f59e0b', '#8b5cf6', '#10b981', '#ef4444', '#3b82f6'];
     const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
     if (editingEvent) {
-      // Update existing event
       editingEvent.setProp('title', `${clientName} - ${serviceType}`);
       editingEvent.setStart(startDateTime);
       editingEvent.setEnd(endDateTime);
       editingEvent.setExtendedProp('client', clientName);
       editingEvent.setExtendedProp('service', serviceType);
-      
-      // Update in events array
+
       const index = events.findIndex(e => e.id === editingEvent.id);
       if (index !== -1) {
         events[index] = {
@@ -160,14 +151,10 @@
           title: `${clientName} - ${serviceType}`,
           start: startDateTime.toISOString(),
           end: endDateTime.toISOString(),
-          extendedProps: {
-            client: clientName,
-            service: serviceType
-          }
+          extendedProps: { client: clientName, service: serviceType }
         };
       }
     } else {
-      // Create new event
       const newEvent = {
         id: Date.now().toString(),
         title: `${clientName} - ${serviceType}`,
@@ -175,12 +162,8 @@
         end: endDateTime.toISOString(),
         backgroundColor: randomColor,
         borderColor: randomColor,
-        extendedProps: {
-          client: clientName,
-          service: serviceType
-        }
+        extendedProps: { client: clientName, service: serviceType }
       };
-
       events = [...events, newEvent];
       calendar.addEvent(newEvent);
     }
@@ -238,7 +221,7 @@
 
   <!-- Calendar Container -->
   <div class="bg-white rounded-lg shadow-lg p-6 flex-1 overflow-auto">
-    <div bind:this={calendarEl} class="calendar-container"></div>
+    <div bind:this={calendarEl} class="calendar-container" style="min-height: 600px;"></div>
   </div>
 </div>
 

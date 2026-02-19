@@ -75,3 +75,20 @@ export const POST: RequestHandler = async ({ request, locals }) => {
     return json({ error: 'Failed to create appointment' }, { status: 500 });
   }
 };
+
+
+import { getAppointmentsByStylistWithItems } from '$lib/server/db/queries/appointments';
+
+export const GET: RequestHandler = async ({ locals }) => {
+  if (!locals.user) {
+    return json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  try {
+    const data = await getAppointmentsByStylistWithItems(locals.user.id);
+    return json(data);
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    return json({ error: 'Failed to fetch appointments' }, { status: 500 });
+  }
+};
+

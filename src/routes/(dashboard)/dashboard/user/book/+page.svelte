@@ -44,7 +44,7 @@
                    cat.slug === 'color' ? 'Highlights & coloring' : 
                    'Beauty & wellness services',
       icon,
-      services: allServices.filter(s => s.category_id === cat.id)
+      services: allServices.filter(s => Number(s.category_id) === Number(cat.id))
     };
   }));
 

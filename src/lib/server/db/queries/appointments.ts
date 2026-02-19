@@ -178,3 +178,72 @@ export async function getClientAppointments(client_id: string) {
 
   return appointmentsWithItems;
 }
+
+export async function getAppointmentsByStylistWithItems(stylist_id: string) {
+  const appointmentsData = await db
+    .select({
+      id: appointments.id,
+      start_time: appointments.start_time,
+      end_time: appointments.end_time,
+      status: appointments.status,
+      notes: appointments.notes,
+      client: {
+        id: users.id,
+        full_name: users.full_name,
+      }
+    })
+    .from(appointments)
+    .leftJoin(users, eq(appointments.client_id, users.id))
+    .where(eq(appointments.stylist_id, stylist_id))
+    .orderBy(desc(appointments.start_time));
+
+  return await Promise.all(
+    appointmentsData.map(async (apt) => {
+      const items = await db
+        .select({
+          name: appointment_items.name,
+          duration: appointment_items.duration_snapshot,
+          price: appointment_items.price_snapshot,
+        })
+        .from(appointment_items)
+        .where(eq(appointment_items.appointment_id, apt.id));
+
+      return { ...apt, items };
+    })
+  );
+}
+
+// get appointments for the logged-in stylist with full details
+export async function getMySchedule(stylist_id: string) {
+  const appointmentsData = await db
+    .select({
+      id: appointments.id,
+      start_time: appointments.start_time,
+      end_time: appointments.end_time,
+      status: appointments.status,
+      notes: appointments.notes,
+      client: {
+        id: users.id,
+        full_name: users.full_name,
+      }
+    })
+    .from(appointments)
+    .leftJoin(users, eq(appointments.client_id, users.id))
+    .where(eq(appointments.stylist_id, stylist_id))
+    .orderBy(desc(appointments.start_time));
+
+  return await Promise.all(
+    appointmentsData.map(async (apt) => {
+      const items = await db
+        .select({
+          name: appointment_items.name,
+          duration: appointment_items.duration_snapshot,
+          price: appointment_items.price_snapshot,
+        })
+        .from(appointment_items)
+        .where(eq(appointment_items.appointment_id, apt.id));
+
+      return { ...apt, items };
+    })
+  );
+}

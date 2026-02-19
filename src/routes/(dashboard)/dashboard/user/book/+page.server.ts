@@ -8,9 +8,16 @@ export const load: PageServerLoad = async () => {
         getAllCategories()
     ]);
 
-    return {
-        services,
+     return {
+        services: services.map(s => ({
+            ...s,
+            category_id: Number(s.category_id),
+            price: s.price                        
+        })),
         stylists,
-        categories
+        categories: categories.map(c => ({
+            ...c,
+            id: Number(c.id)
+        }))
     };
 };
